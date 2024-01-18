@@ -7,15 +7,15 @@ install_requires = [
 ]
 
 packages = [
-    "compe",
+    "atc",
 ]
 
 console_scripts = [
-    "compe=compe:main",
+    "atc=atc:main",
 ]
 
 setup(
-    name="compe",
+    name="atc",
     version="0.0.0",
     packages=packages,
     install_requires=install_requires,
