@@ -187,8 +187,8 @@ def main():
 
     # get page
     # FIXME: need better test ways.
-    # soup = fetch(url)
-    soup = test_fetch(url)
+    soup = fetch(url)
+    # soup = test_fetch(url)
 
     # get all tasks
     task_IDs = get_all_taskIDs(soup)
