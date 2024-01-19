@@ -6,3 +6,7 @@ run:
 .PHONY: in
 in:
 	python3 main.py < in
+
+.PHONY: test
+test:
+	pytest -sv
