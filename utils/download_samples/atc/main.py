@@ -21,7 +21,7 @@ import argparse
 import subprocess
 import time
 from pathlib import Path
-from typing import List
+from typing import List, Tuple
 
 import requests
 from bs4 import BeautifulSoup as bs
@@ -126,7 +126,7 @@ def fetch(url: str):
     return bs(res.text, "lxml")
 
 
-def validation(url: str) -> str:
+def validation(url: str) -> Tuple[str, str]:
     if "https://atcoder.jp" not in url:
         raise ValueError("Not AtCoder.jp")
 
@@ -134,8 +134,9 @@ def validation(url: str) -> str:
         raise ValueError("Not Contest top page url")
 
     if "/tasks" not in url:
-        raise ValueError("should require url:'/tasks'")
+        url += "/tasks"
 
+    # FIXME: regular expression?
     contest_id = url.split("/")[-2]
     found = False
 
@@ -145,7 +146,9 @@ def validation(url: str) -> str:
     if not found:
         raise ValueError("name is NOT valid name. 'abc', 'arc', 'agc'")
 
-    return url
+    return url, contest_id
+
+
 def test_fetch(url: str) -> bs:
     """
     test fetch method
