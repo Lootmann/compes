@@ -130,10 +130,13 @@ def validation(url: str) -> str:
     if "https://atcoder.jp" not in url:
         raise ValueError("Not AtCoder.jp")
 
-    if "contests" not in url:
+    if "/contests" not in url:
         raise ValueError("Not Contest top page url")
 
-    contest_id = url.split("/")[-1]
+    if "/tasks" not in url:
+        raise ValueError("should require url:'/tasks'")
+
+    contest_id = url.split("/")[-2]
     found = False
 
     for name in ["abc", "arc", "agc"]:
