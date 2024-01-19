@@ -63,8 +63,8 @@ def get_all_taskIDs(soup: bs) -> List[str]:
 
     filter = """
     html body div#main-div.float-container div#main-container.container div.row div.col-sm-12
-    div#contest-statement span.lang span.lang-ja section div.row div.span4
-    table.table.table-responsible.table-striped.table-bordered tbody"""
+    div.panel.panel-default.table-responsive table.table.table-bordered.table-striped tbody
+    """
 
     table = soup.select(filter)[0]
 
@@ -82,7 +82,7 @@ def get_all_taskIDs(soup: bs) -> List[str]:
     task_ids = []
 
     for idx, td in enumerate(table.find_all("td")):
-        if idx % 2 == 0:
+        if idx % 4 == 0:
             task_ids.append(td.text.strip())
 
     # when task_IDs has 'Ex', change it for get_sampels
@@ -155,21 +155,22 @@ def main():
     args = parser.parse_args()
 
     # validation
-    url = args.url
-    validation(url)
+    url, contest_id = validation(args.url)
 
     print(f"* get samples from {url}")
     print("*")
 
     # get page
-    soup = fetch(url)
+    # FIXME: need better test ways.
+    # soup = fetch(url)
+    soup = test_fetch(url)
 
     # get all tasks
     task_IDs = get_all_taskIDs(soup)
     print("* ", task_IDs)
 
     # create each task dirs
-    contest_id = url.split("/")[-1]
+    contest_id = url.split("/")[-2]
 
     print("* create_dirs")
     task_dirpaths = create_dirs(task_IDs, contest_id)
