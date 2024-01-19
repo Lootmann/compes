@@ -146,6 +146,28 @@ def validation(url: str) -> str:
         raise ValueError("name is NOT valid name. 'abc', 'arc', 'agc'")
 
     return url
+def test_fetch(url: str) -> bs:
+    """
+    test fetch method
+    create cache(just index.html)
+    """
+    path = Path("index.html")
+
+    if path.exists():
+        print("* use cache")
+        html = path.read_text()
+        soup = bs(html, "lxml")
+    else:
+        print("* no cache")
+        res = requests.get(url)
+        if res.status_code != 200:
+            raise ValueError("url is something with wrong.")
+
+        res.raise_for_status()
+        soup = bs(res.text, "lxml")
+        path.write_text(soup.prettify())
+
+    return soup
 
 
 def main():
