@@ -19,7 +19,6 @@ usage:
 """
 import argparse
 import subprocess
-import time
 from pathlib import Path
 from typing import List, Tuple
 
@@ -71,11 +70,11 @@ def get_all_taskIDs(soup: bs) -> List[str]:
     """
     table is html:table
 
-    | problem | score |
-    |---------+-------|
-    |    A    |  300  |
-    |    B    |  500  |
-    |    C    |  700  |
+    | problem | name | score |
+    +---------+------+-------+
+    |    A    | hoge |  300  |
+    |    B    | hige |  500  |
+    |    C    | hage |  700  |
     ...
     """
     # task_id ls left column, so I get all even columns
@@ -94,19 +93,32 @@ def get_all_taskIDs(soup: bs) -> List[str]:
     return task_ids
 
 
+def get_all_task_urls(soup: bs) -> List[str]:
+    filter = """
+    html body div#main-div.float-container div#main-container.container div.row div.col-sm-12
+    div.panel.panel-default.table-responsive table.table.table-bordered.table-striped tbody
+    """
+    task_urls = []
+    table = soup.select(filter)[0]
+
+    for idx, a in enumerate(table.find_all("a")):
+        if idx % 2 == 0:
+            task_urls.append(a.get("href"))
+
+    return task_urls
+
+
 def get_samples(
-    task_IDs: List[str], task_dirpaths: List[Path], contest_id: str
+    task_dirpaths: List[Path],
+    task_urls: List[str],
 ) -> None:
     """
-    :param task_IDs: List[str]       - ['A', 'B', 'C', ...]
     :param task_dirpaths: List[Path] - ["test/A", "test/B", "test/C", ...]
-    :param contest_id: str           - abcNNN, arcNNN, agcNNN
+    :param task_urls:     List[Path] - ["contests/abcNNN/tasks/abcNNN_X", ...]
     """
-    base_url = "https://atcoder.jp/contests/{0}/tasks/{0}_{1}"
-    for idx, path in enumerate(task_dirpaths):
-        time.sleep(0.5)
 
-        task_url = base_url.format(contest_id, task_IDs[idx].lower())
+    for url, path in zip(task_urls, task_dirpaths):
+        task_url = f"https://atcoder.jp{url}"
         test_path = path / "test"
 
         if test_path.exists():
@@ -138,13 +150,6 @@ def validation(url: str) -> Tuple[str, str]:
 
     # FIXME: regular expression?
     contest_id = url.split("/")[-2]
-    found = False
-
-    for name in ["abc", "arc", "agc"]:
-        found |= name in contest_id
-
-    if not found:
-        raise ValueError("name is NOT valid name. 'abc', 'arc', 'agc'")
 
     return url, contest_id
 
@@ -194,6 +199,10 @@ def main():
     task_IDs = get_all_taskIDs(soup)
     print("* ", task_IDs)
 
+    # get all task urls
+    task_urls = get_all_task_urls(soup)
+    print(task_urls)
+
     print("* create_dirs")
     task_dirpaths = create_dirs(task_IDs, contest_id)
     print("* {}".format(", ".join(map(str, task_dirpaths))))
@@ -201,7 +210,7 @@ def main():
 
     # get all samples
     print("* get_samples")
-    get_samples(task_IDs, task_dirpaths, contest_id)
+    get_samples(task_dirpaths, task_urls)
     print("*")
 
 
