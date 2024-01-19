@@ -152,11 +152,11 @@ def validation(url: str) -> Tuple[str, str]:
     contest_id = url.split("/")[-2]
     found = False
 
-    for name in ["abc", "arc", "agc"]:
+    for name in ["abc", "arc", "agc", "acl"]:
         found |= name in contest_id
 
     if not found:
-        raise ValueError("name is NOT valid name. 'abc', 'arc', 'agc'")
+        raise ValueError("name is NOT valid name. 'abc', 'arc', 'agc', 'acl")
 
     return url, contest_id
 
