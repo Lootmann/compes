@@ -70,11 +70,11 @@ def get_all_taskIDs(soup: bs) -> List[str]:
     """
     table is html:table
 
-    | problem | score |
-    |---------+-------|
-    |    A    |  300  |
-    |    B    |  500  |
-    |    C    |  700  |
+    | problem | name | score |
+    +---------+------+-------+
+    |    A    | hoge |  300  |
+    |    B    | hige |  500  |
+    |    C    | hage |  700  |
     ...
     """
     # task_id ls left column, so I get all even columns
