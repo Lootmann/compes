@@ -194,9 +194,6 @@ def main():
     task_IDs = get_all_taskIDs(soup)
     print("* ", task_IDs)
 
-    # create each task dirs
-    contest_id = url.split("/")[-2]
-
     print("* create_dirs")
     task_dirpaths = create_dirs(task_IDs, contest_id)
     print("* {}".format(", ".join(map(str, task_dirpaths))))
