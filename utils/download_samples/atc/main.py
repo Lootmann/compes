@@ -21,7 +21,7 @@ import argparse
 import subprocess
 import time
 from pathlib import Path
-from typing import List
+from typing import List, Tuple
 
 import requests
 from bs4 import BeautifulSoup as bs
@@ -63,8 +63,8 @@ def get_all_taskIDs(soup: bs) -> List[str]:
 
     filter = """
     html body div#main-div.float-container div#main-container.container div.row div.col-sm-12
-    div#contest-statement span.lang span.lang-ja section div.row div.span4
-    table.table.table-responsible.table-striped.table-bordered tbody"""
+    div.panel.panel-default.table-responsive table.table.table-bordered.table-striped tbody
+    """
 
     table = soup.select(filter)[0]
 
@@ -82,7 +82,7 @@ def get_all_taskIDs(soup: bs) -> List[str]:
     task_ids = []
 
     for idx, td in enumerate(table.find_all("td")):
-        if idx % 2 == 0:
+        if idx % 4 == 0:
             task_ids.append(td.text.strip())
 
     # when task_IDs has 'Ex', change it for get_sampels
@@ -126,14 +126,18 @@ def fetch(url: str):
     return bs(res.text, "lxml")
 
 
-def validation(url: str) -> str:
+def validation(url: str) -> Tuple[str, str]:
     if "https://atcoder.jp" not in url:
         raise ValueError("Not AtCoder.jp")
 
-    if "contests" not in url:
+    if "/contests" not in url:
         raise ValueError("Not Contest top page url")
 
-    contest_id = url.split("/")[-1]
+    if "/tasks" not in url:
+        url += "/tasks"
+
+    # FIXME: regular expression?
+    contest_id = url.split("/")[-2]
     found = False
 
     for name in ["abc", "arc", "agc"]:
@@ -142,7 +146,31 @@ def validation(url: str) -> str:
     if not found:
         raise ValueError("name is NOT valid name. 'abc', 'arc', 'agc'")
 
-    return url
+    return url, contest_id
+
+
+def test_fetch(url: str) -> bs:
+    """
+    test fetch method
+    create cache(just index.html)
+    """
+    path = Path("index.html")
+
+    if path.exists():
+        print("* use cache")
+        html = path.read_text()
+        soup = bs(html, "lxml")
+    else:
+        print("* no cache")
+        res = requests.get(url)
+        if res.status_code != 200:
+            raise ValueError("url is something with wrong.")
+
+        res.raise_for_status()
+        soup = bs(res.text, "lxml")
+        path.write_text(soup.prettify())
+
+    return soup
 
 
 def main():
@@ -152,21 +180,19 @@ def main():
     args = parser.parse_args()
 
     # validation
-    url = args.url
-    validation(url)
+    url, contest_id = validation(args.url)
 
     print(f"* get samples from {url}")
     print("*")
 
     # get page
+    # FIXME: need better test ways.
     soup = fetch(url)
+    # soup = test_fetch(url)
 
     # get all tasks
     task_IDs = get_all_taskIDs(soup)
     print("* ", task_IDs)
-
-    # create each task dirs
-    contest_id = url.split("/")[-1]
 
     print("* create_dirs")
     task_dirpaths = create_dirs(task_IDs, contest_id)
