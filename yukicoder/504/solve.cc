@@ -63,11 +63,7 @@ int main() {
   vector<int> ai(n);
   rep(i, n) cin >> ai[i];
 
-  int k_score{};
-  read(k_score);
-
-  int top_tier{};
-
+  int k_score{}, top_tier{};
   rep(i, n) {
     if (i == 0) {
       k_score = ai[i];
