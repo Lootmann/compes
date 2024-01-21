@@ -79,31 +79,9 @@ struct Pos {
   //   S
   int d;  // direction
   Pos() : y{0}, x{0}, d{1} {}
-
   void changeDirection() { d = (d + 1) % 4; }
-  void move() {
-    if (d == 0) {
-      y--;
-    } else if (d == 1) {
-      x++;
-    } else if (d == 2) {
-      y++;
-    } else {
-      x--;
-    }
-  }
-
-  void back() {
-    if (d == 0) {
-      y++;
-    } else if (d == 1) {
-      x--;
-    } else if (d == 2) {
-      y--;
-    } else {
-      x++;
-    }
-  }
+  void move() { d == 0 ? y-- : d == 1 ? x++ : d == 2 ? y++ : x--; }
+  void back() { d == 0 ? y++ : d == 1 ? x-- : d == 2 ? y-- : x++; }
 };
 
 string format(int n) {
@@ -116,8 +94,6 @@ int main() {
   FastIO;
   int n;
   read(n);
-
-  if (n == 1) die("001");
 
   vector<vector<int>> cells(n, vector<int>(n, 0));
   vector<vector<int>> moves = gen_moves(n);
