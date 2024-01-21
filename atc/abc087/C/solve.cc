@@ -69,31 +69,24 @@ int main() {
 
   // dp
   vector<vector<int>> dp(2, vector<int>(n, 0));
+  dp[0][0] = cells[0][0];
 
-  // cells[0][n] is invariant
-  rep(i, n) {
-    if (i == 0) {
-      dp[0][0] = cells[0][0];
-    } else {
-      dp[0][i] = cells[0][i] + dp[0][i - 1];
+  repa(y, 0, 2) rep(x, n) {
+    //
+    // [] -> [] -> []
+    //
+    if (x > 0) {
+      chmax(dp[y][x], dp[y][x - 1] + cells[y][x]);
+    }
+
+    // []
+    // |
+    // v
+    // []
+    if (y > 0) {
+      chmax(dp[y][x], dp[y - 1][x] + cells[y][x]);
     }
   }
-
-  // * update direction
-  // [ ]   [ ]
-  //        |
-  //        v
-  // [ ] ->
-  rep(i, n) {
-    if (i == 0) {
-      chmax(dp[1][0], dp[0][0] + cells[1][0]);
-    } else {
-      int maxc = max(dp[0][i], dp[1][i - 1]) + cells[1][i];
-      chmax(dp[1][i], maxc);
-    }
-  }
-  dump(dp[0]);
-  dump(dp[1]);
 
   output(dp[1][n - 1]);
 }
