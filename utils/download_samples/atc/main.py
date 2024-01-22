@@ -62,8 +62,14 @@ def create_dirs(task_ids: List[str], contest_id: str) -> List[Path]:
 
 def get_all_taskIDs(soup: bs) -> List[str]:
     """
-    soup is top page html.
+    soup is task page html.
     this page shows all task IDs. get All shit.
+
+    Args:
+        soup (bs4): tasks page html
+
+    Returns:
+        List[str] - ['A', 'B', ...]
     """
 
     filter = """
