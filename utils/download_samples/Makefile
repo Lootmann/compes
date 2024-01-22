@@ -3,7 +3,7 @@
 # https://atcoder.jp/contests/abc093
 
 run:
-	python3 atc/main.py https://atcoder.jp/contests/acl1
+	python3 atc/main.py abc093
 
 .PHONY: in
 in:
