@@ -18,6 +18,7 @@ usage:
     > |- F/test
 """
 import argparse
+import re
 import subprocess
 from pathlib import Path
 from typing import List, Tuple
@@ -138,7 +139,59 @@ def fetch(url: str):
     return bs(res.text, "lxml")
 
 
+def extract_contest_id(url: str) -> str:
+    """
+    if url has '(abc|arc|agc|alc)[NNN]' N is 0-9 digit
+    (named regular contest),
+    get contest_id and generate complete url.
+
+    if url has unusual contest_id (jag2018summer, joi2024yo2),
+    throw this process.
+
+    :param  url: str
+    :return usual contest_id: str
+    """
+    pattern = r"(abc|arc|agc|alc)\d\d\d"
+    found = re.match(pattern, url)
+
+    if found:
+        contest_id = found.group()
+        return contest_id
+
+    return ""
+
+
 def validation(url: str) -> Tuple[str, str]:
+    """
+    url is like
+        - abc063
+        - https://atcoder.jp/contests/abc063
+        - https://atcoder.jp/contests/abc063/tasks
+        - https://atcoder.jp/contests/abc063/tasks/abc063_a
+        - get-me-pls-abc063
+
+    :return [url, contest_id] tuple[str, str]
+        url: https://atcoder.jp/contests/.../tasks
+        contest_id: ...
+    """
+    contest_id = extract_contest_id(url)
+
+    # when url is contest_id
+    if contest_id != "":
+        url = "https://atcoder.jp/contests/{}/tasks".format(contest_id)
+        return url, contest_id
+
+    # url may be 3 patterns
+    # 1. unusual and only contest_id  'jag2018summer-day2'
+    # 2. unusual full url 'https://atcoder.jp/contests/jag2018summer-day2'
+    # 3. wrong url 'http://hogehoge.comcom', 'random-string-here :^)'
+
+    # 1. when url is unusual contest_id, attach url 'https://atcoder.jp/contests{}/tasks'
+    if "https" not in url:
+        contest_id = url
+        return f"https://atcoder.jp/contests/{contest_id}/tasks", contest_id
+
+    # full url
     if "https://atcoder.jp" not in url:
         raise ValueError("Not AtCoder.jp")
 
@@ -148,7 +201,8 @@ def validation(url: str) -> Tuple[str, str]:
     if "/tasks" not in url:
         url += "/tasks"
 
-    # FIXME: regular expression?
+    # contest_id has many variations.
+    # so can't use regular expression extraction.
     contest_id = url.split("/")[-2]
 
     return url, contest_id
