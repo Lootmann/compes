@@ -54,12 +54,6 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-void out(llint a, llint b) {
-  if (a > b) die(">");
-  if (a == b) die("=");
-  die("<");
-}
-
 int main() {
   FastIO;
   llint a, b, c;
@@ -67,42 +61,18 @@ int main() {
 
   if (c % 2 == 0) {
     a = abs(a), b = abs(b);
-    out(a, b);
+    c = 2;
+  } else {
+    c = 1;
   }
 
-  if (a == b) die("=");
+  llint aa = pow(a, c);
+  llint bb = pow(b, c);
 
-  // a|b = 0
-  if (a == 0 && b == 0) die("=");
-
-  if (a == 0) {
-    if (a < b) die("<");
-    if (a > b) die(">");
-  }
-
-  if (b == 0) {
-    if (a > b) die(">");
-    if (a < b) die("<");
-  }
-
-  // + +
-  if (a > 0 && b > 0) {
-    out(a, b);
-  }
-
-  // + -
-  if (a > 0 && b < 0) {
-    die(">");
-  }
-
-  // - +
-  if (a < 0 && b > 0) {
-    die("<");
-  }
-
-  // - -
-  if (a < 0 && b < 0) {
-    if (a < b) die(">");
-    if (a > b) die("<");
-  }
+  if (aa > bb)
+    output(">");
+  else if (aa == bb)
+    output("=");
+  else
+    output("<");
 }
