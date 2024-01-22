@@ -3,19 +3,20 @@ get all Contest problmes with online-judge-tools
 
 usage:
 
-    > pset https://atcoder.jp/contests/arc143
-    > arc143/
+    > atc https://atcoder.jp/contests/arc143
+    or
+    > atc arc143
 
     > tree arc143
-    >
-    > |- A/test
-    > |      |- sample-1.in
-    > |      |- ...
-    > |- B/test
-    > |- C/test
-    > |- D/test
-    > |- E/test
-    > |- F/test
+
+    |- A/test
+    |      |- sample-1.in
+    |      |- ...
+    |- B/test
+    |- C/test
+    |- D/test
+    |- E/test
+    |- F/test
 """
 import argparse
 import re
@@ -36,8 +37,12 @@ def create_dirs(task_ids: List[str], contest_id: str) -> List[Path]:
     |- C
     ..
 
-    return dir path (Pathlib)
+    Args:
+        task_ids (List[str]): ['A', 'B', ...]
+        contest_id (str): 'abc123', 'joi2024yo2', ...
 
+    Returns:
+        List[Path]: dir paths
     """
     task_dirpaths = []
     tmp_path = Path(f"./{contest_id}/")
@@ -57,8 +62,14 @@ def create_dirs(task_ids: List[str], contest_id: str) -> List[Path]:
 
 def get_all_taskIDs(soup: bs) -> List[str]:
     """
-    soup is top page html.
+    soup is task page html.
     this page shows all task IDs. get All shit.
+
+    Args:
+        soup (bs4): tasks page html
+
+    Returns:
+        List[str] - ['A', 'B', ...]
     """
 
     filter = """
@@ -95,6 +106,15 @@ def get_all_taskIDs(soup: bs) -> List[str]:
 
 
 def get_all_task_urls(soup: bs) -> List[str]:
+    """
+    get all task urls
+
+    Args:
+        soup (bs4): tasks page html
+
+    Returns:
+        List[str]: task urls ['https://atcoder.jp/contests/abc123/task/abc123_c', ...]
+    """
     filter = """
     html body div#main-div.float-container div#main-container.container div.row div.col-sm-12
     div.panel.panel-default.table-responsive table.table.table-bordered.table-striped tbody
@@ -114,8 +134,13 @@ def get_samples(
     task_urls: List[str],
 ) -> None:
     """
-    :param task_dirpaths: List[Path] - ["test/A", "test/B", "test/C", ...]
-    :param task_urls:     List[Path] - ["contests/abcNNN/tasks/abcNNN_X", ...]
+    get all task testcase
+
+    Args:
+        task_dirpaths (List[Path]): ["test/A", "test/B", "test/C", ...]
+
+    Returns:
+        List[Path]: Return task_urls ["contests/abcNNN/tasks/abcNNN_X", ...]
     """
 
     for url, path in zip(task_urls, task_dirpaths):
@@ -129,8 +154,16 @@ def get_samples(
             print(cmd)
 
 
-def fetch(url: str):
-    """fetch url html"""
+def fetch(url: str) -> bs:
+    """
+    fetch url html, html to BeautifulSoup object
+
+    Args:
+        url (str)
+
+    Returns:
+        bs: task page html soup
+    """
     res = requests.get(url)
     if res.status_code != 200:
         raise ValueError("url is something with wrong.")
@@ -148,8 +181,11 @@ def extract_contest_id(url: str) -> str:
     if url has unusual contest_id (jag2018summer, joi2024yo2),
     throw this process.
 
-    :param  url: str
-    :return usual contest_id: str
+    Args:
+        url (str):
+
+    Returns:
+        str: Return usual contest_id
     """
     pattern = r"(abc|arc|agc)\d\d\d"
     found = re.match(pattern, url)
@@ -170,9 +206,12 @@ def validation(url: str) -> Tuple[str, str]:
         - https://atcoder.jp/contests/abc063/tasks/abc063_a
         - get-me-pls-abc063
 
-    :return [url, contest_id] tuple[str, str]
-        url: https://atcoder.jp/contests/.../tasks
-        contest_id: ...
+    Args:
+        url (str): url or contest_id
+
+    Returns:
+        url (str) - https://atcoder.jp/contests/.../tasks
+        contest_id (str) - contest_id 'abc123', 'joi2024yo2', 'agc123'
     """
     contest_id = extract_contest_id(url)
 
@@ -212,6 +251,12 @@ def test_fetch(url: str) -> bs:
     """
     test fetch method
     create cache(just index.html)
+
+    Args:
+        url (str): https://atcoder.jp/contests/xxxNNN/tasks
+
+    Returns:
+        bs (BeautifulSoup): html soup
     """
     path = Path("index.html")
 
