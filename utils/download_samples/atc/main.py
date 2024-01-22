@@ -18,6 +18,7 @@ usage:
     > |- F/test
 """
 import argparse
+import re
 import subprocess
 from pathlib import Path
 from typing import List, Tuple
@@ -136,6 +137,28 @@ def fetch(url: str):
 
     res.raise_for_status()
     return bs(res.text, "lxml")
+
+
+def extract_contest_id(url: str) -> str:
+    """
+    if url has '(abc|arc|agc|alc)[NNN]' N is 0-9 digit
+    (named regular contest),
+    get contest_id and generate complete url.
+
+    if url has unusual contest_id (jag2018summer, joi2024yo2),
+    throw this process.
+
+    :param  url: str
+    :return usual contest_id: str
+    """
+    pattern = r"(abc|arc|agc|alc)\d\d\d"
+    found = re.match(pattern, url)
+
+    if found:
+        contest_id = found.group()
+        return contest_id
+
+    return ""
 
 
 def validation(url: str) -> Tuple[str, str]:
