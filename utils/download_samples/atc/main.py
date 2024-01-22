@@ -141,7 +141,7 @@ def fetch(url: str):
 
 def extract_contest_id(url: str) -> str:
     """
-    if url has '(abc|arc|agc|alc)[NNN]' N is 0-9 digit
+    if url has '(abc|arc|agc)[NNN]' N is 0-9 digit
     (named regular contest),
     get contest_id and generate complete url.
 
@@ -151,7 +151,7 @@ def extract_contest_id(url: str) -> str:
     :param  url: str
     :return usual contest_id: str
     """
-    pattern = r"(abc|arc|agc|alc)\d\d\d"
+    pattern = r"(abc|arc|agc)\d\d\d"
     found = re.match(pattern, url)
 
     if found:

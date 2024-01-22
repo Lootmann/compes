@@ -36,7 +36,6 @@ class TestValidation:
             ("arc765", url_format.format("arc765")),
             ("agc123", url_format.format("agc123")),
             ("agc000", url_format.format("agc000")),
-            ("alc999", url_format.format("alc999")),
             ("jag2018summer-day2", url_format.format("jag2018summer-day2")),
             ("jag2012autumn", url_format.format("jag2012autumn")),
             ("past16-open", url_format.format("past16-open")),
@@ -56,7 +55,7 @@ class TestExtractContestId:
             ("abc012", "abc012"),
             ("agc001", "agc001"),
             ("arc123", "arc123"),
-            ("alc001", "alc001"),
+            ("alc001", ""),
             ("joi2024yo2", ""),
         ]
         for url, expect in urls:
