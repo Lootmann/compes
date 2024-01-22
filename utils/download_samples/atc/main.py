@@ -106,6 +106,15 @@ def get_all_taskIDs(soup: bs) -> List[str]:
 
 
 def get_all_task_urls(soup: bs) -> List[str]:
+    """
+    get all task urls
+
+    Args:
+        soup (bs4): tasks page html
+
+    Returns:
+        List[str]: task urls ['https://atcoder.jp/contests/abc123/task/abc123_c', ...]
+    """
     filter = """
     html body div#main-div.float-container div#main-container.container div.row div.col-sm-12
     div.panel.panel-default.table-responsive table.table.table-bordered.table-striped tbody
@@ -125,8 +134,13 @@ def get_samples(
     task_urls: List[str],
 ) -> None:
     """
-    :param task_dirpaths: List[Path] - ["test/A", "test/B", "test/C", ...]
-    :param task_urls:     List[Path] - ["contests/abcNNN/tasks/abcNNN_X", ...]
+    get all task testcase
+
+    Args:
+        task_dirpaths (List[Path]): ["test/A", "test/B", "test/C", ...]
+
+    Returns:
+        List[Path]: Return task_urls ["contests/abcNNN/tasks/abcNNN_X", ...]
     """
 
     for url, path in zip(task_urls, task_dirpaths):
