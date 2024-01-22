@@ -3,19 +3,20 @@ get all Contest problmes with online-judge-tools
 
 usage:
 
-    > pset https://atcoder.jp/contests/arc143
-    > arc143/
+    > atc https://atcoder.jp/contests/arc143
+    or
+    > atc arc143
 
     > tree arc143
-    >
-    > |- A/test
-    > |      |- sample-1.in
-    > |      |- ...
-    > |- B/test
-    > |- C/test
-    > |- D/test
-    > |- E/test
-    > |- F/test
+
+    |- A/test
+    |      |- sample-1.in
+    |      |- ...
+    |- B/test
+    |- C/test
+    |- D/test
+    |- E/test
+    |- F/test
 """
 import argparse
 import re
@@ -36,8 +37,12 @@ def create_dirs(task_ids: List[str], contest_id: str) -> List[Path]:
     |- C
     ..
 
-    return dir path (Pathlib)
+    Args:
+        task_ids (List[str]): ['A', 'B', ...]
+        contest_id (str): 'abc123', 'joi2024yo2', ...
 
+    Returns:
+        List[Path]: dir paths
     """
     task_dirpaths = []
     tmp_path = Path(f"./{contest_id}/")
