@@ -154,8 +154,16 @@ def get_samples(
             print(cmd)
 
 
-def fetch(url: str):
-    """fetch url html"""
+def fetch(url: str) -> bs:
+    """
+    fetch url html, html to BeautifulSoup object
+
+    Args:
+        url (str)
+
+    Returns:
+        bs: task page html soup
+    """
     res = requests.get(url)
     if res.status_code != 200:
         raise ValueError("url is something with wrong.")
@@ -173,8 +181,11 @@ def extract_contest_id(url: str) -> str:
     if url has unusual contest_id (jag2018summer, joi2024yo2),
     throw this process.
 
-    :param  url: str
-    :return usual contest_id: str
+    Args:
+        url (str):
+
+    Returns:
+        str: Return usual contest_id
     """
     pattern = r"(abc|arc|agc)\d\d\d"
     found = re.match(pattern, url)
@@ -195,9 +206,12 @@ def validation(url: str) -> Tuple[str, str]:
         - https://atcoder.jp/contests/abc063/tasks/abc063_a
         - get-me-pls-abc063
 
-    :return [url, contest_id] tuple[str, str]
-        url: https://atcoder.jp/contests/.../tasks
-        contest_id: ...
+    Args:
+        url (str): url or contest_id
+
+    Returns:
+        url (str) - https://atcoder.jp/contests/.../tasks
+        contest_id (str) - contest_id 'abc123', 'joi2024yo2', 'agc123'
     """
     contest_id = extract_contest_id(url)
 
@@ -237,6 +251,12 @@ def test_fetch(url: str) -> bs:
     """
     test fetch method
     create cache(just index.html)
+
+    Args:
+        url (str): https://atcoder.jp/contests/xxxNNN/tasks
+
+    Returns:
+        bs (BeautifulSoup): html soup
     """
     path = Path("index.html")
 
