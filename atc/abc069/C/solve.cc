@@ -45,16 +45,9 @@ int main() {
     }
   }
 
-  if (mod4 == 0) {
-    if (mod2 >= 2 && odd == 0) die("Yes");
-    die("No");
-  }
-
+  if (mod4 == 0 && mod2 >= 2 && odd == 0) die("Yes");
   if (mod4 >= odd) die("Yes");
-  if (mod4 + 1 == odd) {
-    if (mod2 == 0) die("Yes");
-    die("No");
-  }
+  if (mod4 + 1 == odd && mod2 == 0) die("Yes");
 
   die("No");
 }
