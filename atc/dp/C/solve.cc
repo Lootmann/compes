@@ -25,24 +25,35 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-bool is_upper(char ch) {
-  return 'A' <= ch && ch <= 'Z';
-}
-
 int main() {
   FastIO;
-  string s;
-  cin >> s;
+  int n;
+  cin >> n;
 
-  if (s.size() != 8) die("No");
-  if (!is_upper(s.front()) || !is_upper(s.back())) die("No");
-  for (int i = 1; i < 7; ++i) {
-    if (!('0' <= s[i] && s[i] <= '9')) die("No");
+  vector<llint> ai(n), bi(n), ci(n);
+  rep(i, n) cin >> ai[i] >> bi[i] >> ci[i];
+  dump(ai);
+  dump(bi);
+  dump(ci);
+
+  // a, b, c
+  vector<vector<llint>> dp(n + 1, vector<llint>(3, 0));
+
+  // push-based
+  for (int i = 0; i < n; ++i) {
+    // (b,c) <- a
+    chmax(dp[i + 1][1], dp[i][0] + ai[i]);
+    chmax(dp[i + 1][2], dp[i][0] + ai[i]);
+
+    // (a,c) <- b
+    chmax(dp[i + 1][0], dp[i][1] + bi[i]);
+    chmax(dp[i + 1][2], dp[i][1] + bi[i]);
+
+    // (a,b) <- c
+    chmax(dp[i + 1][0], dp[i][2] + ci[i]);
+    chmax(dp[i + 1][1], dp[i][2] + ci[i]);
   }
 
-  int num = stoi(s.substr(1, 6));
-  if (100000 <= num && num <= 999999)
-    output("Yes");
-  else
-    output("No");
+  rep(i, n + 1) dump(dp[i]);
+  output(max(dp[n][0], max(dp[n][1], dp[n][2])));
 }
