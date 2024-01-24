@@ -28,27 +28,11 @@ using llint = long long int;
 int main() {
   FastIO;
 
-  int n;
-  cin >> n;
+  int x, a, b;
+  cin >> x >> a >> b;
 
-  map<llint, llint> mp;
-  rep(_, n) {
-    int a;
-    cin >> a;
-    mp[a]++;
-  }
-
-  vector<llint> sides;
-  for (auto key : mp) {
-    rep(_, key.second / 2) {
-      sides.push_back(key.first);
-    }
-  }
-
-  sort(sides.rbegin(), sides.rend());
-
-  if ((int)sides.size() >= 2)
-    output(sides[0] * sides[1]);
+  if (abs(x - a) > abs(x - b))
+    output("B");
   else
-    output(0);
+    output("A");
 }

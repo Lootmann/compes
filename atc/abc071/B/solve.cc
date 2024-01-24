@@ -27,28 +27,16 @@ using llint = long long int;
 
 int main() {
   FastIO;
+  string s;
+  cin >> s;
 
-  int n;
-  cin >> n;
-
-  map<llint, llint> mp;
-  rep(_, n) {
-    int a;
-    cin >> a;
-    mp[a]++;
+  vector<int> alpha(26, 0);
+  for (auto ch : s) {
+    alpha[ch - 'a']++;
   }
 
-  vector<llint> sides;
-  for (auto key : mp) {
-    rep(_, key.second / 2) {
-      sides.push_back(key.first);
-    }
+  rep(i, 26) {
+    if (alpha[i] == 0) die((char)(i + 'a'));
   }
-
-  sort(sides.rbegin(), sides.rend());
-
-  if ((int)sides.size() >= 2)
-    output(sides[0] * sides[1]);
-  else
-    output(0);
+  die("None");
 }
