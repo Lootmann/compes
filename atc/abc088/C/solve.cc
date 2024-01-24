@@ -25,23 +25,42 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-bool is_upper(char ch) {
-  return 'A' <= ch && ch <= 'Z';
-}
-
 int main() {
   FastIO;
-  string s;
-  cin >> s;
 
-  if (s.size() != 8) die("No");
-  if (!is_upper(s.front()) || !is_upper(s.back())) die("No");
-  for (int i = 1; i < 7; ++i) {
-    if (!('0' <= s[i] && s[i] <= '9')) die("No");
+  vector<vector<int>> grid(3, vector<int>(3, 0));
+  rep(h, 3) {
+    rep(w, 3) {
+      int c;
+      cin >> c;
+      grid[h][w] = c;
+    }
   }
 
-  int num = stoi(s.substr(1, 6));
-  if (100000 <= num && num <= 999999)
+  bool is_good{true};
+  dump(is_good);
+
+  // vertical
+  rep(i, 2) {
+    int diff1 = grid[i][0] - grid[i + 1][0];
+    int diff2 = grid[i][1] - grid[i + 1][1];
+    int diff3 = grid[i][2] - grid[i + 1][2];
+    is_good &= (diff1 == diff2 && diff2 == diff3);
+    dump(is_good);
+  }
+
+  // horizontal
+  rep(i, 2) {
+    int diff1 = grid[0][i] - grid[0][i + 1];
+    int diff2 = grid[1][i] - grid[1][i + 1];
+    int diff3 = grid[2][i] - grid[2][i + 1];
+    is_good &= (diff1 == diff2 && diff2 == diff3);
+    dump(is_good);
+  }
+
+  dump(is_good);
+
+  if (is_good)
     output("Yes");
   else
     output("No");

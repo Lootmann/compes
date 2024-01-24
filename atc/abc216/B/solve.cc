@@ -25,23 +25,25 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-bool is_upper(char ch) {
-  return 'A' <= ch && ch <= 'Z';
-}
-
 int main() {
   FastIO;
-  string s;
-  cin >> s;
+  int n;
+  cin >> n;
 
-  if (s.size() != 8) die("No");
-  if (!is_upper(s.front()) || !is_upper(s.back())) die("No");
-  for (int i = 1; i < 7; ++i) {
-    if (!('0' <= s[i] && s[i] <= '9')) die("No");
+  bool same{false};
+  set<string> names;
+  rep(i, n) {
+    string s, t;
+    cin >> s >> t;
+    string fullname = s + " " + t;
+    if (names.contains(fullname)) {
+      same = true;
+    } else {
+      names.insert(fullname);
+    }
   }
 
-  int num = stoi(s.substr(1, 6));
-  if (100000 <= num && num <= 999999)
+  if (same)
     output("Yes");
   else
     output("No");

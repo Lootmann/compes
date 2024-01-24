@@ -25,24 +25,27 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-bool is_upper(char ch) {
-  return 'A' <= ch && ch <= 'Z';
-}
-
 int main() {
   FastIO;
-  string s;
-  cin >> s;
+  llint n, w;
+  cin >> n >> w;
 
-  if (s.size() != 8) die("No");
-  if (!is_upper(s.front()) || !is_upper(s.back())) die("No");
-  for (int i = 1; i < 7; ++i) {
-    if (!('0' <= s[i] && s[i] <= '9')) die("No");
+  vector<pair<llint, llint>> cheese(n);
+  rep(i, n) {
+    llint taste, weight;
+    cin >> taste >> weight;
+    cheese[i] = make_pair(taste, weight);
   }
 
-  int num = stoi(s.substr(1, 6));
-  if (100000 <= num && num <= 999999)
-    output("Yes");
-  else
-    output("No");
+  sort(cheese.rbegin(), cheese.rend());
+
+  llint total{};
+  rep(i, n) {
+    if (w >= 0) {
+      total += cheese[i].first * min(w, cheese[i].second);
+      w -= cheese[i].second;
+    }
+  }
+
+  output(total);
 }

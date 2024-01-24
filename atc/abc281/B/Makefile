@@ -19,6 +19,10 @@ in:
 submit:
 	oj s solve.cc
 
+.PHONY: watch
+watch:
+	find $(SRC) | entr -sc "make run && oj t"
+
 .PHONY: clean
 clean:
 	rm a.out solve.cc ./test -r

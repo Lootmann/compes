@@ -25,24 +25,27 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-bool is_upper(char ch) {
-  return 'A' <= ch && ch <= 'Z';
-}
-
 int main() {
   FastIO;
-  string s;
-  cin >> s;
+  int n, m;
+  cin >> n >> m;
+  vector<int> mi(m, 0);
 
-  if (s.size() != 8) die("No");
-  if (!is_upper(s.front()) || !is_upper(s.back())) die("No");
-  for (int i = 1; i < 7; ++i) {
-    if (!('0' <= s[i] && s[i] <= '9')) die("No");
+  rep(i, n) {
+    int k;
+    cin >> k;
+
+    rep(_, k) {
+      int a;
+      cin >> a;
+      a--;
+      mi[a]++;
+    }
   }
 
-  int num = stoi(s.substr(1, 6));
-  if (100000 <= num && num <= 999999)
-    output("Yes");
-  else
-    output("No");
+  int cnt{};
+  rep(i, m) {
+    if (mi[i] == n) cnt++;
+  }
+  output(cnt);
 }

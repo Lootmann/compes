@@ -25,24 +25,29 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-bool is_upper(char ch) {
-  return 'A' <= ch && ch <= 'Z';
+bool is_even_string(const string& s) {
+  int len = (int)s.size();
+  string left = s.substr(0, len / 2);
+  string right = s.substr(len / 2);
+  return left == right;
 }
 
 int main() {
   FastIO;
+
   string s;
   cin >> s;
 
-  if (s.size() != 8) die("No");
-  if (!is_upper(s.front()) || !is_upper(s.back())) die("No");
-  for (int i = 1; i < 7; ++i) {
-    if (!('0' <= s[i] && s[i] <= '9')) die("No");
+  int len = (int)s.size();
+  int max_len{1};
+
+  rep(i, len) {
+    int idx = len - i - 1;
+    string part = s.substr(0, idx);
+    if (is_even_string(part)) {
+      chmax(max_len, idx);
+    }
   }
 
-  int num = stoi(s.substr(1, 6));
-  if (100000 <= num && num <= 999999)
-    output("Yes");
-  else
-    output("No");
+  output(max_len);
 }

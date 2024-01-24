@@ -15,6 +15,7 @@ using namespace std;
     cout << msg << endl; \
     exit(0);             \
   } while (0)
+#define INFL 1LL << 60
 
 template <typename T> bool chmax(T& a, const T& b) {
   return ((a < b) ? (a = b, true) : (false));
@@ -25,24 +26,26 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-bool is_upper(char ch) {
-  return 'A' <= ch && ch <= 'Z';
-}
-
 int main() {
   FastIO;
-  string s;
-  cin >> s;
+  int n, k;
+  cin >> n >> k;
 
-  if (s.size() != 8) die("No");
-  if (!is_upper(s.front()) || !is_upper(s.back())) die("No");
-  for (int i = 1; i < 7; ++i) {
-    if (!('0' <= s[i] && s[i] <= '9')) die("No");
+  vector<llint> hi(n);
+  rep(i, n) cin >> hi[i];
+
+  vector<llint> dp(n, INFL);
+  dp[0] = 0;
+
+  for (int i = 1; i < n; ++i) {
+    for (int j = 1; j <= k; ++j) {
+      if (i - j >= 0) {
+        chmin(dp[i], dp[i - j] + abs(hi[i] - hi[i - j]));
+      }
+    }
+    dump(dp);
   }
 
-  int num = stoi(s.substr(1, 6));
-  if (100000 <= num && num <= 999999)
-    output("Yes");
-  else
-    output("No");
+  dump(dp);
+  output(dp[n - 1]);
 }

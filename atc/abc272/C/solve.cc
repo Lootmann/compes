@@ -25,24 +25,43 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-bool is_upper(char ch) {
-  return 'A' <= ch && ch <= 'Z';
+void supermax(int num, int& n1, int& n2) {
+  if (num >= n1) {
+    n2 = n1;
+    n1 = num;
+  } else if (num >= n2) {
+    n2 = num;
+  }
 }
 
 int main() {
   FastIO;
-  string s;
-  cin >> s;
+  int e1{-1}, e2{-1};  // even
+  int o1{-1}, o2{-1};  // odd
 
-  if (s.size() != 8) die("No");
-  if (!is_upper(s.front()) || !is_upper(s.back())) die("No");
-  for (int i = 1; i < 7; ++i) {
-    if (!('0' <= s[i] && s[i] <= '9')) die("No");
+  int n;
+  cin >> n;
+
+  rep(_, n) {
+    int a;
+    cin >> a;
+
+    if (a % 2 == 0) {
+      supermax(a, e1, e2);
+    } else {
+      supermax(a, o1, o2);
+    }
   }
 
-  int num = stoi(s.substr(1, 6));
-  if (100000 <= num && num <= 999999)
-    output("Yes");
-  else
-    output("No");
+  int ans{-1};
+
+  if (e1 >= 0 && e2 >= 0) {
+    chmax(ans, e1 + e2);
+  }
+
+  if (o1 >= 0 && o2 >= 0) {
+    chmax(ans, o1 + o2);
+  }
+
+  cout << ans << '\n';
 }
