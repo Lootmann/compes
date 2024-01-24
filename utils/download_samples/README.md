@@ -11,8 +11,14 @@ pip install .
 
 ```
 > atc https://atcoder.jp/contests/abc284
+> atc https://atcoder.jp/contests/abc284/tasks
 ```
 
-Url formats are `https://atcoder.jp/contests/xxxNNN`.
+or
 
-`xxx` fits only `abc`, `arc`, `agc`.
+```
+> atc abc284
+> atc agc001
+> atc yahoo-procon2019-qual
+> atc dp
+```
