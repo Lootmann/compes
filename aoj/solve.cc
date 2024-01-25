@@ -29,20 +29,25 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  string s;
+  int n;
+  cin >> n;
 
-  vector<int> chars(26, 0);
+  int building[4][3][10]{};
 
-  while (getline(cin, s)) {
-    transform(s.begin(), s.end(), s.begin(), ::tolower);
-    for (auto ch : s) {
-      if ('a' <= ch && ch <= 'z') {
-        chars[ch - 'a']++;
-      }
-    }
+  rep(_, n) {
+    int b, f, r, v;
+    cin >> b >> f >> r >> v;
+    b--, f--, r--;
+    building[b][f][r] += v;
   }
 
-  rep(i, 26) {
-    cout << (char)(i + 'a') << " : " << chars[i] << '\n';
+  rep(b, 4) {
+    rep(f, 3) {
+      rep(r, 10) {
+        cout << ' ' << building[b][f][r];
+      }
+      cout << '\n';
+    }
+    if (b != 3) cout << "####################" << '\n';
   }
 }
