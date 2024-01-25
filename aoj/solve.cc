@@ -29,13 +29,20 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int W, H, x, y, r;
-  cin >> W >> H >> x >> y >> r;
+  string s;
 
-  bool within_w = 0 <= x - r && x + r <= W;
-  bool within_h = 0 <= y - r && y + r <= H;
-  if (within_w && within_h)
-    output("Yes");
-  else
-    output("No");
+  vector<int> chars(26, 0);
+
+  while (getline(cin, s)) {
+    transform(s.begin(), s.end(), s.begin(), ::tolower);
+    for (auto ch : s) {
+      if ('a' <= ch && ch <= 'z') {
+        chars[ch - 'a']++;
+      }
+    }
+  }
+
+  rep(i, 26) {
+    cout << (char)(i + 'a') << " : " << chars[i] << '\n';
+  }
 }
