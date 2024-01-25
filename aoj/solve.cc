@@ -27,50 +27,32 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-using VI = vector<int>;
+void solve(int n) {
+  vector<double> si(n);
+  rep(i, n) cin >> si[i];
 
-double manhattan(const VI& xi, const VI& yi, const int len) {
-  double dist{};
-  rep(i, len) dist += abs(xi[i] - yi[i]);
-  return dist;
-}
-
-double euclid(const VI& xi, const VI& yi, const int len) {
-  double dist{};
-  rep(i, len) {
-    dist += abs(xi[i] - yi[i]) * abs(xi[i] - yi[i]);
+  double average{};
+  rep(i, n) {
+    average += si[i];
   }
-  return sqrt(dist);
-}
+  average /= n;
 
-long double euclid3(const VI& xi, const VI& yi, const int len) {
-  long double dist{};
-  rep(i, len) {
-    dist += powl(abs(xi[i] - yi[i]), 3);
+  double variance{};
+  rep(i, n) {
+    variance += powl((si[i] - average), 2);
   }
-  return cbrt(dist);
-}
+  double std = sqrt(variance / n);
 
-double chevshev(const VI& xi, const VI& yi, const int len) {
-  int dist{};
-  rep(i, len) {
-    chmax(dist, abs(xi[i] - yi[i]));
-  }
-  return (double)dist;
+  cout << fixed << setprecision(8);
+  output(std);
 }
 
 int main() {
   FastIO;
-  int n;
-  cin >> n;
-
-  vector<int> xi(n), yi(n);
-  rep(i, n) cin >> xi[i];
-  rep(i, n) cin >> yi[i];
-
-  cout << fixed << setprecision(6);
-  output(manhattan(xi, yi, n));
-  output(euclid(xi, yi, n));
-  output(euclid3(xi, yi, n));
-  output(chevshev(xi, yi, n));
+  while (true) {
+    int t;
+    cin >> t;
+    if (t == 0) return 0;
+    solve(t);
+  }
 }
