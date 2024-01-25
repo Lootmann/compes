@@ -29,24 +29,24 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int n;
-  cin >> n;
+  int N, K;
+  cin >> N >> K;
 
-  vector<int> hi(n);
-  rep(i, n) cin >> hi[i];
+  vector<int> hi(N);
+  rep(i, N) cin >> hi[i];
 
-  vector<int> dp(n, INFi);
+  vector<int> dp(N, INFi);
   dp[0] = 0;
 
-  for (int i = 0; i < n; ++i) {
-    if (i < n - 1) {
-      chmin(dp[i + 1], dp[i] + abs(hi[i + 1] - hi[i]));
-    }
-    if (i < n - 2) {
-      chmin(dp[i + 2], dp[i] + abs(hi[i + 2] - hi[i]));
+  // [ ] [ ] [ ] [ ]     [ ]
+  //  i  i+1 i+2 i+3 ... i+k  ...
+  rep(i, N) {
+    for (int k = 1; k <= K; ++k) {
+      if (i + k < N) {
+        chmin(dp[i + k], dp[i] + abs(hi[i] - hi[i + k]));
+      }
     }
   }
-  dump(dp);
 
-  output(dp[n - 1]);
+  output(dp[N - 1]);
 }
