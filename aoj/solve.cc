@@ -29,12 +29,12 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int a, b;
-  cin >> a >> b;
-  if (a > b)
-    output("a > b");
-  else if (a == b)
-    output("a == b");
+
+  int a, b, c;
+  cin >> a >> b >> c;
+
+  if (a < b && b < c)
+    output("Yes");
   else
-    output("a < b");
+    output("No");
 }
