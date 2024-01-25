@@ -27,16 +27,36 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-bool can_div_3(int n) {
-  return n % 3 == 0;
+using VI = vector<int>;
+
+double manhattan(const VI& xi, const VI& yi, const int len) {
+  double dist{};
+  rep(i, len) dist += abs(xi[i] - yi[i]);
+  return dist;
 }
 
-bool has_digit_3(int n) {
-  bool is_ok{false};
-  for (auto ch : to_string(n)) {
-    if (ch == '3') is_ok = true;
+double euclid(const VI& xi, const VI& yi, const int len) {
+  double dist{};
+  rep(i, len) {
+    dist += abs(xi[i] - yi[i]) * abs(xi[i] - yi[i]);
   }
-  return is_ok;
+  return sqrt(dist);
+}
+
+long double euclid3(const VI& xi, const VI& yi, const int len) {
+  long double dist{};
+  rep(i, len) {
+    dist += powl(abs(xi[i] - yi[i]), 3);
+  }
+  return cbrt(dist);
+}
+
+double chevshev(const VI& xi, const VI& yi, const int len) {
+  int dist{};
+  rep(i, len) {
+    chmax(dist, abs(xi[i] - yi[i]));
+  }
+  return (double)dist;
 }
 
 int main() {
@@ -44,14 +64,13 @@ int main() {
   int n;
   cin >> n;
 
-  llint minv{10000000}, maxv{-100000001}, total{0};
-  rep(_, n) {
-    llint a;
-    cin >> a;
-    chmin(minv, a);
-    chmax(maxv, a);
-    total += a;
-  }
+  vector<int> xi(n), yi(n);
+  rep(i, n) cin >> xi[i];
+  rep(i, n) cin >> yi[i];
 
-  cout << minv << ' ' << maxv << ' ' << total << endl;
+  cout << fixed << setprecision(6);
+  output(manhattan(xi, yi, n));
+  output(euclid(xi, yi, n));
+  output(euclid3(xi, yi, n));
+  output(chevshev(xi, yi, n));
 }
