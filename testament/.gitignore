@@ -1,0 +1,6 @@
+**/test
+*.out
+in
+out
+want
+got
