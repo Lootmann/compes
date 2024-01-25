@@ -40,12 +40,13 @@ int main() {
 
   // [ ] [ ] [ ] [ ]     [ ]
   //  i  i+1 i+2 i+3 ... i+k  ...
-  rep(i, N) {
+  for (int i = 1; i < N; ++i) {
     for (int k = 1; k <= K; ++k) {
-      if (i + k < N) {
-        chmin(dp[i + k], dp[i] + abs(hi[i] - hi[i + k]));
+      if (0 <= i - k) {
+        chmin(dp[i], dp[i - k] + abs(hi[i] - hi[i - k]));
       }
     }
+    dump(dp);
   }
 
   output(dp[N - 1]);
