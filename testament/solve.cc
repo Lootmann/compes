@@ -38,13 +38,15 @@ int main() {
   vector<int> dp(n, INFi);
   dp[0] = 0;
 
-  for (int i = 1; i < n; ++i) {
-    dp[i] = min(dp[i], dp[i - 1] + abs(hi[i] - hi[i - 1]));
-
-    if (i >= 2) {
-      dp[i] = min(dp[i], dp[i - 2] + abs(hi[i] - hi[i - 2]));
+  for (int i = 0; i < n; ++i) {
+    if (i < n - 1) {
+      chmin(dp[i + 1], dp[i] + abs(hi[i + 1] - hi[i]));
+    }
+    if (i < n - 2) {
+      chmin(dp[i + 2], dp[i] + abs(hi[i + 2] - hi[i]));
     }
   }
+  dump(dp);
 
   output(dp[n - 1]);
 }
