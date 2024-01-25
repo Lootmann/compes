@@ -31,5 +31,10 @@ int main() {
   FastIO;
   int a, b;
   cin >> a >> b;
-  cout << a * b << ' ' << 2 * a + 2 * b << endl;
+  if (a > b)
+    output("a > b");
+  else if (a == b)
+    output("a == b");
+  else
+    output("a < b");
 }
