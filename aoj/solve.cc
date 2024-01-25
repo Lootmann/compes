@@ -29,5 +29,7 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  cout << "Hello World" << endl;
+  int x;
+  cin >> x;
+  output(x * x * x);
 }
