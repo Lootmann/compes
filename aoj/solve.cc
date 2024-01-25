@@ -27,27 +27,27 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
+bool can_div_3(int n) {
+  return n % 3 == 0;
+}
+
+bool has_digit_3(int n) {
+  bool is_ok{false};
+  for (auto ch : to_string(n)) {
+    if (ch == '3') is_ok = true;
+  }
+  return is_ok;
+}
+
 int main() {
   FastIO;
   int n;
   cin >> n;
 
-  int building[4][3][10]{};
-
-  rep(_, n) {
-    int b, f, r, v;
-    cin >> b >> f >> r >> v;
-    b--, f--, r--;
-    building[b][f][r] += v;
-  }
-
-  rep(b, 4) {
-    rep(f, 3) {
-      rep(r, 10) {
-        cout << ' ' << building[b][f][r];
-      }
-      cout << '\n';
+  for (int i = 3; i <= n; ++i) {
+    if (can_div_3(i) || has_digit_3(i)) {
+      cout << ' ' << i;
     }
-    if (b != 3) cout << "####################" << '\n';
   }
+  cout << '\n';
 }
