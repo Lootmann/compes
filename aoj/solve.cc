@@ -29,12 +29,9 @@ using llint = long long int;
 
 int main() {
   FastIO;
-
   int a, b, c;
   cin >> a >> b >> c;
-
-  if (a < b && b < c)
-    output("Yes");
-  else
-    output("No");
+  cout << min(a, min(b, c)) << ' '
+       << (a + b + c) - max(a, max(b, c)) - min(a, min(b, c)) << ' '
+       << max(a, max(b, c)) << endl;
 }
