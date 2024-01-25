@@ -15,7 +15,7 @@ using namespace std;
     cout << msg << endl; \
     exit(0);             \
   } while (0)
-#define INTi 1 << 30
+#define INFi 1 << 30
 #define INFll 1LL << 60
 
 template <typename T> bool chmax(T& a, const T& b) {
@@ -44,10 +44,14 @@ int main() {
   int n;
   cin >> n;
 
-  for (int i = 3; i <= n; ++i) {
-    if (can_div_3(i) || has_digit_3(i)) {
-      cout << ' ' << i;
-    }
+  llint minv{10000000}, maxv{-100000001}, total{0};
+  rep(_, n) {
+    llint a;
+    cin >> a;
+    chmin(minv, a);
+    chmax(maxv, a);
+    total += a;
   }
-  cout << '\n';
+
+  cout << minv << ' ' << maxv << ' ' << total << endl;
 }
