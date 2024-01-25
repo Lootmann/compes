@@ -29,9 +29,13 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int a, b, c;
-  cin >> a >> b >> c;
-  cout << min(a, min(b, c)) << ' '
-       << (a + b + c) - max(a, max(b, c)) - min(a, min(b, c)) << ' '
-       << max(a, max(b, c)) << endl;
+  int W, H, x, y, r;
+  cin >> W >> H >> x >> y >> r;
+
+  bool within_w = 0 <= x - r && x + r <= W;
+  bool within_h = 0 <= y - r && y + r <= H;
+  if (within_w && within_h)
+    output("Yes");
+  else
+    output("No");
 }
