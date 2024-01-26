@@ -29,12 +29,9 @@ using llint = long long int;
 
 int main() {
   FastIO;
+  double r;
+  cin >> r;
 
-  int a, b;
-  cin >> a >> b;
-
-  cout << a / b << ' ';
-  cout << a % b << ' ';
   cout << fixed << setprecision(12);
-  cout << (double)a / b << '\n';
+  cout << r * r * M_PI << ' ' << 2 * M_PI * r << '\n';
 }
