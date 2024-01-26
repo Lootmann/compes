@@ -29,21 +29,40 @@ using llint = long long int;
 
 int main() {
   FastIO;
+  string s;
+  cin >> s;
+
+  int left{}, right{};
+
   int n;
   cin >> n;
-
-  int taro{}, hanako{};
-
-  string t, h;
   rep(_, n) {
-    cin >> t >> h;
-    if (t > h)
-      taro += 3;
-    else if (t == h) {
-      taro++, hanako++;
+    string op;
+    cin >> op;
+
+    if (op == "print") {
+      cin >> left >> right;
+      for (int i = left; i <= right; ++i) cout << s[i];
+      cout << '\n';
+
+    } else if (op == "reverse") {
+      cin >> left >> right;
+
+      string rev = s.substr(left, right - left + 1);
+      reverse(rev.begin(), rev.end());
+
+      for (int i = left; i <= right; ++i) {
+        s[i] = rev[i - left];
+      }
     } else {
-      hanako += 3;
+      cin >> left >> right;
+
+      string r;
+      cin >> r;
+
+      for (int i = 0; i <= right - left; ++i) {
+        s[i + left] = r[i];
+      }
     }
   }
-  cout << taro << ' ' << hanako << '\n';
 }
