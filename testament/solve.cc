@@ -29,25 +29,29 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int N, K;
-  cin >> N >> K;
+  int N;
+  cin >> N;
 
-  vector<int> hi(N);
-  rep(i, N) cin >> hi[i];
+  vector<int> ai(N, 0), bi(N, 0), ci(N, 0);
+  rep(i, N) cin >> ai[i] >> bi[i] >> ci[i];
 
-  vector<int> dp(N, INFi);
-  dp[0] = 0;
+  vector<vector<int>> dp(N + 1, vector<int>(3, 0));
 
-  // [ ] [ ] [ ] [ ]     [ ]
-  //  i  i+1 i+2 i+3 ... i+k  ...
-  for (int i = 1; i < N; ++i) {
-    for (int k = 1; k <= K; ++k) {
-      if (0 <= i - k) {
-        chmin(dp[i], dp[i - k] + abs(hi[i] - hi[i - k]));
-      }
-    }
-    dump(dp);
+  for (int i = 1; i <= N; ++i) {
+    // a <- b,c
+    chmax(dp[i][0], dp[i - 1][1] + bi[i - 1]);
+    chmax(dp[i][0], dp[i - 1][2] + ci[i - 1]);
+
+    // b <- c,a
+    chmax(dp[i][1], dp[i - 1][2] + ci[i - 1]);
+    chmax(dp[i][1], dp[i - 1][0] + ai[i - 1]);
+
+    // c <- a,b
+    chmax(dp[i][2], dp[i - 1][0] + ai[i - 1]);
+    chmax(dp[i][2], dp[i - 1][1] + bi[i - 1]);
   }
 
-  output(dp[N - 1]);
+  int ans{};
+  rep(i, 3) chmax(ans, dp[N][i]);
+  output(ans);
 }
