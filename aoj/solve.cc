@@ -30,15 +30,17 @@ using llint = long long int;
 int main() {
   FastIO;
   string s;
-  cin >> s;
-  transform(s.begin(), s.end(), s.begin(), ::tolower);
 
-  int cnt{};
-  string t;
-  while (cin >> t) {
-    if (t == "END_OF_TEXT") break;
-    transform(t.begin(), t.end(), t.begin(), ::tolower);
-    if (t == s) cnt++;
+  while (cin >> s) {
+    if (s == "-") break;
+    int m;
+    cin >> m;
+
+    rep(_, m) {
+      int h;
+      cin >> h;
+      s = s.substr(h) + s.substr(0, h);
+    }
+    output(s);
   }
-  output(cnt);
 }
