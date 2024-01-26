@@ -29,13 +29,16 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  string s, p;
-  cin >> s >> p;
-  s += s;
+  string s;
+  cin >> s;
+  transform(s.begin(), s.end(), s.begin(), ::tolower);
 
-  if (s.find(p) != string::npos) {
-    output("Yes");
-  } else {
-    output("No");
+  int cnt{};
+  string t;
+  while (cin >> t) {
+    if (t == "END_OF_TEXT") break;
+    transform(t.begin(), t.end(), t.begin(), ::tolower);
+    if (t == s) cnt++;
   }
+  output(cnt);
 }
