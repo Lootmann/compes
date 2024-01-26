@@ -27,19 +27,15 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-int digit_sum(string x) {
-  int sum{};
-  for (auto ch : x) {
-    sum += ch - '0';
-  }
-  return sum;
-}
-
 int main() {
   FastIO;
-  string x;
-  while (cin >> x) {
-    if (x == "0") break;
-    cout << digit_sum(x) << '\n';
+  string s, p;
+  cin >> s >> p;
+  s += s;
+
+  if (s.find(p) != string::npos) {
+    output("Yes");
+  } else {
+    output("No");
   }
 }
