@@ -29,12 +29,9 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int idx{1};
-  while (true) {
-    int n;
-    cin >> n;
-    if (n == 0) return 0;
-    cout << "Case " << idx << ": " << n << '\n';
-    idx++;
+  int x, y;
+  while (cin >> x >> y) {
+    if (x == 0 && y == 0) return 0;
+    cout << min(x, y) << ' ' << max(x, y) << '\n';
   }
 }
