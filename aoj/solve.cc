@@ -27,26 +27,21 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-void show_rectangle(int h, int w) {
-  rep(_, w) cout << "#";
-  cout << '\n';
-
-  rep(i, h - 2) {
-    cout << "#";
-    rep(j, w - 2) cout << ".";
-    cout << "#" << '\n';
+void show_chessboard(int H, int W) {
+  rep(h, H) {
+    rep(w, W) {
+      cout << ((h + w + 1) % 2 ? '#' : '.');
+    }
+    cout << '\n';
   }
-
-  rep(_, w) cout << "#";
-  cout << '\n';
   return;
 }
 
 int main() {
   FastIO;
+
   vector<pair<int, int>> vp;
   int h, w;
-
   while (cin >> h >> w) {
     if (h == 0 && w == 0) break;
     vp.push_back(make_pair(h, w));
@@ -54,7 +49,7 @@ int main() {
 
   int len = (int)vp.size();
   rep(i, len) {
-    show_rectangle(vp[i].first, vp[i].second);
+    show_chessboard(vp[i].first, vp[i].second);
     if (i != len - 1) cout << '\n';
   }
 }
