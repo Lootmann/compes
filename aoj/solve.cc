@@ -29,10 +29,7 @@ using llint = long long int;
 
 int main() {
   FastIO;
-
-  double x1, y1, x2, y2;
-  cin >> x1 >> y1 >> x2 >> y2;
-
-  cout << fixed << setprecision(12);
-  cout << sqrt(pow(y1 - y2, 2) + pow(x1 - x2, 2)) << endl;
+  for (int i = 0; i < 1000; ++i) {
+    cout << "Hello World" << '\n';
+  }
 }
