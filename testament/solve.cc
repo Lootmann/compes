@@ -29,29 +29,29 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int N;
-  cin >> N;
+  // 1 <= N <= 100
+  int N, W;
+  cin >> N >> W;
 
-  vector<int> ai(N, 0), bi(N, 0), ci(N, 0);
-  rep(i, N) cin >> ai[i] >> bi[i] >> ci[i];
+  vector<llint> ws(N), vs(N);
+  rep(i, N) cin >> ws[i] >> vs[i];
 
-  vector<vector<int>> dp(N + 1, vector<int>(3, 0));
+  // dp[value][total_weight]
+  // 1 <= W <= 100000
+  vector<vector<llint>> dp(N + 1, vector<llint>(100100));
 
-  for (int i = 0; i < N; ++i) {
-    // a -> b,c
-    chmax(dp[i + 1][1], dp[i][0] + ai[i]);
-    chmax(dp[i + 1][2], dp[i][0] + ai[i]);
+  rep(i, N) {
+    rep(sum_weight, W + 1) {
+      // pick value[i], but can't over sum_weight
+      if (sum_weight - ws[i] >= 0) {
+        chmax(dp[i + 1][sum_weight], dp[i][sum_weight - ws[i]] + vs[i]);
+      }
 
-    // b -> c,a
-    chmax(dp[i + 1][2], dp[i][1] + bi[i]);
-    chmax(dp[i + 1][0], dp[i][1] + bi[i]);
-
-    // c -> a,b
-    chmax(dp[i + 1][0], dp[i][2] + ci[i]);
-    chmax(dp[i + 1][1], dp[i][2] + ci[i]);
+      // don't pick value[i]
+      chmax(dp[i + 1][sum_weight], dp[i][sum_weight]);
+    }
   }
 
-  int ans{};
-  rep(i, 3) chmax(ans, dp[N][i]);
-  output(ans);
+  dump(dp[N][W]);
+  output(dp[N][W]);
 }
