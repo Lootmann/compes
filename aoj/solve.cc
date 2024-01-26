@@ -27,20 +27,21 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
+void out(char ch) {
+  if ('a' <= ch && ch <= 'z') {
+    cout << (char)(ch - 'a' + 'A');
+  } else if ('A' <= ch && ch <= 'Z') {
+    cout << (char)(ch - 'A' + 'a');
+  } else {
+    cout << ch;
+  }
+}
+
 int main() {
   FastIO;
-  int N, M, L;
-  cin >> N >> M >> L;
+  string s;
+  getline(cin, s);
 
-  vector<vector<llint>> A(N, vector<llint>(M, 0)), B(M, vector<llint>(L, 0));
-  rep(n, N) rep(m, M) cin >> A[n][m];
-  rep(m, M) rep(l, L) cin >> B[m][l];
-
-  rep(i, N) {
-    rep(j, L) {
-      llint c{};
-      rep(k, M) c += A[i][k] * B[k][j];
-      cout << c << (j == L - 1 ? '\n' : ' ');
-    }
-  }
+  for (auto ch : s) out(ch);
+  cout << endl;
 }
