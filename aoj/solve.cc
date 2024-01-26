@@ -29,40 +29,16 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  string s;
-  cin >> s;
+  double a, b, C;
+  cin >> a >> b >> C;
 
-  int left{}, right{};
+  double c = sqrt(a * a + b * b - 2 * a * b * cos(C * (double)M_PI / 180));
+  double L = a + b + c;
+  double S = a * b * sin(C * (double)M_PI / 180) / 2;
+  double h = (2 * S) / a;
 
-  int n;
-  cin >> n;
-  rep(_, n) {
-    string op;
-    cin >> op;
-
-    if (op == "print") {
-      cin >> left >> right;
-      for (int i = left; i <= right; ++i) cout << s[i];
-      cout << '\n';
-
-    } else if (op == "reverse") {
-      cin >> left >> right;
-
-      string rev = s.substr(left, right - left + 1);
-      reverse(rev.begin(), rev.end());
-
-      for (int i = left; i <= right; ++i) {
-        s[i] = rev[i - left];
-      }
-    } else {
-      cin >> left >> right;
-
-      string r;
-      cin >> r;
-
-      for (int i = 0; i <= right - left; ++i) {
-        s[i + left] = r[i];
-      }
-    }
-  }
+  cout << fixed << setprecision(12);
+  output(S);
+  output(L);
+  output(h);
 }
