@@ -29,18 +29,26 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int h, w;
-  cin >> h >> w;
+  int m, f, r;
 
-  vector<vector<int>> A(h, vector<int>(w, 0));
-  vector<int> b(w, 0);
+  while (cin >> m >> f >> r) {
+    if (m == -1 && f == -1 && r == -1) break;
+    int total = m + f;
 
-  rep(i, h) rep(j, w) cin >> A[i][j];
-  rep(i, w) cin >> b[i];
+    dump(m, f, total);
 
-  rep(i, h) {
-    int row{};
-    rep(j, w) row += A[i][j] * b[j];
-    output(row);
+    if (m == -1 || f == -1) {
+      output('F');
+    } else if (total >= 80) {
+      output('A');
+    } else if (total >= 65) {
+      output('B');
+    } else if (total >= 50) {
+      output('C');
+    } else if (total >= 30) {
+      output(r >= 50 ? 'C' : 'D');
+    } else {
+      output('F');
+    }
   }
 }
