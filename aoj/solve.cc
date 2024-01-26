@@ -9,6 +9,8 @@ using namespace std;
 
 #define FastIO cin.tie(nullptr), ios_base::sync_with_stdio(false);
 #define rep(i, n) for (int i = 0; (int)i < n; ++i)
+#define all(k) k.begin(), k.end()
+#define rall(k) k.rbegin(), k.rend()
 #define output(msg) cout << (msg) << '\n'
 #define die(msg)         \
   do {                   \
@@ -27,29 +29,18 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-void show_chessboard(int H, int W) {
-  rep(h, H) {
-    rep(w, W) {
-      cout << ((h + w + 1) % 2 ? '#' : '.');
-    }
-    cout << '\n';
-  }
-  return;
-}
-
 int main() {
   FastIO;
+  int n;
+  cin >> n;
 
-  vector<pair<int, int>> vp;
-  int h, w;
-  while (cin >> h >> w) {
-    if (h == 0 && w == 0) break;
-    vp.push_back(make_pair(h, w));
-  }
+  vector<int> ai(n);
+  rep(i, n) cin >> ai[i];
 
-  int len = (int)vp.size();
-  rep(i, len) {
-    show_chessboard(vp[i].first, vp[i].second);
-    if (i != len - 1) cout << '\n';
+  reverse(all(ai));
+
+  rep(i, n) {
+    cout << ai[i];
+    cout << (i == n - 1 ? '\n' : ' ');
   }
 }
