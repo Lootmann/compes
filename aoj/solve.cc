@@ -29,7 +29,12 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  for (int i = 0; i < 1000; ++i) {
-    cout << "Hello World" << '\n';
+  int idx{1};
+  while (true) {
+    int n;
+    cin >> n;
+    if (n == 0) return 0;
+    cout << "Case " << idx << ": " << n << '\n';
+    idx++;
   }
 }
