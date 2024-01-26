@@ -29,21 +29,33 @@ using llint = long long int;
 
 int main() {
   FastIO;
+  int H, W;
+  cin >> H >> W;
 
-  int n, x;
-  while (cin >> n >> x) {
-    if (n == 0 && x == 0) break;
+  vector<vector<int>> sheet(H + 1, vector<int>(W + 1, 0));
+  rep(h, H) rep(w, W) cin >> sheet[h][w];
 
-    int cnt{};
-    for (int a = 1; a <= n; ++a) {
-      for (int b = a + 1; b <= n; ++b) {
-        for (int c = b + 1; c <= n; ++c) {
-          if (a + b + c == x) {
-            cnt++;
-          }
-        }
-      }
+  rep(h, H) {
+    int row_sum{};
+    rep(w, W) row_sum += sheet[h][w];
+    sheet[h][W] = row_sum;
+  }
+
+  rep(w, W) {
+    int col_sum{};
+    rep(h, H) col_sum += sheet[h][w];
+    sheet[H][w] = col_sum;
+  }
+
+  rep(w, W) {
+    int total_sum{};
+    rep(h, H) total_sum += sheet[h][W];
+    sheet[H][W] = total_sum;
+  }
+
+  rep(h, H + 1) {
+    rep(w, W + 1) {
+      cout << sheet[h][w] << (w == W ? '\n' : ' ');
     }
-    output(cnt);
   }
 }
