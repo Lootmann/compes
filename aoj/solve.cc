@@ -27,18 +27,53 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
+struct Dice {
+  int one, two, three, four, five, six;
+  Dice(int o, int tw, int th, int fo, int fi, int s)
+      : one(o), two(tw), three(th), four(fo), five(fi), six(s) {}
+
+  // direction
+  void move(char d) {
+    if (d == 'N') {
+      int tmp = one;
+      one = two;
+      two = six;
+      six = five;
+      five = tmp;
+    } else if (d == 'S') {
+      int tmp = one;
+      one = five;
+      five = six;
+      six = two;
+      two = tmp;
+    } else if (d == 'E') {
+      int tmp = one;
+      one = four;
+      four = six;
+      six = three;
+      three = tmp;
+    } else {
+      int tmp = one;
+      one = three;
+      three = six;
+      six = four;
+      four = tmp;
+    }
+  }
+};
+
 int main() {
   FastIO;
-  double a, b, C;
-  cin >> a >> b >> C;
+  int one, two, three, four, five, six;
+  cin >> one >> two >> three >> four >> five >> six;
 
-  double c = sqrt(a * a + b * b - 2 * a * b * cos(C * (double)M_PI / 180));
-  double L = a + b + c;
-  double S = a * b * sin(C * (double)M_PI / 180) / 2;
-  double h = (2 * S) / a;
+  Dice d(one, two, three, four, five, six);
 
-  cout << fixed << setprecision(12);
-  output(S);
-  output(L);
-  output(h);
+  string s;
+  cin >> s;
+  for (auto ch : s) {
+    d.move(ch);
+    dump(d.one);
+  }
+  output(d.one);
 }
