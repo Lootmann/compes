@@ -29,9 +29,19 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  double r;
-  cin >> r;
+  int a, b;
+  char op;
+  while (cin >> a >> op >> b) {
+    if (op == '?') return 0;
 
-  cout << fixed << setprecision(12);
-  cout << r * r * M_PI << ' ' << 2 * M_PI * r << '\n';
+    if (op == '+') {
+      cout << a + b << '\n';
+    } else if (op == '-') {
+      cout << a - b << '\n';
+    } else if (op == '*') {
+      cout << a * b << '\n';
+    } else if (op == '/') {
+      cout << a / b << '\n';
+    }
+  }
 }
