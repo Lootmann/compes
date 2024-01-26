@@ -29,22 +29,18 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  set<string> cards;
+  int h, w;
+  cin >> h >> w;
 
-  int n;
-  cin >> n;
-  rep(_, n) {
-    string s, t;
-    cin >> s >> t;
-    cards.insert(s + t);
-  }
+  vector<vector<int>> A(h, vector<int>(w, 0));
+  vector<int> b(w, 0);
 
-  for (auto c : vector<char>{'S', 'H', 'C', 'D'}) {
-    for (int i = 1; i <= 13; ++i) {
-      string missing = c + to_string(i);
-      if (cards.find(missing) == cards.end()) {
-        cout << missing[0] << ' ' << missing.substr(1) << '\n';
-      }
-    }
+  rep(i, h) rep(j, w) cin >> A[i][j];
+  rep(i, w) cin >> b[i];
+
+  rep(i, h) {
+    int row{};
+    rep(j, w) row += A[i][j] * b[j];
+    output(row);
   }
 }
