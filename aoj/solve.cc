@@ -29,19 +29,24 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int a, b;
-  char op;
-  while (cin >> a >> op >> b) {
-    if (op == '?') return 0;
 
-    if (op == '+') {
-      cout << a + b << '\n';
-    } else if (op == '-') {
-      cout << a - b << '\n';
-    } else if (op == '*') {
-      cout << a * b << '\n';
-    } else if (op == '/') {
-      cout << a / b << '\n';
+  vector<int> hi, wi;
+  int h, w;
+  while (cin >> h >> w) {
+    if (h == 0 && w == 0) break;
+    hi.push_back(h);
+    wi.push_back(w);
+  }
+
+  dump(hi);
+  dump(wi);
+
+  int len = (int)hi.size();
+  rep(i, len) {
+    rep(_, hi[i]) {
+      rep(__, wi[i]) cout << "#";
+      cout << '\n';
     }
+    if (i != len - 1) cout << '\n';
   }
 }
