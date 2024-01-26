@@ -9,8 +9,6 @@ using namespace std;
 
 #define FastIO cin.tie(nullptr), ios_base::sync_with_stdio(false);
 #define rep(i, n) for (int i = 0; (int)i < n; ++i)
-#define all(k) k.begin(), k.end()
-#define rall(k) k.rbegin(), k.rend()
 #define output(msg) cout << (msg) << '\n'
 #define die(msg)         \
   do {                   \
@@ -31,16 +29,22 @@ using llint = long long int;
 
 int main() {
   FastIO;
+  set<string> cards;
+
   int n;
   cin >> n;
+  rep(_, n) {
+    string s, t;
+    cin >> s >> t;
+    cards.insert(s + t);
+  }
 
-  vector<int> ai(n);
-  rep(i, n) cin >> ai[i];
-
-  reverse(all(ai));
-
-  rep(i, n) {
-    cout << ai[i];
-    cout << (i == n - 1 ? '\n' : ' ');
+  for (auto c : vector<char>{'S', 'H', 'C', 'D'}) {
+    for (int i = 1; i <= 13; ++i) {
+      string missing = c + to_string(i);
+      if (cards.find(missing) == cards.end()) {
+        cout << missing[0] << ' ' << missing.substr(1) << '\n';
+      }
+    }
   }
 }
