@@ -29,6 +29,7 @@ using llint = long long int;
 
 struct Dice {
   int one, two, three, four, five, six;
+  Dice() {}
   Dice(int o, int tw, int th, int fo, int fi, int s)
       : one(o), two(tw), three(th), four(fo), five(fi), six(s) {}
 
@@ -60,20 +61,47 @@ struct Dice {
       four = tmp;
     }
   }
+
+  // xxxxxx
+  int die_number() {
+    return 100000 * one + 10000 * two + 1000 * three + 100 * four + 10 * five +
+           six;
+  }
 };
+
+Dice input() {
+  int one, two, three, four, five, six;
+  cin >> one >> two >> three >> four >> five >> six;
+  return Dice(one, two, three, four, five, six);
+}
+
+bool is_same_dice(Dice d1, Dice d2) {
+  for (auto direction : "NNNNWNNNWNNNENNNENNNWNNN") {
+    d1.move(direction);
+    if (d1.die_number() == d2.die_number()) {
+      return true;
+    }
+  }
+  return false;
+}
 
 int main() {
   FastIO;
-  int one, two, three, four, five, six;
-  cin >> one >> two >> three >> four >> five >> six;
+  int n;
+  cin >> n;
 
-  Dice d(one, two, three, four, five, six);
-
-  string s;
-  cin >> s;
-  for (auto ch : s) {
-    d.move(ch);
-    dump(d.one);
+  vector<Dice> dices;
+  rep(_, n) {
+    Dice d = input();
+    dices.push_back(d);
   }
-  output(d.one);
+
+  for (int i = 0; i < n; ++i) {
+    for (int j = i + 1; j < n; ++j) {
+      if (is_same_dice(dices[i], dices[j])) {
+        die("No");
+      }
+    }
+  }
+  output("Yes");
 }
