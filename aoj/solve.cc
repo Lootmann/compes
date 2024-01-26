@@ -27,26 +27,34 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-int main() {
-  FastIO;
+void show_rectangle(int h, int w) {
+  rep(_, w) cout << "#";
+  cout << '\n';
 
-  vector<int> hi, wi;
-  int h, w;
-  while (cin >> h >> w) {
-    if (h == 0 && w == 0) break;
-    hi.push_back(h);
-    wi.push_back(w);
+  rep(i, h - 2) {
+    cout << "#";
+    rep(j, w - 2) cout << ".";
+    cout << "#" << '\n';
   }
 
-  dump(hi);
-  dump(wi);
+  rep(_, w) cout << "#";
+  cout << '\n';
+  return;
+}
 
-  int len = (int)hi.size();
+int main() {
+  FastIO;
+  vector<pair<int, int>> vp;
+  int h, w;
+
+  while (cin >> h >> w) {
+    if (h == 0 && w == 0) break;
+    vp.push_back(make_pair(h, w));
+  }
+
+  int len = (int)vp.size();
   rep(i, len) {
-    rep(_, hi[i]) {
-      rep(__, wi[i]) cout << "#";
-      cout << '\n';
-    }
+    show_rectangle(vp[i].first, vp[i].second);
     if (i != len - 1) cout << '\n';
   }
 }
