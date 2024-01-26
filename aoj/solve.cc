@@ -29,14 +29,12 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int a, b, c;
-  cin >> a >> b >> c;
 
-  int cnt{};
-  for (int i = a; i <= b; ++i) {
-    if (c % i == 0) {
-      cnt++;
-    }
-  }
-  output(cnt);
+  int a, b;
+  cin >> a >> b;
+
+  cout << a / b << ' ';
+  cout << a % b << ' ';
+  cout << fixed << setprecision(12);
+  cout << (double)a / b << '\n';
 }
