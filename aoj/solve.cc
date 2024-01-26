@@ -29,26 +29,21 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int m, f, r;
 
-  while (cin >> m >> f >> r) {
-    if (m == -1 && f == -1 && r == -1) break;
-    int total = m + f;
+  int n, x;
+  while (cin >> n >> x) {
+    if (n == 0 && x == 0) break;
 
-    dump(m, f, total);
-
-    if (m == -1 || f == -1) {
-      output('F');
-    } else if (total >= 80) {
-      output('A');
-    } else if (total >= 65) {
-      output('B');
-    } else if (total >= 50) {
-      output('C');
-    } else if (total >= 30) {
-      output(r >= 50 ? 'C' : 'D');
-    } else {
-      output('F');
+    int cnt{};
+    for (int a = 1; a <= n; ++a) {
+      for (int b = a + 1; b <= n; ++b) {
+        for (int c = b + 1; c <= n; ++c) {
+          if (a + b + c == x) {
+            cnt++;
+          }
+        }
+      }
     }
+    output(cnt);
   }
 }
