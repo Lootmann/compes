@@ -29,18 +29,21 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  string s;
+  int n;
+  cin >> n;
 
-  while (cin >> s) {
-    if (s == "-") break;
-    int m;
-    cin >> m;
+  int taro{}, hanako{};
 
-    rep(_, m) {
-      int h;
-      cin >> h;
-      s = s.substr(h) + s.substr(0, h);
+  string t, h;
+  rep(_, n) {
+    cin >> t >> h;
+    if (t > h)
+      taro += 3;
+    else if (t == h) {
+      taro++, hanako++;
+    } else {
+      hanako += 3;
     }
-    output(s);
   }
+  cout << taro << ' ' << hanako << '\n';
 }
