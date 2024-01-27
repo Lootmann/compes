@@ -33,13 +33,32 @@ int main() {
   int n;
   cin >> n;
 
+  int d;
+  cin >> d;
+  set<int> st;
+  rep(_, d) {
+    int e;
+    cin >> e;
+    st.insert(e);
+  }
+
   for (int bit = 0; bit < (1 << n); ++bit) {
-    cout << bit << ":";
+    vector<int> res{bit};
+    int cnt{};
+
     rep(i, n) {
       if (bit & (1 << i)) {
-        cout << ' ' << i;
+        if (st.find(i) != st.end()) cnt++;
+        res.push_back(i);
       }
     }
-    cout << '\n';
+
+    if (res.size() >= st.size() + 1 && cnt == (int)st.size()) {
+      cout << res[0] << ":";
+      for (int i = 1; i < (int)res.size(); ++i) {
+        cout << ' ' << res[i];
+      }
+      cout << '\n';
+    }
   }
 }
