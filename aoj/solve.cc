@@ -38,5 +38,5 @@ int main() {
 
   do {
     rep(i, n) cout << ai[i] << (i == n - 1 ? '\n' : ' ');
-  } while (next_permutation(all(ai)));
+  } while (next_permutation(all(ai));
 }
