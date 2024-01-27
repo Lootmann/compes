@@ -27,6 +27,16 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
+int count_num(const vector<int>& nums, int k, int left, int right) {
+  int cnt{};
+  for (int i = left; i < right; ++i) {
+    if (nums[i] == k) {
+      cnt++;
+    }
+  }
+  return cnt;
+}
+
 int main() {
   FastIO;
   int n;
@@ -38,13 +48,9 @@ int main() {
   int q;
   cin >> q;
   rep(_, q) {
-    int com, left, right;
-    cin >> com >> left >> right;
+    int b, e, k;
+    cin >> b >> e >> k;
 
-    if (com == 0) {
-      output(*min_element(ai.begin() + left, ai.begin() + right));
-    } else {
-      output(*max_element(ai.begin() + left, ai.begin() + right));
-    }
+    cout << count_num(ai, k, b, e) << '\n';
   }
 }
