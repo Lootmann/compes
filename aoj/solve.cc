@@ -27,16 +27,6 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-void prevp(vector<int> ai, int n) {
-  auto k = prev_permutation(ai.begin(), ai.end());
-  if (k != 0) rep(i, n) cout << ai[i] << (i == n - 1 ? '\n' : ' ');
-}
-
-void nextp(vector<int> ai, int n) {
-  auto k = next_permutation(ai.begin(), ai.end());
-  if (k != 0) rep(i, n) cout << ai[i] << (i == n - 1 ? '\n' : ' ');
-}
-
 int main() {
   FastIO;
   int n;
@@ -45,7 +35,16 @@ int main() {
   vector<int> ai(n);
   rep(i, n) cin >> ai[i];
 
-  prevp(ai, n);
-  rep(i, n) cout << ai[i] << (i == n - 1 ? '\n' : ' ');
-  nextp(ai, n);
+  int q;
+  cin >> q;
+  rep(_, q) {
+    int a;
+    cin >> a;
+
+    if (binary_search(ai.begin(), ai.end(), a)) {
+      output(1);
+    } else {
+      output(0);
+    }
+  }
 }
