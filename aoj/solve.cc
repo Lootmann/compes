@@ -29,36 +29,29 @@ template <typename T> bool chmin(T& a, const T& b) {
 using llint = long long int;
 
 int main() {
-  FastIO;
-  int n;
-  cin >> n;
+  int n, k;
+  cin >> n >> k;
 
-  int d;
-  cin >> d;
-  set<int> st;
-  rep(_, d) {
-    int e;
-    cin >> e;
-    st.insert(e);
+  //     43210
+  // 000001010
+  bitset<32> subset(0);
+  for (int i = 0; i < k; ++i) {
+    int x;
+    cin >> x;
+    subset.set(x);
   }
 
-  for (int bit = 0; bit < (1 << n); ++bit) {
-    vector<int> res{bit};
-    int cnt{};
+  for (int i = 0; i < (1 << n); ++i) {
+    bitset<32> tmp(i);
 
-    rep(i, n) {
-      if (bit & (1 << i)) {
-        if (st.find(i) != st.end()) cnt++;
-        res.push_back(i);
-      }
-    }
-
-    if (res.size() >= st.size() + 1 && cnt == (int)st.size()) {
-      cout << res[0] << ":";
-      for (int i = 1; i < (int)res.size(); ++i) {
-        cout << ' ' << res[i];
+    if ((int)(tmp | subset).count() == k) {
+      cout << i << ":";
+      rep(j, n) {
+        if (tmp[j]) cout << ' ' << j;
       }
       cout << '\n';
     }
   }
+
+  return 0;
 }
