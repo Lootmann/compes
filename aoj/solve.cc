@@ -27,18 +27,59 @@ template <typename T> bool chmin(T& a, const T& b) {
 }
 
 using llint = long long int;
+using Graph = vector<vector<int>>;
+
+// cums
+vector<int> discover, finish;
+vector<bool> visited;
+
+void dfs(Graph& graph, int v, int& ttime) {
+  visited[v] = true;
+  discover[v] = ++ttime;
+
+  for (auto nv : graph[v]) {
+    if (visited[nv]) continue;
+    dfs(graph, nv, ttime);
+  }
+
+  finish[v] = ++ttime;
+}
 
 int main() {
   FastIO;
   int n;
   cin >> n;
 
-  vector<llint> memo(45, 0);
-  memo[0] = 1;
-  memo[1] = 1;
-  for (int i = 2; i < 45; ++i) {
-    memo[i] = memo[i - 1] + memo[i - 2];
+  Graph graph(n);
+
+  rep(_, n) {
+    int u;
+    cin >> u;
+    u--;
+
+    int k;
+    cin >> k;
+    rep(__, k) {
+      int v;
+      cin >> v;
+      v--;
+      graph[u].push_back(v);
+      // graph[v].push_back(u);
+    }
   }
 
-  cout << memo[n] << endl;
+  discover.resize(n, 0);
+  finish.resize(n, 0);
+  visited.assign(n, false);
+  int time{0};
+
+  rep(v, n) {
+    if (!visited[v]) {
+      dfs(graph, v, time);
+    }
+  }
+
+  rep(i, n) {
+    cout << i + 1 << ' ' << discover[i] << ' ' << finish[i] << '\n';
+  }
 }
