@@ -33,18 +33,13 @@ int main() {
   int n;
   cin >> n;
 
-  map<string, int> mp;
-  rep(_, n) {
-    int op;
-    string key;
-    cin >> op >> key;
-
-    if (op == 0) {
-      int x;
-      cin >> x;
-      mp[key] = x;
-    } else {
-      cout << mp[key] << '\n';
+  for (int bit = 0; bit < (1 << n); ++bit) {
+    cout << bit << ":";
+    rep(i, n) {
+      if (bit & (1 << i)) {
+        cout << ' ' << i;
+      }
     }
+    cout << '\n';
   }
 }
