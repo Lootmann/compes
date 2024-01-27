@@ -30,31 +30,23 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int n;
-  cin >> n;
-
-  vector<int> ai(n);
-  rep(i, n) cin >> ai[i];
-
   int q;
   cin >> q;
-  rep(_, q) {
-    int k;
-    cin >> k;
-    auto itl = lower_bound(ai.begin(), ai.end(), k);
-    if (itl != ai.end()) {
-      size_t pos = distance(ai.begin(), itl);
-      cout << pos << ' ';
-    } else {
-      cout << n << ' ';
-    }
 
-    auto itu = upper_bound(ai.begin(), ai.end(), k);
-    if (itu != ai.end()) {
-      size_t pos = distance(ai.begin(), itu);
-      cout << pos << '\n';
+  set<int> st;
+  rep(_, q) {
+    int query, x;
+    cin >> query >> x;
+
+    if (query == 0) {
+      st.insert(x);
+      cout << st.size() << '\n';
     } else {
-      cout << n << '\n';
+      if (st.find(x) != st.end()) {
+        cout << 1 << '\n';
+      } else {
+        cout << 0 << '\n';
+      }
     }
   }
 }
