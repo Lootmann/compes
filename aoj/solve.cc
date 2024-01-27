@@ -41,12 +41,14 @@ int main() {
     if (query == 0) {
       st.insert(x);
       cout << st.size() << '\n';
-    } else {
+    } else if (query == 1) {
       if (st.find(x) != st.end()) {
         cout << 1 << '\n';
       } else {
         cout << 0 << '\n';
       }
+    } else {
+      st.erase(x);
     }
   }
 }
