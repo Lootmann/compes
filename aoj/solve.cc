@@ -29,57 +29,57 @@ template <typename T> bool chmin(T& a, const T& b) {
 using llint = long long int;
 using Graph = vector<vector<int>>;
 
-// cums
-vector<int> discover, finish;
-vector<bool> visited;
+void bfs(Graph& graph, int from) {
+  int N = (int)graph.size();
 
-void dfs(Graph& graph, int v, int& ttime) {
-  visited[v] = true;
-  discover[v] = ++ttime;
+  vector<bool> visited(N, false);
+  visited[from] = true;
 
-  for (auto nv : graph[v]) {
-    if (visited[nv]) continue;
-    dfs(graph, nv, ttime);
+  queue<int> que;
+  que.push(from);
+
+  vector<int> dist(N, -1);
+  dist[from] = 0;
+
+  while (!que.empty()) {
+    // start
+    int u = que.front();
+    que.pop();
+
+    // neighbors
+    for (auto nv : graph[u]) {
+      if (!visited[nv]) {
+        visited[nv] = true;
+        dist[nv] = dist[u] + 1;
+        que.push(nv);
+      }
+    }
   }
 
-  finish[v] = ++ttime;
+  rep(i, N) {
+    cout << i + 1 << ' ' << dist[i] << '\n';
+  }
 }
 
 int main() {
   FastIO;
-  int n;
-  cin >> n;
+  int N;
+  cin >> N;
 
-  Graph graph(n);
+  // unweighted directed graph
+  Graph graph(N);
 
-  rep(_, n) {
-    int u;
-    cin >> u;
-    u--;
+  rep(_, N) {
+    int v, n;
+    cin >> v >> n;
 
-    int k;
-    cin >> k;
-    rep(__, k) {
-      int v;
-      cin >> v;
-      v--;
-      graph[u].push_back(v);
-      // graph[v].push_back(u);
+    rep(i, n) {
+      int nv;
+      cin >> nv;
+      graph[v - 1].push_back(nv - 1);
     }
   }
 
-  discover.resize(n, 0);
-  finish.resize(n, 0);
-  visited.assign(n, false);
-  int time{0};
-
-  rep(v, n) {
-    if (!visited[v]) {
-      dfs(graph, v, time);
-    }
-  }
-
-  rep(i, n) {
-    cout << i + 1 << ' ' << discover[i] << ' ' << finish[i] << '\n';
-  }
+  // start from 0 vertex
+  bfs(graph, 0);
 }
