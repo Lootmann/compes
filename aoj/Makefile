@@ -1,6 +1,6 @@
 CXX      = g++
 CXXFLAGS = -std=c++2a -Wall -Wextra -pedantic-errors -Wshadow \
-		   -fsanitize=undefined -fsanitize=address -DDEBUG_
+		   -DDEBUG_
 TARGET   = a.out
 SRC      = solve.cc
 

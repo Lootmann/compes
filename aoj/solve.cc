@@ -27,35 +27,119 @@ template <typename T> bool chmin(T& a, const T& b) {
 }
 
 using llint = long long int;
-using P = pair<string, int>;
+
+namespace me {
+struct Node {
+  int m_num;
+  Node *m_prev, *m_nxt;
+  Node() : m_num(-1), m_prev(nullptr), m_nxt(nullptr) {}
+  Node(int num) : m_num(num), m_prev(nullptr), m_nxt(nullptr) {}
+  //~Node() {}
+};
+
+template <class T> struct Deque {
+  Node* m_dummy;
+  int m_size;
+
+  Deque() {
+    m_dummy = new Node();
+    m_dummy->m_nxt = m_dummy;
+    m_dummy->m_prev = m_dummy;
+  }
+  //~Deque() {}
+
+  void insert(T x) {
+    m_size++;
+
+    Node* new_node = new Node(x);
+    auto old = m_dummy->m_nxt;
+    m_dummy->m_nxt = new_node;
+    new_node->m_nxt = old;
+    old->m_prev = new_node;
+    new_node->m_prev = m_dummy;
+  }
+
+  void deleteNum(T x) {
+    if (is_empty()) return;
+    Node* tmp = m_dummy;
+
+    while ((tmp = tmp->m_nxt) != m_dummy) {
+      if (tmp->m_num == x) {
+        m_size--;
+        tmp->m_prev->m_nxt = tmp->m_nxt;
+        tmp->m_nxt->m_prev = tmp->m_prev;
+        return;
+      }
+    }
+  }
+
+  Node* deleteFirst() {
+    m_size--;
+
+    Node* d = m_dummy->m_nxt;
+    m_dummy->m_nxt = m_dummy->m_nxt->m_nxt;
+    m_dummy->m_nxt->m_prev = m_dummy;
+    return d;
+  }
+
+  Node* deleteLast() {
+    m_size--;
+
+    Node* d = m_dummy->m_prev;
+    m_dummy->m_prev = m_dummy->m_prev->m_prev;
+    m_dummy->m_prev->m_nxt = m_dummy;
+    return d;
+  }
+
+  void out() {
+    Node* t = m_dummy->m_nxt;
+
+    while (t->m_nxt != m_dummy) {
+      cout << t->m_num << ' ';
+      t = t->m_nxt;
+    }
+    cout << t->m_num << '\n';
+  }
+
+  bool is_empty() {
+    return m_dummy->m_nxt == m_dummy || m_dummy->m_prev == m_dummy;
+  }
+
+  // debug
+  T top() {
+    if (!is_empty()) return m_dummy->m_nxt->m_num;
+    throw runtime_error("No Queue");
+  }
+
+  int size() const { return m_size; }
+};
+
+}  // namespace me
 
 int main() {
   FastIO;
+  int n;
+  cin >> n;
 
-  int n, q;
-  cin >> n >> q;
-  queue<P> que;
+  me::Deque<int> que;
 
   rep(_, n) {
-    string s;
-    int time;
-    cin >> s >> time;
-    que.push(make_pair(s, time));
-  }
+    string op;
+    cin >> op;
 
-  int total{};
-  while (!que.empty()) {
-    auto now = que.front();
-    que.pop();
-
-    // consume
-    if (now.second <= q) {
-      total += now.second;
-      cout << now.first << ' ' << total << '\n';
-    } else {
-      total += q;
-      now.second -= q;
-      que.push(now);
+    if (op == "insert") {
+      int x;
+      cin >> x;
+      que.insert(x);
+    } else if (op == "delete") {
+      int x;
+      cin >> x;
+      que.deleteNum(x);
+    } else if (op == "deleteFirst") {
+      que.deleteFirst();
+    } else if (op == "deleteLast") {
+      que.deleteLast();
     }
   }
+  que.out();
 }
