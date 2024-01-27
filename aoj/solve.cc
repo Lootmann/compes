@@ -27,14 +27,13 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-int count_num(const vector<int>& nums, int k, int left, int right) {
-  int cnt{};
-  for (int i = left; i < right; ++i) {
-    if (nums[i] == k) {
-      cnt++;
-    }
+void vector_swap(vector<int>& vs, int left, int right) {
+  for (int i = 0; i < (right - left) / 2; ++i) {
+    int tmp = vs[i + left];
+    vs[i + left] = vs[right - i - 1];
+    vs[right - i - 1] = tmp;
   }
-  return cnt;
+  return;
 }
 
 int main() {
@@ -48,9 +47,13 @@ int main() {
   int q;
   cin >> q;
   rep(_, q) {
-    int b, e, k;
-    cin >> b >> e >> k;
+    int left, right;
+    cin >> left >> right;
+    vector_swap(ai, left, right);
+    dump(ai);
+  }
 
-    cout << count_num(ai, k, b, e) << '\n';
+  rep(i, n) {
+    cout << ai[i] << (i == n - 1 ? '\n' : ' ');
   }
 }
