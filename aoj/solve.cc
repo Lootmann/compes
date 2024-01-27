@@ -28,20 +28,32 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-namespace me {
-llint gcd(llint a, llint b) {
-  if (b == 0) return a;
-  if (a > b)
-    return gcd(b, a % b);
-  else
-    return gcd(b, b % a);
+bool is_prime(int n) {
+  if (n == 2) return true;
+  if (n % 2 == 0) return false;
+  if (n == 3) return true;
+  if (n % 3 == 0) return false;
+
+  for (int i = 2; i * i <= n; ++i) {
+    if (n % i == 0) {
+      return false;
+    }
+  }
+  return true;
 }
-}  // namespace me
 
 int main() {
   FastIO;
-  llint x, y;
-  cin >> x >> y;
+  int n;
+  cin >> n;
 
-  cout << me::gcd(x, y) << endl;
+  int cnt{};
+  rep(_, n) {
+    int a;
+    cin >> a;
+    if (is_prime(a)) {
+      cnt++;
+    }
+  }
+  cout << cnt << '\n';
 }
