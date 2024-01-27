@@ -28,29 +28,41 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-bool search(const vector<int>& si, int k) {
-  for (auto num : si) {
-    if (num == k) return true;
+namespace me {
+bool binary_search(const vector<int>& ai, int k) {
+  int left = 0, right = (int)ai.size() - 1;
+
+  while (left <= right) {
+    int mid = left + (right - left) / 2;
+
+    if (ai[mid] == k) {
+      return true;
+    } else if (k < ai[mid]) {
+      right = mid - 1;
+    } else {
+      left = mid + 1;
+    }
   }
+
   return false;
 }
+}  // namespace me
 
 int main() {
   FastIO;
   int n;
   cin >> n;
+  vector<int> ai(n);
+  rep(i, n) cin >> ai[i];
 
-  vector<int> si(n);
-  rep(i, n) cin >> si[i];
-
+  int cnt{};
   int q;
   cin >> q;
 
-  int cnt{};
   rep(_, q) {
     int t;
     cin >> t;
-    if (search(si, t)) {
+    if (me::binary_search(ai, t)) {
       cnt++;
     }
   }
