@@ -27,37 +27,35 @@ template <typename T> bool chmin(T& a, const T& b) {
 }
 
 using llint = long long int;
+using P = pair<string, int>;
 
 int main() {
   FastIO;
 
-  stack<int> st;
+  int n, q;
+  cin >> n >> q;
+  queue<P> que;
 
-  string ch;
-  while (cin >> ch) {
-    dump(ch);
-    if (ch == "+") {
-      int left = st.top();
-      st.pop();
-      int right = st.top();
-      st.pop();
-      st.push(left + right);
-    } else if (ch == "-") {
-      int left = st.top();
-      st.pop();
-      int right = st.top();
-      st.pop();
-      st.push(right - left);
-    } else if (ch == "*") {
-      int left = st.top();
-      st.pop();
-      int right = st.top();
-      st.pop();
-      st.push(right * left);
-    } else {
-      st.push(stoi(ch));
-    }
+  rep(_, n) {
+    string s;
+    int time;
+    cin >> s >> time;
+    que.push(make_pair(s, time));
   }
 
-  cout << st.top() << '\n';
+  int total{};
+  while (!que.empty()) {
+    auto now = que.front();
+    que.pop();
+
+    // consume
+    if (now.second <= q) {
+      total += now.second;
+      cout << now.first << ' ' << total << '\n';
+    } else {
+      total += q;
+      now.second -= q;
+      que.push(now);
+    }
+  }
 }
