@@ -26,30 +26,23 @@ template <typename T> bool chmin(T& a, const T& b) {
 }
 
 using llint = long long int;
+using P = pair<int, int>;
 
 int main() {
   FastIO;
-  string a{};
-
   int n;
   cin >> n;
+
+  vector<P> vp(n);
   rep(i, n) {
-    int aa;
-    cin >> aa;
-    a += to_string(aa);
+    int x, y;
+    cin >> x >> y;
+    vp[i] = make_pair(x, y);
   }
 
-  string b{};
-  int m;
-  cin >> m;
-  rep(i, m) {
-    int bb;
-    cin >> bb;
-    b += to_string(bb);
-  }
+  sort(vp.begin(), vp.end());
 
-  if (a < b)
-    output(1);
-  else
-    output(0);
+  rep(i, n) {
+    cout << vp[i].first << ' ' << vp[i].second << '\n';
+  }
 }
