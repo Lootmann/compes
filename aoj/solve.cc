@@ -29,29 +29,31 @@ template <typename T> bool chmin(T& a, const T& b) {
 using llint = long long int;
 
 int main() {
-  int n, k;
-  cin >> n >> k;
+  FastIO;
+  int n;
+  cin >> n;
 
-  //     43210
-  // 000001010
-  bitset<32> subset(0);
-  for (int i = 0; i < k; ++i) {
-    int x;
-    cin >> x;
-    subset.set(x);
-  }
+  vector<vector<int>> graph(n, vector<int>(n, 0));
 
-  for (int i = 0; i < (1 << n); ++i) {
-    bitset<32> tmp(i);
+  rep(_, n) {
+    int u;
+    cin >> u;
+    u--;
 
-    if ((int)(tmp | subset).count() == k) {
-      cout << i << ":";
-      rep(j, n) {
-        if (tmp[j]) cout << ' ' << j;
-      }
-      cout << '\n';
+    int k;
+    cin >> k;
+
+    rep(__, k) {
+      int v;
+      cin >> v;
+      v--;
+      graph[u][v] = 1;
     }
   }
 
-  return 0;
+  rep(h, n) {
+    rep(w, n) {
+      cout << graph[h][w] << (w == n - 1 ? '\n' : ' ');
+    }
+  }
 }
