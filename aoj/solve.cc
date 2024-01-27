@@ -31,20 +31,27 @@ int main() {
   FastIO;
   int n;
   cin >> n;
-
-  vector<int> ai(n);
-  rep(i, n) cin >> ai[i];
-
-  int q;
-  cin >> q;
-  rep(_, q) {
+  set<int> st;
+  rep(i, n) {
     int a;
     cin >> a;
+    st.insert(a);
+  }
 
-    if (binary_search(ai.begin(), ai.end(), a)) {
-      output(1);
-    } else {
-      output(0);
+  int m;
+  cin >> m;
+
+  bool is_ok{true};
+  rep(i, m) {
+    int b;
+    cin >> b;
+    if (st.find(b) == st.end()) {
+      is_ok = false;
     }
   }
+
+  if (is_ok)
+    output(1);
+  else
+    output(0);
 }
