@@ -29,28 +29,7 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int n, q;
-  cin >> n >> q;
-
-  vector<queue<int>> que(n);
-  rep(_, q) {
-    int op;
-    cin >> op;
-
-    if (op == 0) {
-      int t, x;
-      cin >> t >> x;
-      que[t].push(x);
-    } else if (op == 1) {
-      int t;
-      cin >> t;
-      if (!que[t].empty()) {
-        cout << que[t].front() << '\n';
-      }
-    } else {
-      int t;
-      cin >> t;
-      if (!que[t].empty()) que[t].pop();
-    }
-  }
+  int a, b, c;
+  cin >> a >> b >> c;
+  cout << min(a, min(b, c)) << ' ' << max(a, max(b, c)) << endl;
 }
