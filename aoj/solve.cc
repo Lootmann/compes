@@ -33,27 +33,12 @@ int main() {
   int n;
   cin >> n;
 
-  vector<vector<int>> graph(n, vector<int>(n, 0));
-
-  rep(_, n) {
-    int u;
-    cin >> u;
-    u--;
-
-    int k;
-    cin >> k;
-
-    rep(__, k) {
-      int v;
-      cin >> v;
-      v--;
-      graph[u][v] = 1;
-    }
+  vector<llint> memo(45, 0);
+  memo[0] = 1;
+  memo[1] = 1;
+  for (int i = 2; i < 45; ++i) {
+    memo[i] = memo[i - 1] + memo[i - 2];
   }
 
-  rep(h, n) {
-    rep(w, n) {
-      cout << graph[h][w] << (w == n - 1 ? '\n' : ' ');
-    }
-  }
+  cout << memo[n] << endl;
 }
