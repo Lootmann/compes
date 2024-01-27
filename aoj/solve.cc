@@ -1,6 +1,4 @@
 #include <bits/stdc++.h>
-
-#include <cwchar>
 using namespace std;
 
 #ifdef DEBUG_
@@ -35,20 +33,31 @@ int main() {
   int n;
   cin >> n;
 
-  set<string> st;
+  vector<int> ai(n);
+  rep(i, n) cin >> ai[i];
 
-  rep(_, n) {
-    string op, str;
-    cin >> op >> str;
-
-    if (op == "insert") {
-      st.insert(str);
-    } else if (op == "find") {
-      if (st.find(str) != st.end()) {
-        cout << "yes" << '\n';
-      } else {
-        cout << "no" << '\n';
+  set<int> st;
+  // calc bit search
+  for (int bit = 0; bit < (1 << n); ++bit) {
+    int cnt{};
+    rep(i, n) {
+      if (bit & (1 << i)) {
+        cnt += ai[i];
       }
+    }
+    st.insert(cnt);
+  }
+
+  int q;
+  cin >> q;
+  rep(_, q) {
+    int m;
+    cin >> m;
+
+    if (st.find(m) != st.end()) {
+      cout << "yes" << '\n';
+    } else {
+      cout << "no" << '\n';
     }
   }
 }

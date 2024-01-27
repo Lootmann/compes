@@ -1,7 +1,4 @@
-6
-insert AAA
-insert AAC
-find AAA
-find CCC
-insert CCC
-find CCC
+5
+1 5 7 10 21
+4
+2 4 17 8
