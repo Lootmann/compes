@@ -1,4 +1,6 @@
 #include <bits/stdc++.h>
+
+#include <cwchar>
 using namespace std;
 
 #ifdef DEBUG_
@@ -28,43 +30,25 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-namespace me {
-bool binary_search(const vector<int>& ai, int k) {
-  int left = 0, right = (int)ai.size() - 1;
-
-  while (left <= right) {
-    int mid = left + (right - left) / 2;
-
-    if (ai[mid] == k) {
-      return true;
-    } else if (k < ai[mid]) {
-      right = mid - 1;
-    } else {
-      left = mid + 1;
-    }
-  }
-
-  return false;
-}
-}  // namespace me
-
 int main() {
   FastIO;
   int n;
   cin >> n;
-  vector<int> ai(n);
-  rep(i, n) cin >> ai[i];
 
-  int cnt{};
-  int q;
-  cin >> q;
+  set<string> st;
 
-  rep(_, q) {
-    int t;
-    cin >> t;
-    if (me::binary_search(ai, t)) {
-      cnt++;
+  rep(_, n) {
+    string op, str;
+    cin >> op >> str;
+
+    if (op == "insert") {
+      st.insert(str);
+    } else if (op == "find") {
+      if (st.find(str) != st.end()) {
+        cout << "yes" << '\n';
+      } else {
+        cout << "no" << '\n';
+      }
     }
   }
-  output(cnt);
 }
