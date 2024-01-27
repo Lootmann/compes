@@ -26,22 +26,15 @@ template <typename T> bool chmin(T& a, const T& b) {
 }
 
 using llint = long long int;
-using T = tuple<int, int, char, llint, string>;
 
-bool compare(const T& l, const T& r) {
-  if (get<0>(l) == get<0>(r)) {
-    if (get<1>(l) == get<1>(r)) {
-      if (get<2>(l) == get<2>(r)) {
-        if (get<3>(l) == get<3>(r)) {
-          return get<4>(l) < get<4>(r);
-        }
-        return get<3>(l) < get<3>(r);
-      }
-      return get<2>(l) < get<2>(r);
-    }
-    return get<1>(l) < get<1>(r);
-  }
-  return get<0>(l) < get<0>(r);
+void prevp(vector<int> ai, int n) {
+  auto k = prev_permutation(ai.begin(), ai.end());
+  if (k != 0) rep(i, n) cout << ai[i] << (i == n - 1 ? '\n' : ' ');
+}
+
+void nextp(vector<int> ai, int n) {
+  auto k = next_permutation(ai.begin(), ai.end());
+  if (k != 0) rep(i, n) cout << ai[i] << (i == n - 1 ? '\n' : ' ');
 }
 
 int main() {
@@ -49,22 +42,10 @@ int main() {
   int n;
   cin >> n;
 
-  vector<T> vt(n);
+  vector<int> ai(n);
+  rep(i, n) cin >> ai[i];
 
-  rep(i, n) {
-    int value, weight;
-    char id;
-    llint date;
-    string name;
-    cin >> value >> weight >> id >> date >> name;
-    vt[i] = tuple(value, weight, id, date, name);
-  }
-
-  sort(vt.begin(), vt.end(), compare);
-
-  rep(i, n) {
-    auto item = vt[i];
-    cout << get<0>(item) << ' ' << get<1>(item) << ' ' << get<2>(item) << ' '
-         << get<3>(item) << ' ' << get<4>(item) << '\n';
-  }
+  prevp(ai, n);
+  rep(i, n) cout << ai[i] << (i == n - 1 ? '\n' : ' ');
+  nextp(ai, n);
 }
