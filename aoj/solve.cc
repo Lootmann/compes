@@ -30,25 +30,23 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int q;
-  cin >> q;
+  int n;
+  cin >> n;
 
   set<int> st;
-  rep(_, q) {
-    int query, x;
-    cin >> query >> x;
+  rep(_, n) {
+    int a;
+    cin >> a;
+    st.insert(a);
+  }
 
-    if (query == 0) {
-      st.insert(x);
-      cout << st.size() << '\n';
-    } else if (query == 1) {
-      if (st.find(x) != st.end()) {
-        cout << 1 << '\n';
-      } else {
-        cout << 0 << '\n';
-      }
-    } else {
-      st.erase(x);
-    }
+  vector<int> ai;
+  for (auto num : st) {
+    ai.push_back(num);
+  }
+
+  int len = (int)ai.size();
+  rep(i, len) {
+    cout << ai[i] << (i == len - 1 ? '\n' : ' ');
   }
 }
