@@ -10,6 +10,7 @@ using namespace std;
 #define FastIO cin.tie(nullptr), ios_base::sync_with_stdio(false);
 #define rep(i, n) for (int i = 0; (int)i < n; ++i)
 #define output(msg) cout << (msg) << '\n'
+#define all(k) k.begin(), k.end()
 #define die(msg)         \
   do {                   \
     cout << msg << endl; \
@@ -31,27 +32,11 @@ int main() {
   FastIO;
   int n;
   cin >> n;
-  set<int> st;
-  rep(i, n) {
-    int a;
-    cin >> a;
-    st.insert(a);
-  }
 
-  int m;
-  cin >> m;
+  vector<int> ai(n);
+  rep(i, n) ai[i] = i + 1;
 
-  bool is_ok{true};
-  rep(i, m) {
-    int b;
-    cin >> b;
-    if (st.find(b) == st.end()) {
-      is_ok = false;
-    }
-  }
-
-  if (is_ok)
-    output(1);
-  else
-    output(0);
+  do {
+    rep(i, n) cout << ai[i] << (i == n - 1 ? '\n' : ' ');
+  } while (next_permutation(all(ai)));
 }
