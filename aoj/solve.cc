@@ -27,77 +27,37 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-namespace me {
-struct vector {
-  int* array;
-  int idx;
-  int size;
-
-  vector() : idx(0), size(10) {
-    array = new int[size];
-    for (int i = 0; i < size; ++i) {
-      array[i] = 0;
-    }
-  }
-
-  vector(int size_) : idx(0), size(size_) {
-    array = new int[size_];
-    for (int i = 0; i < size_; ++i) {
-      array[i] = 0;
-    }
-  }
-  ~vector() { delete[] array; }
-
-  void pushBack(int x) {
-    if (size <= idx) {
-      resize();
-    }
-
-    array[idx++] = x;
-  }
-
-  int randomAccess(int p) {
-    assert(size >= p);
-    return array[p];
-  }
-
-  bool popBack() {
-    idx--;
-    return true;
-  }
-
-  bool resize() {
-    size *= 2;
-    int* tmp = new int[size];
-    for (int i = 0; i < idx; ++i) {
-      tmp[i] = array[i];
-    }
-    array = tmp;
-    return true;
-  }
-};
-};  // namespace me
-
 int main() {
   FastIO;
+  deque<int> que;
+
   int n;
   cin >> n;
 
-  me::vector v(n);
   rep(_, n) {
-    int query;
-    cin >> query;
+    int op;
+    cin >> op;
 
-    if (query == 0) {
-      int x;
-      cin >> x;
-      v.pushBack(x);
-    } else if (query == 1) {
+    if (op == 0) {
+      int d, x;
+      cin >> d >> x;
+      if (d == 0)
+        que.push_front(x);
+      else
+        que.push_back(x);
+
+    } else if (op == 1) {
       int p;
       cin >> p;
-      output(v.randomAccess(p));
+      output(que[p]);
+
     } else {
-      v.popBack();
+      int d;
+      cin >> d;
+      if (d == 0)
+        que.pop_front();
+      else
+        que.pop_back();
     }
   }
 }
