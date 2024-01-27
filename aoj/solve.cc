@@ -1,6 +1,4 @@
 #include <bits/stdc++.h>
-
-#include <cwchar>
 using namespace std;
 
 #ifdef DEBUG_
@@ -31,11 +29,10 @@ using llint = long long int;
 
 int main() {
   FastIO;
-
   int n, q;
   cin >> n >> q;
 
-  vector<stack<int>> vs(n);
+  vector<queue<int>> que(n);
   rep(_, q) {
     int op;
     cin >> op;
@@ -43,17 +40,17 @@ int main() {
     if (op == 0) {
       int t, x;
       cin >> t >> x;
-      vs[t].push(x);
+      que[t].push(x);
     } else if (op == 1) {
       int t;
       cin >> t;
-      if (!vs[t].empty()) {
-        cout << vs[t].top() << '\n';
+      if (!que[t].empty()) {
+        cout << que[t].front() << '\n';
       }
     } else {
       int t;
       cin >> t;
-      if (!vs[t].empty()) vs[t].pop();
+      if (!que[t].empty()) que[t].pop();
     }
   }
 }
