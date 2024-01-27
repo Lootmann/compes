@@ -27,33 +27,29 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-void vector_swap(vector<int>& vs, int left, int right) {
-  for (int i = 0; i < (right - left) / 2; ++i) {
-    int tmp = vs[i + left];
-    vs[i + left] = vs[right - i - 1];
-    vs[right - i - 1] = tmp;
-  }
-  return;
-}
-
 int main() {
   FastIO;
+  string a{};
+
   int n;
   cin >> n;
-
-  vector<int> ai(n);
-  rep(i, n) cin >> ai[i];
-
-  int q;
-  cin >> q;
-  rep(_, q) {
-    int left, right;
-    cin >> left >> right;
-    vector_swap(ai, left, right);
-    dump(ai);
-  }
-
   rep(i, n) {
-    cout << ai[i] << (i == n - 1 ? '\n' : ' ');
+    int aa;
+    cin >> aa;
+    a += to_string(aa);
   }
+
+  string b{};
+  int m;
+  cin >> m;
+  rep(i, m) {
+    int bb;
+    cin >> bb;
+    b += to_string(bb);
+  }
+
+  if (a < b)
+    output(1);
+  else
+    output(0);
 }
