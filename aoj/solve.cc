@@ -32,6 +32,7 @@ int main() {
   FastIO;
   int n;
   cin >> n;
+
   vector<int> ai(n);
   rep(i, n) cin >> ai[i];
 
@@ -40,13 +41,20 @@ int main() {
   rep(_, q) {
     int k;
     cin >> k;
-
-    auto it = lower_bound(ai.begin(), ai.end(), k);
-    if (it != ai.end()) {
-      size_t pos = distance(ai.begin(), it);
-      output(pos);
+    auto itl = lower_bound(ai.begin(), ai.end(), k);
+    if (itl != ai.end()) {
+      size_t pos = distance(ai.begin(), itl);
+      cout << pos << ' ';
     } else {
-      output(n);
+      cout << n << ' ';
+    }
+
+    auto itu = upper_bound(ai.begin(), ai.end(), k);
+    if (itu != ai.end()) {
+      size_t pos = distance(ai.begin(), itu);
+      cout << pos << '\n';
+    } else {
+      cout << n << '\n';
     }
   }
 }
