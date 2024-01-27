@@ -33,20 +33,18 @@ int main() {
   int n;
   cin >> n;
 
-  set<int> st;
+  map<string, int> mp;
   rep(_, n) {
-    int a;
-    cin >> a;
-    st.insert(a);
-  }
+    int op;
+    string key;
+    cin >> op >> key;
 
-  vector<int> ai;
-  for (auto num : st) {
-    ai.push_back(num);
-  }
-
-  int len = (int)ai.size();
-  rep(i, len) {
-    cout << ai[i] << (i == len - 1 ? '\n' : ' ');
+    if (op == 0) {
+      int x;
+      cin >> x;
+      mp[key] = x;
+    } else {
+      cout << mp[key] << '\n';
+    }
   }
 }
