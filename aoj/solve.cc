@@ -30,7 +30,12 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int x;
-  cin >> x;
-  output(x * 24);
+  int a, b;
+  cin >> a >> b;
+  if (a > b)
+    output(1);
+  else if (a == b)
+    output(0);
+  else
+    output(-1);
 }
