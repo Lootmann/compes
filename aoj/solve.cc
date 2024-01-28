@@ -33,19 +33,17 @@ int main() {
   int n;
   cin >> n;
 
-  string s;
-  cin >> s;
+  vector<int> ai(n);
+  rep(i, n) cin >> ai[i];
 
-  rep(i, n - 1) {
-    string k = s.substr(i, 2);
-    if (k == "jj") {
-      s[i] = s[i + 1] = 'J';
-    } else if (k == "oo") {
-      s[i] = s[i + 1] = 'O';
-    } else if (k == "ii") {
-      s[i] = s[i + 1] = 'I';
-    }
-    dump(k);
+  int minv{ai[0]}, maxv{ai[0]};
+
+  rep(i, n) {
+    chmin(minv, ai[i]);
+    chmax(maxv, ai[i]);
   }
-  output(s);
+
+  rep(i, n) {
+    cout << max(maxv - ai[i], ai[i] - minv) << '\n';
+  }
 }
