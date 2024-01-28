@@ -30,7 +30,23 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int a, b, c;
-  cin >> a >> b >> c;
-  output(3 * max({a, b, c}) - a - b - c);
+  int n, k;
+  cin >> n >> k;
+  k--;
+
+  string t;
+  cin >> t;
+
+  for (int i = 0; i < k; ++i) {
+    cout << t[i];
+  }
+
+  for (int i = k; i < n; ++i) {
+    if ('a' <= t[i] && t[i] <= 'z') {
+      cout << (char)(t[i] - 'a' + 'A');
+    } else {
+      cout << (char)(t[i] - 'A' + 'a');
+    }
+  }
+  cout << '\n';
 }
