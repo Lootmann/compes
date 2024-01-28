@@ -30,24 +30,32 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int n;
-  cin >> n;
+  int n, m;
+  cin >> n >> m;
 
-  string s;
-  cin >> s;
+  set<int> sa, sb;
+  rep(_, n) {
+    int a;
+    cin >> a;
+    sa.insert(a);
+  }
 
-  int J{}, O{}, I{};
-  for (auto ch : s) {
-    if (ch == 'J') {
-      J++;
-    } else if (ch == 'O') {
-      O++;
-    } else {
-      I++;
+  vector<int> ans;
+  rep(_, m) {
+    int b;
+    cin >> b;
+    sb.insert(b);
+  }
+
+  for (auto num : sa) {
+    if (sb.find(num) != sb.end()) {
+      ans.push_back(num);
     }
   }
-  rep(_, J) cout << "J";
-  rep(_, O) cout << "O";
-  rep(_, I) cout << "I";
-  cout << '\n';
+
+  dump(ans);
+
+  for (auto num : ans) {
+    output(num);
+  }
 }
