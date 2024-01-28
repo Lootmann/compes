@@ -30,25 +30,36 @@ using llint = long long int;
 
 int main() {
   FastIO;
+  int n;
+  cin >> n;
 
-  int a, b, c;
-  cin >> a >> b >> c;
+  vector<int> xi(n);
+  rep(i, n) cin >> xi[i];
 
-  int total{}, day{1};
-  while (true) {
-    total += a;
-
-    // login
-    if (day % 7 == 0) {
-      total += b;
-    }
-
-    if (total >= c) {
-      break;
-    }
-
-    day++;
+  int m;
+  cin >> m;
+  vector<int> ai(n);
+  rep(i, m) {
+    cin >> ai[i];
+    ai[i]--;
   }
 
-  output(day);
+  rep(i, m) {
+    int idx = ai[i];
+    // rigth
+    if (idx == n - 1) {
+      if (xi[idx] < 2019) {
+        xi[idx]++;
+      }
+    } else {
+      if (xi[idx] + 1 < xi[idx + 1]) {
+        xi[idx]++;
+      }
+    }
+    dump(idx, xi);
+  }
+
+  rep(i, n) {
+    output(xi[i]);
+  }
 }
