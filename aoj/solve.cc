@@ -33,25 +33,19 @@ int main() {
   int n;
   cin >> n;
 
-  vector<int> ai(n);
-  map<int, int> mp;
-  rep(i, n) {
-    int a;
-    cin >> a;
-    ai[i] = a;
-    mp[a]++;
+  string s;
+  cin >> s;
+
+  rep(i, n - 1) {
+    string k = s.substr(i, 2);
+    if (k == "jj") {
+      s[i] = s[i + 1] = 'J';
+    } else if (k == "oo") {
+      s[i] = s[i + 1] = 'O';
+    } else if (k == "ii") {
+      s[i] = s[i + 1] = 'I';
+    }
+    dump(k);
   }
-
-  dump(ai);
-
-  int rank{1};
-
-  for (auto m : mp) {
-    mp[m.first] = rank;
-    rank += m.second;
-  }
-
-  rep(i, n) {
-    output(mp[ai[i]]);
-  }
+  output(s);
 }
