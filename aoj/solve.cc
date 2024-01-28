@@ -30,18 +30,40 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int n;
-  cin >> n;
 
-  string s;
-  cin >> s;
+  int n, m, d;
+  cin >> n >> m >> d;
 
-  int ans{};
-  rep(i, n - 1) {
-    if (s[i] != s[i + 1]) {
-      ans++;
-      i++;
+  vector<string> vs(n);
+  rep(i, n) cin >> vs[i];
+
+  int cnt{};
+
+  // horizontal
+  rep(i, n) {
+    rep(j, m - d + 1) {
+      bool is_ok{true};
+      rep(k, d) {
+        if (vs[i][j + k] != '.') {
+          is_ok = false;
+        }
+      }
+      if (is_ok) cnt++;
     }
   }
-  output(ans);
+
+  // vertical
+  rep(i, n - d + 1) {
+    rep(j, m) {
+      bool is_ok{true};
+      rep(k, d) {
+        if (vs[i + k][j] != '.') {
+          is_ok = false;
+        }
+      }
+      if (is_ok) cnt++;
+    }
+  }
+
+  output(cnt);
 }
