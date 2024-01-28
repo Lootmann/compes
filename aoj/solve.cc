@@ -30,12 +30,15 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int a, b;
-  cin >> a >> b;
-  if (a > b)
-    output(1);
-  else if (a == b)
-    output(0);
-  else
-    output(-1);
+  int n;
+  cin >> n;
+
+  string s;
+  cin >> s;
+
+  if (s.substr(0, n / 2) == s.substr(n / 2)) {
+    output("Yes");
+  } else {
+    output("No");
+  }
 }
