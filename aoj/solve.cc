@@ -28,42 +28,11 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-string opt_sort(string& s) {
-  vector<int> lower(26, 0), upper(26, 0), digit(10, 0);
-  int n = (int)s.size();
-  rep(i, n) {
-    if (islower(s[i])) lower[s[i] - 'a']++;
-  }
-  rep(i, n) {
-    if (isupper(s[i])) upper[s[i] - 'A']++;
-  }
-  rep(i, n) {
-    if (isdigit(s[i])) digit[s[i] - '0']++;
-  }
-
-  string res{};
-
-  rep(i, 26) {
-    rep(j, lower[i]) res += (char)('a' + i);
-  }
-
-  rep(i, 26) {
-    rep(j, upper[i]) res += (char)('A' + i);
-  }
-
-  rep(i, 10) {
-    rep(j, digit[i]) res += (char)('0' + i);
-  }
-
-  return res;
-}
-
 int main() {
   FastIO;
-  string line;
-  while (cin >> line) {
-    if (line == "#") return 0;
-    line = opt_sort(line);
-    output(line);
+  for (int i = 1; i <= 9; ++i) {
+    for (int j = 1; j <= 9; ++j) {
+      cout << i << "x" << j << "=" << i * j << '\n';
+    }
   }
 }
