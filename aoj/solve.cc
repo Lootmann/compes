@@ -30,26 +30,7 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int n;
-  cin >> n;
-
-  vector<int> ai(n);
-  rep(i, n) cin >> ai[i];
-
-  int m;
-  cin >> m;
-  vector<int> bi(m);
-  rep(i, m) cin >> bi[i];
-
-  int ans{};
-  rep(i, n) {
-    ans += ai[i];
-    rep(j, m) {
-      if (ans == bi[j]) {
-        ans = 0;
-      }
-    }
-    dump(ans);
-  }
-  output(ans);
+  int a, b;
+  cin >> a >> b;
+  cout << a << b << endl;
 }
