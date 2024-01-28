@@ -30,20 +30,7 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int n;
-  cin >> n;
-
-  map<int, int> mp;
-  rep(_, 2 * n - 1) {
-    int a;
-    cin >> a;
-    mp[a]++;
-  }
-
-  for (auto key : mp) {
-    if (key.second == 1) {
-      die(key.first);
-    }
-  }
-  output(":^)");
+  int x;
+  cin >> x;
+  output(x * 24);
 }
