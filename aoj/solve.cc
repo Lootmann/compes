@@ -30,11 +30,20 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  set<int> st;
-  rep(_, 4) {
-    int a;
-    cin >> a;
-    st.insert(a);
+  int n;
+  cin >> n;
+
+  vector<int> ai(n);
+  rep(i, n) cin >> ai[i];
+
+  int ans{};
+  int prev = 0;
+  rep(i, n) {
+    int now = abs(ai[i] - prev);
+    ans += min(now, 10 - now);
+
+    dump(abs(prev - ai[i]), abs(10 - ai[i]));
+    prev = ai[i];
   }
-  output(st.size() == 2 ? "1" : "0");
+  output(ans);
 }
