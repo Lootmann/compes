@@ -30,7 +30,37 @@ using llint = long long int;
 
 int main() {
   FastIO;
+
   int n;
-  cin >> n;
-  output(n / 10 == n % 10);
+  string s;
+  cin >> n >> s;
+
+  vector<int> box(3, 0);
+  box[0] = 1;
+  int x{0}, cnt{};
+
+  for (auto ch : s) {
+    if (ch == 'L') {
+      if (x == 0) {
+        // pass
+      } else {
+        box[x - 1] = box[x];
+        box[x] = 0;
+        x--;
+      }
+    } else {
+      if (x == 2) {
+      } else {
+        box[x + 1] = box[x];
+        box[x] = 0;
+        x++;
+      }
+    }
+
+    if (box[2] == 1) {
+      cnt++;
+    }
+    dump(box);
+  }
+  output(cnt);
 }
