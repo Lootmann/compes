@@ -30,8 +30,23 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int a, b;
-  cin >> a >> b;
-  output(max(a + b, a - b));
-  output(min(a + b, a - b));
+  int n;
+  cin >> n;
+
+  string s;
+  cin >> s;
+
+  int cnt{};
+  rep(i, n) {
+    if (i % 2 == 0) {
+      if (s[i] != 'I') {
+        cnt++;
+      }
+    } else {
+      if (s[i] != 'O') {
+        cnt++;
+      }
+    }
+  }
+  output(cnt);
 }
