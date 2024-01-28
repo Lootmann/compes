@@ -1,2 +1,3 @@
-*_*.text
-**/*/metadata.yml
+**/*_*.txt
+**/metadata.yml
+**/a.out
