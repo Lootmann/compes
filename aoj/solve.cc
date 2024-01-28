@@ -30,12 +30,11 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int d, x, y;
-  cin >> d >> x >> y;
+  int n;
+  cin >> n;
 
-  if (d >= abs(x) + abs(y)) {
-    output("Yes");
-  } else {
-    output("No");
+  while (n > 0) {
+    output(n);
+    n /= 2;
   }
 }
