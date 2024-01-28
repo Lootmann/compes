@@ -30,32 +30,8 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int n, m;
-  cin >> n >> m;
-
-  set<int> sa, sb;
-  rep(_, n) {
-    int a;
-    cin >> a;
-    sa.insert(a);
-  }
-
-  vector<int> ans;
-  rep(_, m) {
-    int b;
-    cin >> b;
-    sb.insert(b);
-  }
-
-  for (auto num : sa) {
-    if (sb.find(num) != sb.end()) {
-      ans.push_back(num);
-    }
-  }
-
-  dump(ans);
-
-  for (auto num : ans) {
-    output(num);
-  }
+  int a, b;
+  cin >> a >> b;
+  output(max(a + b, a - b));
+  output(min(a + b, a - b));
 }
