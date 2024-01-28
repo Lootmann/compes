@@ -30,37 +30,20 @@ using llint = long long int;
 
 int main() {
   FastIO;
-
   int n;
-  string s;
-  cin >> n >> s;
+  cin >> n;
 
-  vector<int> box(3, 0);
-  box[0] = 1;
-  int x{0}, cnt{};
-
-  for (auto ch : s) {
-    if (ch == 'L') {
-      if (x == 0) {
-        // pass
-      } else {
-        box[x - 1] = box[x];
-        box[x] = 0;
-        x--;
-      }
-    } else {
-      if (x == 2) {
-      } else {
-        box[x + 1] = box[x];
-        box[x] = 0;
-        x++;
-      }
-    }
-
-    if (box[2] == 1) {
-      cnt++;
-    }
-    dump(box);
+  map<int, int> mp;
+  rep(_, 2 * n - 1) {
+    int a;
+    cin >> a;
+    mp[a]++;
   }
-  output(cnt);
+
+  for (auto key : mp) {
+    if (key.second == 1) {
+      die(key.first);
+    }
+  }
+  output(":^)");
 }
