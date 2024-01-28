@@ -30,9 +30,11 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  long double d;
-  cin >> d;
-
-  cout << fixed << setprecision(10);
-  output((long)(d * 0.25));
+  set<int> st;
+  rep(_, 4) {
+    int a;
+    cin >> a;
+    st.insert(a);
+  }
+  output(st.size() == 2 ? "1" : "0");
 }
