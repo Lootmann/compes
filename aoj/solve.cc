@@ -30,20 +30,7 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int n;
-  cin >> n;
-
-  vector<int> ai(n);
-  rep(i, n) cin >> ai[i];
-
-  int minv{ai[0]}, maxv{ai[0]};
-
-  rep(i, n) {
-    chmin(minv, ai[i]);
-    chmax(maxv, ai[i]);
-  }
-
-  rep(i, n) {
-    cout << max(maxv - ai[i], ai[i] - minv) << '\n';
-  }
+  int a, b, c;
+  cin >> a >> b >> c;
+  output(a + b + c - max({a, b, c}) - min({a, b, c}));
 }
