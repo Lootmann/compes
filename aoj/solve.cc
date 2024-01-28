@@ -30,7 +30,7 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int a, b;
-  cin >> a >> b;
-  output(a * b);
+  int n;
+  cin >> n;
+  output(n / 10 == n % 10);
 }
