@@ -30,20 +30,17 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int n;
-  cin >> n;
+  int n, m;
+  cin >> n >> m;
 
-  string s;
-  cin >> s;
+  vector<int> ai(n), bi(m);
+  rep(i, n) cin >> ai[i];
+  rep(i, m) cin >> bi[i];
 
   int cnt{};
-  rep(i, n) {
-    if (i % 2 == 0) {
-      if (s[i] != 'I') {
-        cnt++;
-      }
-    } else {
-      if (s[i] != 'O') {
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < m; ++j) {
+      if (ai[i] <= bi[j]) {
         cnt++;
       }
     }
