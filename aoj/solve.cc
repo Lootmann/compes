@@ -33,12 +33,23 @@ int main() {
   int n;
   cin >> n;
 
-  string s;
-  cin >> s;
+  vector<int> ai(n);
+  rep(i, n) cin >> ai[i];
 
-  if (s.substr(0, n / 2) == s.substr(n / 2)) {
-    output("Yes");
-  } else {
-    output("No");
+  int m;
+  cin >> m;
+  vector<int> bi(m);
+  rep(i, m) cin >> bi[i];
+
+  int ans{};
+  rep(i, n) {
+    ans += ai[i];
+    rep(j, m) {
+      if (ans == bi[j]) {
+        ans = 0;
+      }
+    }
+    dump(ans);
   }
+  output(ans);
 }
