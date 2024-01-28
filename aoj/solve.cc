@@ -28,14 +28,20 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
+int sum_digit(int num) {
+  int cnt{};
+  while (num > 0) {
+    num /= 10;
+    cnt++;
+  }
+  return cnt;
+}
+
 int main() {
   FastIO;
-  vector<int> hi(10, 0);
-  rep(i, 10) cin >> hi[i];
+  int a, b;
 
-  sort(hi.rbegin(), hi.rend());
-
-  rep(i, 3) {
-    cout << hi[i] << '\n';
+  while (cin >> a >> b) {
+    cout << sum_digit(a + b) << '\n';
   }
 }
