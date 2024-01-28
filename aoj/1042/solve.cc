@@ -28,18 +28,30 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
+vector<int> count_word(const string& s) {
+  vector<int> res;
+  int cnt{};
+  for (auto ch : s) {
+    if (ch == ' ') {
+      res.push_back(cnt);
+      cnt = 0;
+    } else {
+      cnt++;
+    }
+  }
+  res.push_back(cnt);
+  return res;
+}
+
 int main() {
   FastIO;
-
-  int n;
-  while (cin >> n) {
-    if (n == 0) break;
-    int cnt{};
-    rep(_, n / 4) {
-      int hit;
-      cin >> hit;
-      cnt += hit;
+  string s;
+  while (getline(cin, s)) {
+    if (s == "END OF INPUT") break;
+    auto res = count_word(s);
+    for (auto c : res) {
+      cout << c;
     }
-    output(cnt);
+    cout << '\n';
   }
 }
