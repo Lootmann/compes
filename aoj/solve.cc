@@ -30,11 +30,9 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int n;
-  cin >> n;
+  long double d;
+  cin >> d;
 
-  while (n > 0) {
-    output(n);
-    n /= 2;
-  }
+  cout << fixed << setprecision(10);
+  output((long)(d * 0.25));
 }
