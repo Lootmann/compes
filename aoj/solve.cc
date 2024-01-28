@@ -28,30 +28,42 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-void solve(int n) {
-  vector<llint> ai(n);
-  rep(i, n) cin >> ai[i];
-
-  llint ans{INFll};
-  for (int bit = 0; bit < (1 << n); ++bit) {
-    llint left{}, right{};
-    rep(i, n) {
-      if (bit & (1 << i)) {
-        left += ai[i];
-      } else {
-        right += ai[i];
-      }
-    }
-    chmin(ans, abs(left - right));
+string opt_sort(string& s) {
+  vector<int> lower(26, 0), upper(26, 0), digit(10, 0);
+  int n = (int)s.size();
+  rep(i, n) {
+    if (islower(s[i])) lower[s[i] - 'a']++;
   }
-  output(ans);
+  rep(i, n) {
+    if (isupper(s[i])) upper[s[i] - 'A']++;
+  }
+  rep(i, n) {
+    if (isdigit(s[i])) digit[s[i] - '0']++;
+  }
+
+  string res{};
+
+  rep(i, 26) {
+    rep(j, lower[i]) res += (char)('a' + i);
+  }
+
+  rep(i, 26) {
+    rep(j, upper[i]) res += (char)('A' + i);
+  }
+
+  rep(i, 10) {
+    rep(j, digit[i]) res += (char)('0' + i);
+  }
+
+  return res;
 }
 
 int main() {
   FastIO;
-  int n;
-  while (cin >> n) {
-    if (n == 0) break;
-    solve(n);
+  string line;
+  while (cin >> line) {
+    if (line == "#") return 0;
+    line = opt_sort(line);
+    output(line);
   }
 }
