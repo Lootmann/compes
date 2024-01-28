@@ -30,7 +30,24 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int a, b, c;
-  cin >> a >> b >> c;
-  output(a + b + c - max({a, b, c}) - min({a, b, c}));
+  int n;
+  cin >> n;
+
+  string s;
+  cin >> s;
+
+  int J{}, O{}, I{};
+  for (auto ch : s) {
+    if (ch == 'J') {
+      J++;
+    } else if (ch == 'O') {
+      O++;
+    } else {
+      I++;
+    }
+  }
+  rep(_, J) cout << "J";
+  rep(_, O) cout << "O";
+  rep(_, I) cout << "I";
+  cout << '\n';
 }
