@@ -28,20 +28,27 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-int sum_digit(int num) {
-  int cnt{};
-  while (num > 0) {
-    num /= 10;
-    cnt++;
-  }
-  return cnt;
+bool is_triangle(int a, int b, int c) {
+  bool is_ok{false};
+  is_ok |= (c * c == a * a + b * b);
+  is_ok |= (a * a == b * b + c * c);
+  is_ok |= (b * b == c * c + a * a);
+  return is_ok;
 }
 
 int main() {
   FastIO;
-  int a, b;
+  int n;
+  cin >> n;
 
-  while (cin >> a >> b) {
-    cout << sum_digit(a + b) << '\n';
+  rep(_, n) {
+    int a, b, c;
+    cin >> a >> b >> c;
+
+    if (is_triangle(a, b, c)) {
+      output("YES");
+    } else {
+      output("NO");
+    }
   }
 }
