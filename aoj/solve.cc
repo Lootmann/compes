@@ -31,19 +31,41 @@ using llint = long long int;
 int main() {
   FastIO;
   int n;
+  cin >> n;
 
-  while (cin >> n) {
-    if (n == 0) break;
+  vector<int> ai(n);
+  rep(i, n) cin >> ai[i];
+  vector<bool> flags(4, false);
+  bool is_inc{true}, is_mono_inc{true};
+  bool is_dec{true}, is_mono_dec{true};
 
-    vector<int> ai(n);
-    rep(i, n) cin >> ai[i];
-
-    int idx{}, diff{10000};
-    rep(i, n) {
-      if (chmin(diff, abs(2023 - ai[i]))) {
-        idx = i;
-      }
+  rep(i, n - 1) {
+    if (ai[i] < ai[i + 1]) {
+      is_dec = false;
+      is_mono_dec = false;
+    } else if (ai[i] <= ai[i + 1]) {
+      is_mono_dec = false;
+      is_mono_inc = false;
+    } else if (ai[i] > ai[i + 1]) {
+      is_inc = false;
+      is_mono_inc = false;
+    } else if (ai[i] >= ai[i + 1]) {
+      is_mono_dec = false;
+      is_mono_inc = false;
     }
-    output(idx + 1);
+  }
+
+  dump(is_mono_inc, is_inc, is_mono_dec, is_dec);
+
+  if (is_mono_inc) {
+    output(2);
+  } else if (is_mono_dec) {
+    output(-2);
+  } else if (is_inc && is_dec) {
+    output(0);
+  } else if (is_inc) {
+    output(1);
+  } else {
+    output(-1);
   }
 }
