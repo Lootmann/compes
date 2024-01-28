@@ -32,5 +32,12 @@ int main() {
   FastIO;
   int a, b;
   cin >> a >> b;
-  cout << a << b << endl;
+
+  int total = a + b * 7;
+  dump(total);
+  if (1 <= total && total <= 30) {
+    output(1);
+  } else {
+    output(0);
+  }
 }
