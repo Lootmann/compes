@@ -30,23 +30,25 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int n, k;
-  cin >> n >> k;
-  k--;
 
-  string t;
-  cin >> t;
+  int a, b, c;
+  cin >> a >> b >> c;
 
-  for (int i = 0; i < k; ++i) {
-    cout << t[i];
-  }
+  int total{}, day{1};
+  while (true) {
+    total += a;
 
-  for (int i = k; i < n; ++i) {
-    if ('a' <= t[i] && t[i] <= 'z') {
-      cout << (char)(t[i] - 'a' + 'A');
-    } else {
-      cout << (char)(t[i] - 'A' + 'a');
+    // login
+    if (day % 7 == 0) {
+      total += b;
     }
+
+    if (total >= c) {
+      break;
+    }
+
+    day++;
   }
-  cout << '\n';
+
+  output(day);
 }
