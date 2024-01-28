@@ -15,6 +15,7 @@ using namespace std;
     cout << msg << endl; \
     exit(0);             \
   } while (0)
+#define all(k) k.begin(), k.end()
 #define INFi 1 << 30
 #define INFll 1LL << 60
 
@@ -26,32 +27,59 @@ template <typename T> bool chmin(T& a, const T& b) {
 }
 
 using llint = long long int;
+using Graph = vector<vector<int>>;
+
+void dfs(Graph& graph, vector<int>& visited, int start, int _id) {
+  visited[start] = _id;
+  stack<int> st;
+  st.push(start);
+
+  while (!st.empty()) {
+    int u = st.top();
+    st.pop();
+
+    for (auto nv : graph[u]) {
+      if (visited[nv] == -1) {
+        visited[nv] = _id;
+        st.push(nv);
+      }
+    }
+  }
+}
 
 int main() {
   FastIO;
-  // 1 <= N <= 100
-  int N, W;
-  cin >> N >> W;
+  int n, m;
+  cin >> n >> m;
 
-  vector<llint> ws(N), vs(N);
-  rep(i, N) cin >> ws[i] >> vs[i];
+  Graph graph(n);
+  rep(i, m) {
+    int from, to;
+    cin >> from >> to;
+    graph[from].push_back(to);
+    graph[to].push_back(from);
+  }
 
-  // dp[value][total_weight]
-  // 1 <= W <= 100000
-  vector<vector<llint>> dp(N + 1, vector<llint>(100100));
+  // calc
+  vector<int> visited(n, -1);
 
-  rep(i, N) {
-    rep(sum_weight, W + 1) {
-      // pick value[i], but can't over sum_weight
-      if (sum_weight - ws[i] >= 0) {
-        chmax(dp[i + 1][sum_weight], dp[i][sum_weight - ws[i]] + vs[i]);
-      }
-
-      // don't pick value[i]
-      chmax(dp[i + 1][sum_weight], dp[i][sum_weight]);
+  int _id{0};
+  rep(vertex, n) {
+    if (visited[vertex] == -1) {
+      dfs(graph, visited, vertex, _id++);
     }
   }
 
-  dump(dp[N][W]);
-  output(dp[N][W]);
+  // queyies
+  int q;
+  cin >> q;
+  rep(_, q) {
+    int from, to;
+    cin >> from >> to;
+    if (visited[from] == visited[to]) {
+      cout << "yes" << '\n';
+    } else {
+      cout << "no" << '\n';
+    }
+  }
 }
