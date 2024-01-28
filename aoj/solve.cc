@@ -31,19 +31,19 @@ using llint = long long int;
 int main() {
   FastIO;
   int n;
-  cin >> n;
 
-  vector<int> ai(n);
-  rep(i, n) cin >> ai[i];
+  while (cin >> n) {
+    if (n == 0) break;
 
-  int ans{};
-  int prev = 0;
-  rep(i, n) {
-    int now = abs(ai[i] - prev);
-    ans += min(now, 10 - now);
+    vector<int> ai(n);
+    rep(i, n) cin >> ai[i];
 
-    dump(abs(prev - ai[i]), abs(10 - ai[i]));
-    prev = ai[i];
+    int idx{}, diff{10000};
+    rep(i, n) {
+      if (chmin(diff, abs(2023 - ai[i]))) {
+        idx = i;
+      }
+    }
+    output(idx + 1);
   }
-  output(ans);
 }
