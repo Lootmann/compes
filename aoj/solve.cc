@@ -30,9 +30,12 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  for (int i = 1; i <= 9; ++i) {
-    for (int j = 1; j <= 9; ++j) {
-      cout << i << "x" << j << "=" << i * j << '\n';
-    }
+  vector<int> hi(10, 0);
+  rep(i, 10) cin >> hi[i];
+
+  sort(hi.rbegin(), hi.rend());
+
+  rep(i, 3) {
+    cout << hi[i] << '\n';
   }
 }
