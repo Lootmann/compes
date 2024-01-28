@@ -30,20 +30,7 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int n, m;
-  cin >> n >> m;
-
-  vector<int> ai(n), bi(m);
-  rep(i, n) cin >> ai[i];
-  rep(i, m) cin >> bi[i];
-
-  int cnt{};
-  for (int i = 0; i < n; ++i) {
-    for (int j = 0; j < m; ++j) {
-      if (ai[i] <= bi[j]) {
-        cnt++;
-      }
-    }
-  }
-  output(cnt);
+  int a, b, c;
+  cin >> a >> b >> c;
+  output(3 * max({a, b, c}) - a - b - c);
 }
