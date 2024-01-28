@@ -30,14 +30,28 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int a, b;
-  cin >> a >> b;
+  int n;
+  cin >> n;
 
-  int total = a + b * 7;
-  dump(total);
-  if (1 <= total && total <= 30) {
-    output(1);
-  } else {
-    output(0);
+  vector<int> ai(n);
+  map<int, int> mp;
+  rep(i, n) {
+    int a;
+    cin >> a;
+    ai[i] = a;
+    mp[a]++;
+  }
+
+  dump(ai);
+
+  int rank{1};
+
+  for (auto m : mp) {
+    mp[m.first] = rank;
+    rank += m.second;
+  }
+
+  rep(i, n) {
+    output(mp[ai[i]]);
   }
 }
