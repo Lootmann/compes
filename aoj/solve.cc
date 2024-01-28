@@ -33,33 +33,15 @@ int main() {
   int n;
   cin >> n;
 
-  vector<int> xi(n);
-  rep(i, n) cin >> xi[i];
+  string s;
+  cin >> s;
 
-  int m;
-  cin >> m;
-  vector<int> ai(n);
-  rep(i, m) {
-    cin >> ai[i];
-    ai[i]--;
-  }
-
-  rep(i, m) {
-    int idx = ai[i];
-    // rigth
-    if (idx == n - 1) {
-      if (xi[idx] < 2019) {
-        xi[idx]++;
-      }
-    } else {
-      if (xi[idx] + 1 < xi[idx + 1]) {
-        xi[idx]++;
-      }
+  int ans{};
+  rep(i, n - 1) {
+    if (s[i] != s[i + 1]) {
+      ans++;
+      i++;
     }
-    dump(idx, xi);
   }
-
-  rep(i, n) {
-    output(xi[i]);
-  }
+  output(ans);
 }
