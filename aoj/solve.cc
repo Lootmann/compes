@@ -27,52 +27,21 @@ template <typename T> bool chmin(T& a, const T& b) {
 }
 
 using llint = long long int;
-using P = pair<int, int>;
-
-tuple<int, int> input(string line) {
-  int a, b, idx{};
-  rep(i, (int)line.size()) {
-    if (line[i] == ',') {
-      idx = i;
-      break;
-    }
-  }
-  a = stoi(line.substr(0, idx));
-  b = stoi(line.substr(idx + 1));
-  return tuple(a, b);
-}
 
 int main() {
   FastIO;
-  int w, n;
-  cin >> w >> n;
 
-  vector<P> vertical_lines;
+  stack<int> que;
+  int n;
 
-  rep(_, n) {
-    string line;
-    cin >> line;
+  while (cin >> n) {
+    if (n == 0 && que.empty()) break;
 
-    int a, b;
-    tie(a, b) = input(line);
-    a--, b--;
-    vertical_lines.push_back(make_pair(a, b));
-  }
-
-  vector<int> ans(w, 0);
-  rep(i, w) {
-    int rot{i};
-    for (auto p : vertical_lines) {
-      if (p.first == rot) {
-        rot = p.second;
-      } else if (p.second == rot) {
-        rot = p.first;
-      }
+    if (n == 0) {
+      output(que.top());
+      que.pop();
+    } else {
+      que.push(n);
     }
-    ans[rot] = i + 1;
-  }
-
-  for (auto r : ans) {
-    output(r);
   }
 }
