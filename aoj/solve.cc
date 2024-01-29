@@ -28,32 +28,89 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-tuple<double, double> split(string s) {
-  int idx{};
-  rep(i, (int)s.size()) {
-    if (s[i] == ',') idx = i;
+namespace me {
+template <typename T> struct Node {
+  Node* m_nxt;
+  int m_num;
+  Node() : m_nxt{nullptr}, m_num{0} {}
+  Node(int num) : m_nxt{nullptr}, m_num{num} {}
+};
+
+template <typename T> struct Stack {
+  Node<T>* m_dummy;
+  Stack() { m_dummy = new Node<T>(-1); }
+  ~Stack() {
+    while (m_dummy->m_nxt != nullptr) {
+      Node<T>* tmp = m_dummy->m_nxt;
+      m_dummy->m_nxt = m_dummy->m_nxt->m_nxt;
+      delete tmp;
+    }
+    delete m_dummy;
   }
-  double x = stod(s.substr(0, idx));
-  double y = stod(s.substr(idx + 1));
-  return tuple(x, y);
-}
+
+  void push(int num) {
+    Node<T>* new_node = new Node<T>(num);
+
+    if (is_empty()) {
+      m_dummy->m_nxt = new_node;
+    } else {
+      new_node->m_nxt = m_dummy->m_nxt;
+      m_dummy->m_nxt = new_node;
+    }
+  }
+
+  T pop() {
+    assert(!is_empty());
+    Node<T>* pop_node = m_dummy->m_nxt;
+    m_dummy->m_nxt = m_dummy->m_nxt->m_nxt;
+
+    int num = pop_node->m_num;
+    delete pop_node;
+    return num;
+  }
+
+  int top() {
+    assert(!is_empty());
+    return m_dummy->m_nxt->m_num;
+  }
+
+  bool is_empty() { return m_dummy->m_nxt == nullptr; }
+
+  void out() {
+    Node<T>* tmp = m_dummy->m_nxt;
+    while (tmp != nullptr) {
+      cerr << "[" << tmp->m_num << "]";
+      tmp = tmp->m_nxt;
+    }
+    cerr << '\n';
+  }
+};
+}  // namespace me
 
 int main() {
   FastIO;
-  string line;
+  me::Stack<int> st;
 
-  double px{0.0}, py{0.0}, deg{0.0};
-  while (cin >> line) {
-    double dist, d;
-    tie(dist, d) = split(line);
-    if (dist == 0 && d == 0) break;
-
-    px += dist * sin(deg * (M_PI / 180));
-    py += dist * cos(deg * (M_PI / 180));
-    deg += d;
+  string s;
+  while (cin >> s) {
+    if (s == "+") {
+      int left = st.pop();
+      int right = st.pop();
+      st.push(left + right);
+    } else if (s == "-") {
+      int left = st.pop();
+      int right = st.pop();
+      st.push(right - left);
+    } else if (s == "*") {
+      int left = st.pop();
+      int right = st.pop();
+      st.push(left * right);
+    } else {
+      st.push(stoi(s));
+    }
+    st.out();
   }
 
-  dump("result", px, py);
-  output((int)px);
-  output((int)py);
+  // st.out();
+  cout << st.top() << '\n';
 }
