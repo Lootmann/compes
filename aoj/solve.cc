@@ -30,19 +30,16 @@ using llint = long long int;
 
 int main() {
   FastIO;
-
   int n;
-  cin >> n;
 
-  llint total{100000};
-  rep(_, n) {
-    total = total * 1.05;
-
-    dump(total, total / 1000, total % 1000);
-    if (total % 1000 > 0) {
-      total = total / 1000 * 1000;
-      total += 1000;
+  const int loop{10};
+  while (cin >> n) {
+    int cnt{};
+    rep(a, loop) rep(b, loop) rep(c, loop) rep(d, loop) {
+      if (n == a + b + c + d) {
+        cnt++;
+      }
     }
+    output(cnt);
   }
-  output(total);
 }
