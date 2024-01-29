@@ -28,18 +28,36 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
+bool is_prime(int n) {
+  if (n == 2) return true;
+  if (n % 2 == 0) return false;
+  if (n == 3) return true;
+  if (n % 3 == 0) return false;
+
+  for (int i = 3; i * i <= n; i += 2) {
+    if (n % i == 0) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+int count_prime(int n) {
+  int cnt{};
+  for (int i = 2; i <= n; ++i) {
+    if (is_prime(i)) {
+      cnt++;
+    }
+  }
+  return cnt;
+}
+
 int main() {
   FastIO;
-  int n;
 
-  const int loop{10};
+  int n;
   while (cin >> n) {
-    int cnt{};
-    rep(a, loop) rep(b, loop) rep(c, loop) rep(d, loop) {
-      if (n == a + b + c + d) {
-        cnt++;
-      }
-    }
-    output(cnt);
+    output(count_prime(n));
   }
 }
