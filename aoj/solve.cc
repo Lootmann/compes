@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#include <math.h>
 using namespace std;
 
 #ifdef DEBUG_
@@ -28,43 +27,52 @@ template <typename T> bool chmin(T& a, const T& b) {
 }
 
 using llint = long long int;
+using P = pair<int, int>;
 
-void solve() {
-  double x1, y1, x2, y2, x3, y3;
-  cin >> x1 >> y1 >> x2 >> y2 >> x3 >> y3;
-
-  double x1_2 = x1 * x1, x2_2 = x2 * x2, x3_2 = x3 * x3;
-  double y1_2 = y1 * y1, y2_2 = y2 * y2, y3_2 = y3 * y3;
-
-  double xy1 = x1_2 + y1_2;
-  double xy2 = x2_2 + y2_2;
-  double xy3 = x3_2 + y3_2;
-
-  double diff_x12 = x1 - x2;
-  double diff_x23 = x2 - x3;
-  double diff_x31 = x3 - x1;
-
-  double diff_y12 = y1 - y2;
-  double diff_y23 = y2 - y3;
-  double diff_y31 = y3 - y1;
-
-  double p = xy1 * diff_y23 + xy2 * diff_y31 + xy3 * diff_y12;
-  p /= (diff_x12 * diff_y23 - diff_x23 * diff_y12);
-  p /= 2;
-
-  double q = xy1 * diff_x23 + xy2 * diff_x31 + xy3 * diff_x12;
-  q /= (diff_x23 * diff_y12 - diff_x12 * diff_y23);
-  q /= 2;
-
-  double r = sqrtl(powl(x1 - p, 2) + powl(y1 - q, 2));
-
-  cout << p << ' ' << q << ' ' << r << '\n';
+tuple<int, int> input(string line) {
+  int a, b, idx{};
+  rep(i, (int)line.size()) {
+    if (line[i] == ',') {
+      idx = i;
+      break;
+    }
+  }
+  a = stoi(line.substr(0, idx));
+  b = stoi(line.substr(idx + 1));
+  return tuple(a, b);
 }
 
 int main() {
   FastIO;
-  int t;
-  cin >> t;
-  cout << fixed << setprecision(3);
-  rep(_, t) solve();
+  int w, n;
+  cin >> w >> n;
+
+  vector<P> vertical_lines;
+
+  rep(_, n) {
+    string line;
+    cin >> line;
+
+    int a, b;
+    tie(a, b) = input(line);
+    a--, b--;
+    vertical_lines.push_back(make_pair(a, b));
+  }
+
+  vector<int> ans(w, 0);
+  rep(i, w) {
+    int rot{i};
+    for (auto p : vertical_lines) {
+      if (p.first == rot) {
+        rot = p.second;
+      } else if (p.second == rot) {
+        rot = p.first;
+      }
+    }
+    ans[rot] = i + 1;
+  }
+
+  for (auto r : ans) {
+    output(r);
+  }
 }
