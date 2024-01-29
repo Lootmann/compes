@@ -30,8 +30,19 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  string s;
-  cin >> s;
-  reverse(s.begin(), s.end());
-  output(s);
+
+  int n;
+  cin >> n;
+
+  llint total{100000};
+  rep(_, n) {
+    total = total * 1.05;
+
+    dump(total, total / 1000, total % 1000);
+    if (total % 1000 > 0) {
+      total = total / 1000 * 1000;
+      total += 1000;
+    }
+  }
+  output(total);
 }
