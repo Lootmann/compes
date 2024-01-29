@@ -28,14 +28,24 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
+namespace me {
+llint gcd(llint a, llint b) {
+  if (b == 0) return a;
+  if (a > b)
+    return gcd(b, a % b);
+  else
+    return gcd(a, b % a);
+}
+
+llint lcm(llint a, llint b) {
+  return a / gcd(a, b) * b;
+}
+}  // namespace me
+
 int main() {
   FastIO;
-  double a, b, c, d, e, f;
-  cout << fixed << setprecision(3);
-  while (cin >> a >> b >> c >> d >> e >> f) {
-    double y = (f * a - c * d) / (e * a - b * d);
-    double x = (c - b * y) / a;
-
-    cout << x << ' ' << y << '\n';
+  llint a, b;
+  while (cin >> a >> b) {
+    cout << gcd(a, b) << ' ' << lcm(a, b) << '\n';
   }
 }
