@@ -27,25 +27,33 @@ template <typename T> bool chmin(T& a, const T& b) {
 }
 
 using llint = long long int;
-using ld = long double;
 
-ld f(ld d) {
-  return d * d;
-}
-
-ld calc_integral(ld d) {
-  ld area{};
-  for (int i = 1; i < 600 / d; ++i) {
-    area += f(i * d) * d;
+tuple<double, double> split(string s) {
+  int idx{};
+  rep(i, (int)s.size()) {
+    if (s[i] == ',') idx = i;
   }
-  return area;
+  double x = stod(s.substr(0, idx));
+  double y = stod(s.substr(idx + 1));
+  return tuple(x, y);
 }
 
 int main() {
   FastIO;
-  long double d;
+  string line;
 
-  while (cin >> d) {
-    output((long)calc_integral(d));
+  double px{0.0}, py{0.0}, deg{0.0};
+  while (cin >> line) {
+    double dist, d;
+    tie(dist, d) = split(line);
+    if (dist == 0 && d == 0) break;
+
+    px += dist * sin(deg * (M_PI / 180));
+    py += dist * cos(deg * (M_PI / 180));
+    deg += d;
   }
+
+  dump("result", px, py);
+  output((int)px);
+  output((int)py);
 }
