@@ -27,21 +27,25 @@ template <typename T> bool chmin(T& a, const T& b) {
 }
 
 using llint = long long int;
+using ld = long double;
+
+ld f(ld d) {
+  return d * d;
+}
+
+ld calc_integral(ld d) {
+  ld area{};
+  for (int i = 1; i < 600 / d; ++i) {
+    area += f(i * d) * d;
+  }
+  return area;
+}
 
 int main() {
   FastIO;
+  long double d;
 
-  stack<int> que;
-  int n;
-
-  while (cin >> n) {
-    if (n == 0 && que.empty()) break;
-
-    if (n == 0) {
-      output(que.top());
-      que.pop();
-    } else {
-      que.push(n);
-    }
+  while (cin >> d) {
+    output((long)calc_integral(d));
   }
 }
