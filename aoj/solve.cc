@@ -28,19 +28,22 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-void bubbleSort(vector<int>& ai, int n) {
+void selectionSort(vector<int>& ai, int n) {
   int cnt{};
-  bool finished{true};
-  while (finished) {
-    finished = false;
-    for (int i = n - 1; i >= 1; --i) {
-      if (ai[i] < ai[i - 1]) {
-        int tmp = ai[i];
-        ai[i] = ai[i - 1];
-        ai[i - 1] = tmp;
-        finished = true;
-        cnt++;
+
+  rep(i, n) {
+    int minj = i;
+    for (int j = i; j < n; ++j) {
+      if (ai[j] < ai[minj]) {
+        minj = j;
       }
+    }
+
+    if (ai[i] != ai[minj]) {
+      int tmp = ai[i];
+      ai[i] = ai[minj];
+      ai[minj] = tmp;
+      cnt++;
     }
   }
 
@@ -56,5 +59,5 @@ int main() {
   vector<int> ai(n);
   rep(i, n) cin >> ai[i];
 
-  bubbleSort(ai, n);
+  selectionSort(ai, n);
 }
