@@ -28,54 +28,31 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-int cnt = 0;
-
-auto trace = [](const vector<int>& v) {
-  for (size_t i = 0; i < v.size(); i++) {
-    cout << v.at(i);
-    cout << ((i != v.size() - 1) ? " " : "\n");
-  }
-};
-
-void insertionSort(vector<int>& vi, int n, int g) {
-  for (int i = g; i < n; i++) {
-    int v = vi.at(i);
-    int j = i - g;
-    while (j >= 0 && vi.at(j) > v) {
-      vi.at(j + g) = vi.at(j);
-      j = j - g;
-      cnt++;
-    }
-    vi.at(j + g) = v;
-  }
-}
-
-void shellSort(vector<int>& vi, int n) {
-  vector<int> g;
-  for (int i = 1;;) {
-    if (i > n) break;
-    g.push_back(i);
-    i = 3 * i + 1;
-  }
-  reverse(g.rbegin(), g.rend());
-
-  // output m and g
-  cout << g.size() << endl;
-  trace(g);
-
-  for (auto gi : g) {
-    insertionSort(vi, n, gi);
-  }
-}
-
 int main() {
+  FastIO;
   int n;
   cin >> n;
 
-  vector<int> vi(n);
-  rep(i, n) cin >> vi.at(i);
+  vector<int> ai(n + 1, 0);
+  rep(i, n) cin >> ai[i + 1];
 
-  shellSort(vi, n);
-  cout << cnt << endl;
-  for (auto num : vi) cout << num << endl;
+  dump(ai);
+
+  for (int i = 1; i <= n; ++i) {
+    cout << "node " << i << ": ";
+    cout << "key = " << ai[i] << ", ";
+
+    if (1 <= i / 2) {
+      cout << "parent key = " << ai[i / 2] << ", ";
+    }
+
+    if (1 <= 2 * i && 2 * i <= n) {
+      cout << "left key = " << ai[2 * i] << ", ";
+    }
+
+    if (1 <= 2 * i + 1 && 2 * i + 1 <= n) {
+      cout << "right key = " << ai[2 * i + 1] << ", ";
+    }
+    cout << '\n';
+  }
 }
