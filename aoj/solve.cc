@@ -28,39 +28,33 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-int main() {
-  FastIO;
-  // 1 <= N <= 100
-  int N, K;
-  cin >> N >> K;
-
-  vector<int> ws(N);
-  rep(i, N) cin >> ws[i];
-
-  int maxw{};
-  rep(i, N) chmax(maxw, ws[i]);
-
-  int left = maxw - 1;
-  int right = 1e9 + 7;
-
-  while (right - left > 1) {
-    int mid = left + (right - left) / 2;
-    int num{1}, cur{0};
-    rep(i, N) {
-      if (cur + ws[i] > mid) {
-        num++;
-        cur = ws[i];
-      } else {
-        cur += ws[i];
+void bubbleSort(vector<int>& ai, int n) {
+  int cnt{};
+  bool finished{true};
+  while (finished) {
+    finished = false;
+    for (int i = n - 1; i >= 1; --i) {
+      if (ai[i] < ai[i - 1]) {
+        int tmp = ai[i];
+        ai[i] = ai[i - 1];
+        ai[i - 1] = tmp;
+        finished = true;
+        cnt++;
       }
-    }
-
-    if (num <= K) {
-      right = mid;
-    } else {
-      left = mid;
     }
   }
 
-  output(right);
+  rep(i, n) cout << ai[i] << (i == n - 1 ? '\n' : ' ');
+  output(cnt);
+}
+
+int main() {
+  FastIO;
+  int n;
+  cin >> n;
+
+  vector<int> ai(n);
+  rep(i, n) cin >> ai[i];
+
+  bubbleSort(ai, n);
 }
