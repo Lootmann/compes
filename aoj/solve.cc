@@ -27,43 +27,40 @@ template <typename T> bool chmin(T& a, const T& b) {
 }
 
 using llint = long long int;
-using P = pair<int, int>;
 
 int main() {
   FastIO;
-  string S;
-  cin >> S;
+  // 1 <= N <= 100
+  int N, K;
+  cin >> N >> K;
 
-  stack<int> st;
-  vector<P> ans;
+  vector<int> ws(N);
+  rep(i, N) cin >> ws[i];
 
-  int cnt{0}, n = (int)S.size();
+  int maxw{};
+  rep(i, N) chmax(maxw, ws[i]);
 
-  for (int i = 0; i < n; i++) {
-    if (S[i] == '\\') {
-      st.push(i);
-    } else if (S[i] == '/') {
-      if (st.empty()) continue;
-      int a = i - st.top();
-      cnt += a;
+  int left = maxw - 1;
+  int right = 1e9 + 7;
 
-      while (!ans.empty() && st.top() < ans.back().second) {
-        a += ans.back().first;
-        ans.pop_back();
+  while (right - left > 1) {
+    int mid = left + (right - left) / 2;
+    int num{1}, cur{0};
+    rep(i, N) {
+      if (cur + ws[i] > mid) {
+        num++;
+        cur = ws[i];
+      } else {
+        cur += ws[i];
       }
+    }
 
-      ans.push_back({a, st.top()});
-      st.pop();
+    if (num <= K) {
+      right = mid;
+    } else {
+      left = mid;
     }
   }
 
-  int nn = (int)ans.size();
-
-  cout << cnt << endl;
-  cout << nn << (nn ? " " : "");
-
-  for (int i = 0; i < nn; i++) {
-    cout << ans[i].first << (i == nn - 1 ? "" : " ");
-  }
-  cout << endl;
+  output(right);
 }
