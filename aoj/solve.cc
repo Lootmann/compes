@@ -27,25 +27,43 @@ template <typename T> bool chmin(T& a, const T& b) {
 }
 
 using llint = long long int;
+using P = pair<int, int>;
 
 int main() {
   FastIO;
-  int n;
-  cin >> n;
+  string S;
+  cin >> S;
 
-  vector<int> ri(n);
-  rep(i, n) cin >> ri[i];
+  stack<int> st;
+  vector<P> ans;
 
-  int i{};
-  int minv{INFi}, ans{ri[1] - ri[0]};
-  rep(j, n) {
-    if (chmin(minv, ri[j])) {
-      i = j;
-    }
+  int cnt{0}, n = (int)S.size();
 
-    if (j > i) {
-      chmax(ans, ri[j] - minv);
+  for (int i = 0; i < n; i++) {
+    if (S[i] == '\\') {
+      st.push(i);
+    } else if (S[i] == '/') {
+      if (st.empty()) continue;
+      int a = i - st.top();
+      cnt += a;
+
+      while (!ans.empty() && st.top() < ans.back().second) {
+        a += ans.back().first;
+        ans.pop_back();
+      }
+
+      ans.push_back({a, st.top()});
+      st.pop();
     }
   }
-  output(ans);
+
+  int nn = (int)ans.size();
+
+  cout << cnt << endl;
+  cout << nn << (nn ? " " : "");
+
+  for (int i = 0; i < nn; i++) {
+    cout << ans[i].first << (i == nn - 1 ? "" : " ");
+  }
+  cout << endl;
 }
