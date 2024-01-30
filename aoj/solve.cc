@@ -28,36 +28,81 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-void selectionSort(vector<int>& ai, int n) {
-  int cnt{};
+struct Card {
+  string mark;
+  int num;
+};
 
-  rep(i, n) {
-    int minj = i;
-    for (int j = i; j < n; ++j) {
-      if (ai[j] < ai[minj]) {
+void BubbleSort(vector<Card>& src) {
+  for (size_t i = 0; i < src.size(); i++) {
+    for (size_t j = src.size() - 1; j > i; --j) {
+      if (src.at(j).num < src.at(j - 1).num) {
+        Card temp = src.at(j);
+        src.at(j) = src.at(j - 1);
+        src.at(j - 1) = temp;
+      }
+    }
+  }
+}
+
+void SelectionSort(vector<Card>& src) {
+  for (size_t i = 0; i <= src.size() - 1; i++) {
+    size_t minj = i;
+    for (size_t j = i; j <= src.size() - 1; j++) {
+      if (src.at(j).num < src.at(minj).num) {
         minj = j;
       }
     }
-
-    if (ai[i] != ai[minj]) {
-      int tmp = ai[i];
-      ai[i] = ai[minj];
-      ai[minj] = tmp;
-      cnt++;
-    }
+    Card temp = src.at(i);
+    src.at(i) = src.at(minj);
+    src.at(minj) = temp;
   }
-
-  rep(i, n) cout << ai[i] << (i == n - 1 ? '\n' : ' ');
-  output(cnt);
 }
 
+auto trace = [](vector<struct Card> vi) {
+  for (size_t i = 0; i < vi.size(); i++) {
+    cout << vi.at(i).mark << vi.at(i).num;
+    cout << ((i != vi.size() - 1) ? " " : "\n");
+  }
+};
+
+auto is_stable = [](vector<struct Card> v1, vector<struct Card> v2) {
+  for (size_t i = 0; i < v1.size(); i++) {
+    if (v1.at(i).mark != v2.at(i).mark) {
+      return false;
+    }
+  }
+  return true;
+};
+
 int main() {
-  FastIO;
+  vector<Card> for_bubble;
+  vector<Card> for_selection;
+
   int n;
   cin >> n;
+  while (n--) {
+    string input;
+    cin >> input;
 
-  vector<int> ai(n);
-  rep(i, n) cin >> ai[i];
+    Card card;
+    card.mark = input[0];
+    card.num = input[1] - '0';
 
-  selectionSort(ai, n);
+    for_bubble.push_back(card);
+    for_selection.push_back(card);
+  }
+
+  BubbleSort(for_bubble);
+  SelectionSort(for_selection);
+
+  trace(for_bubble);
+  cout << "Stable" << endl;
+
+  trace(for_selection);
+  if (is_stable(for_bubble, for_selection)) {
+    cout << "Stable" << endl;
+  } else {
+    cout << "Not stable" << endl;
+  }
 }
