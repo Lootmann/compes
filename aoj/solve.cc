@@ -28,81 +28,54 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-struct Card {
-  string mark;
-  int num;
+int cnt = 0;
+
+auto trace = [](const vector<int>& v) {
+  for (size_t i = 0; i < v.size(); i++) {
+    cout << v.at(i);
+    cout << ((i != v.size() - 1) ? " " : "\n");
+  }
 };
 
-void BubbleSort(vector<Card>& src) {
-  for (size_t i = 0; i < src.size(); i++) {
-    for (size_t j = src.size() - 1; j > i; --j) {
-      if (src.at(j).num < src.at(j - 1).num) {
-        Card temp = src.at(j);
-        src.at(j) = src.at(j - 1);
-        src.at(j - 1) = temp;
-      }
+void insertionSort(vector<int>& vi, int n, int g) {
+  for (int i = g; i < n; i++) {
+    int v = vi.at(i);
+    int j = i - g;
+    while (j >= 0 && vi.at(j) > v) {
+      vi.at(j + g) = vi.at(j);
+      j = j - g;
+      cnt++;
     }
+    vi.at(j + g) = v;
   }
 }
 
-void SelectionSort(vector<Card>& src) {
-  for (size_t i = 0; i <= src.size() - 1; i++) {
-    size_t minj = i;
-    for (size_t j = i; j <= src.size() - 1; j++) {
-      if (src.at(j).num < src.at(minj).num) {
-        minj = j;
-      }
-    }
-    Card temp = src.at(i);
-    src.at(i) = src.at(minj);
-    src.at(minj) = temp;
+void shellSort(vector<int>& vi, int n) {
+  vector<int> g;
+  for (int i = 1;;) {
+    if (i > n) break;
+    g.push_back(i);
+    i = 3 * i + 1;
+  }
+  reverse(g.rbegin(), g.rend());
+
+  // output m and g
+  cout << g.size() << endl;
+  trace(g);
+
+  for (auto gi : g) {
+    insertionSort(vi, n, gi);
   }
 }
-
-auto trace = [](vector<struct Card> vi) {
-  for (size_t i = 0; i < vi.size(); i++) {
-    cout << vi.at(i).mark << vi.at(i).num;
-    cout << ((i != vi.size() - 1) ? " " : "\n");
-  }
-};
-
-auto is_stable = [](vector<struct Card> v1, vector<struct Card> v2) {
-  for (size_t i = 0; i < v1.size(); i++) {
-    if (v1.at(i).mark != v2.at(i).mark) {
-      return false;
-    }
-  }
-  return true;
-};
 
 int main() {
-  vector<Card> for_bubble;
-  vector<Card> for_selection;
-
   int n;
   cin >> n;
-  while (n--) {
-    string input;
-    cin >> input;
 
-    Card card;
-    card.mark = input[0];
-    card.num = input[1] - '0';
+  vector<int> vi(n);
+  rep(i, n) cin >> vi.at(i);
 
-    for_bubble.push_back(card);
-    for_selection.push_back(card);
-  }
-
-  BubbleSort(for_bubble);
-  SelectionSort(for_selection);
-
-  trace(for_bubble);
-  cout << "Stable" << endl;
-
-  trace(for_selection);
-  if (is_stable(for_bubble, for_selection)) {
-    cout << "Stable" << endl;
-  } else {
-    cout << "Not stable" << endl;
-  }
+  shellSort(vi, n);
+  cout << cnt << endl;
+  for (auto num : vi) cout << num << endl;
 }
