@@ -27,38 +27,15 @@ template <typename T> bool chmin(T& a, const T& b) {
 }
 
 using llint = long long int;
-using VVI = vector<vector<int>>;
+using VI = vector<int>;
 
-void out(const VVI& vi, int size) {
-  int idx{};
-  for (int i = 1000; i >= 0; --i) {
-    if (vi[size][i] != 0) {
-      idx = i;
-      break;
-    }
-  }
+void adding(VI& f1, VI& f2, VI& f3) {
+  int carryup{};
 
-  cout << idx << " -> ";
-
-  for (int i = idx; i >= 0; --i) {
-    cout << vi[size][i];
-  }
-  cout << '\n';
-
-  if (idx >= 999) exit(0);
-}
-
-void adding(VVI& fib, int n) {
-  int carryup{0};
-
-  rep(i, (int)fib[n - 2].size()) {
-    int res = fib[n - 1][i] + fib[n - 2][i] + carryup;
-    fib[n][i] = res % 10;
-    carryup = res / 10;
-
-    if (carryup >= 1) {
-      fib[n][i + 1] = carryup;
-    }
+  rep(i, 1000) {
+    int sum = f1[i] + f2[i] + carryup;
+    f3[i] = sum % 10;
+    carryup = sum / 10;
   }
 }
 
@@ -67,13 +44,17 @@ int main() {
   int n;
   cin >> n;
 
-  VVI fib(n + 1, vector<int>(1020, 0));
-  fib[0][0] = 1;
-  fib[1][0] = 1;
+  vector<int> fib1(1001, 0), fib2(1001, 0), fib3(1001, 0);
+  fib1[0] = 1;
+  fib2[0] = 1;
+  fib3[0] = 2;
 
   for (int i = 2; i <= n; ++i) {
-    adding(fib, i);
-    cout << "[" << i << "] =\n";
-    out(fib, i);
+    rep(k, 1000) {
+      fib1[k] = fib2[k];
+      fib2[k] = fib3[k];
+    }
+    adding(fib1, fib2, fib3);
   }
+  dump(fib3);
 }
