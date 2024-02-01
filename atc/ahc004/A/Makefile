@@ -18,9 +18,9 @@ in:
 	./$(TARGET) < in2 > got2
 	./$(TARGET) < in3 > got3
 
-.PHONY: submit
-submit:
-	oj s solve.cc
+.PHONY: test
+test:
+	./$(TARGET) < in0
 
 .PHONY: watch
 watch:

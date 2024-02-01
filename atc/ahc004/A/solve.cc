@@ -27,9 +27,10 @@ void out(const vs& res, const int n) {
   }
 }
 
-void solve(const vs& dna, vs& answer, const int n) {
-  string res{};
+void solve(vs& dna, vs& answer, const int n) {
+  reverse(dna.begin(), dna.end());
 
+  string res{};
   for (auto line : dna) {
     res += line;
   }
@@ -47,7 +48,9 @@ int main() {
   vs dna(m);
   rep(i, m) cin >> dna[i];
 
-  vs ans(n);
+  // init padding '.'
+  vs ans(n, string(n, '.'));
+
   solve(dna, ans, n);
   out(ans, n);
 }
