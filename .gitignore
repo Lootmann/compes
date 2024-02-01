@@ -5,6 +5,7 @@ tmp/
 
 **/test/
 **/in*
+**/out*
 **/got*
 **/want*
 **/seed*
