@@ -13,7 +13,9 @@ out:
 
 .PHONY: in
 in:
-	./$(TARGET) < in > got
+	./$(TARGET) < seed0 > got0
+	./$(TARGET) < seed1 > got1
+	./$(TARGET) < seed2 > got2
 
 .PHONY: submit
 submit:
