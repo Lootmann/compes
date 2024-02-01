@@ -2,4 +2,9 @@
 **/*.out
 **/.clang-format
 tmp/
+
 **/test/
+**/in*
+**/got*
+**/want*
+**/seed*
