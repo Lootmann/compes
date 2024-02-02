@@ -30,26 +30,32 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int n, k;
-  cin >> n >> k;
+  int N, K;
+  cin >> N >> K;
 
-  vector<int> ai(n);
-  rep(i, n) cin >> ai[i];
+  vector<int> ai(N);
+  rep(i, N) cin >> ai[i];
 
-  int ans{};
+  vector<vector<bool>> dp(N + 1, vector<bool>(K + 1));
+  dp[0][0] = true;
 
-  for (int bit = 0; bit < (1 << n); ++bit) {
-    int sum{};
-    for (int i = 0; i < n; ++i) {
-      if (bit & (1 << i)) {
-        sum += ai[i];
+  for (int i = 0; i < N; ++i) {
+    for (int k = 0; k <= K; ++k) {
+      // すでに入ってる -> こんなことなくない？
+      if (!dp[i][k]) continue;
+
+      dp[i + 1][k] = true;
+      // 重量を超えない
+      if (k + ai[i] <= K) {
+        // push based
+        dp[i + 1][k + ai[i]] = true;
       }
-    }
-
-    if (sum <= k) {
-      chmax(ans, sum);
     }
   }
 
-  output(ans);
+  for (int k = K; k >= 0; --k) {
+    if (dp[N][k]) {
+      cout << dp[N][k] << ' ';
+    }
+  }
 }
