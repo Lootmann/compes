@@ -30,29 +30,23 @@ using llint = long long int;
 
 int main() {
   FastIO;
-  int n;
-  cin >> n;
 
-  vector<int> ai(n + 1, 0);
-  rep(i, n) cin >> ai[i + 1];
+  int n, x;
+  while (cin >> n >> x) {
+    if (n == 0 && x == 0) break;
 
-  dump(ai);
-
-  for (int i = 1; i <= n; ++i) {
-    cout << "node " << i << ": ";
-    cout << "key = " << ai[i] << ", ";
-
-    if (1 <= i / 2) {
-      cout << "parent key = " << ai[i / 2] << ", ";
+    int cnt{};
+    for (int a = 1; a <= n; ++a) {
+      for (int b = a + 1; b <= n; ++b) {
+        for (int c = b + 1; c <= n; ++c) {
+          if (a + b + c == x) {
+            dump(a, b, c);
+            cnt++;
+          }
+        }
+      }
     }
 
-    if (1 <= 2 * i && 2 * i <= n) {
-      cout << "left key = " << ai[2 * i] << ", ";
-    }
-
-    if (1 <= 2 * i + 1 && 2 * i + 1 <= n) {
-      cout << "right key = " << ai[2 * i + 1] << ", ";
-    }
-    cout << '\n';
+    output(cnt);
   }
 }
