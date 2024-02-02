@@ -9,15 +9,11 @@ using namespace std;
 
 #define FastIO cin.tie(nullptr), ios_base::sync_with_stdio(false);
 #define rep(i, n) for (int i = 0; i < (int)(n); ++i)
-#define output(msg) cout << (msg) << '\n'
 #define die(msg)         \
   do {                   \
     cout << msg << endl; \
     exit(0);             \
   } while (0)
-#define all(k) k.begin(), k.end()
-#define INFi 1 << 30
-#define INFll 1LL << 60
 
 template <typename T> bool chmax(T& a, const T& b) {
   return ((a < b) ? (a = b, true) : (false));
@@ -31,6 +27,7 @@ using VVI = vector<vector<int>>;
 
 int dy[]{0, 1, -1, 0};
 int dx[]{-1, 0, 0, 1};
+string move_str = "LDUR";
 
 struct Pos {
   int y;
@@ -42,74 +39,42 @@ bool is_inbound(int y, int x) {
   return 0 <= y && y < 50 && 0 <= x && x < 50;
 }
 
-char move_direction(int y, int x) {
-  if (y == -1 && x == 0) return 'U';
-  if (y == 1 && x == 0) return 'D';
-  if (y == 0 && x == -1) return 'L';
-  if (y == 0 && x == 1) return 'R';
-  throw runtime_error("move_direction :^)");
-}
+void solve(const int si, const int sj, VVI& ti, const VVI& pi) {
+  int y = si, x = sj;
+  int point = pi[y][x];
 
-void solve(const int start_y, const int start_x, VVI& ti, const VVI& pi) {
-  // 0 not visited
-  vector<vector<int>> visited(50, vector<int>(50, 0));
+  vector<bool> visited(50 * 50, false);
+  visited[ti[y][x]] = true;
 
-  int id{1};
-  visited[start_y][start_x] = id++;
+  string ans{};
 
-  // check neighbor same tile
-  rep(k, 4) {
-    int ny = start_y + dy[k];
-    int nx = start_x + dx[k];
+  while (true) {
+    int next_move = -1;
+    int next_point = point;
 
-    if (is_inbound(ny, nx)) {
-      if (ti[start_y][start_x] == ti[ny][nx]) {
-        visited[ny][nx] = -1;
-      }
-    }
-  }
+    rep(k, 4) {
+      int ny = y + dy[k];
+      int nx = x + dx[k];
 
-  // dfs
-  stack<Pos> st;
-  st.push(Pos(start_y, start_x));
-
-  while (!st.empty()) {
-    Pos cur = st.top();
-    st.pop();
-
-    rep(i, 4) {
-      int ny = cur.y + dy[i];
-      int nx = cur.x + dx[i];
-
-      // outbound
       if (!is_inbound(ny, nx)) continue;
-      if (visited[ny][nx] != 0) continue;
-      if (ti[cur.y][cur.x] == ti[ny][nx]) {
-        visited[ny][nx] = -1;
-        continue;
+      if (visited[ti[ny][nx]]) continue;
+      if (next_point > point + pi[ny][nx]) continue;
+
+      if (chmax(next_point, point + pi[ny][nx])) {
+        next_move = k;
       }
-
-      visited[ny][nx] = id++;
-
-      st.push(Pos(ny, nx));
     }
+
+    if (next_move == -1) break;
+    y = y + dy[next_move];
+    x = x + dx[next_move];
+
+    visited[ti[y][x]] = true;
+    point += pi[y][x];
+    ans += move_str[next_move];
   }
 
-  // ans
-  auto format = [](int n) {
-    if (n < 0) return string("    ");
-    if (n < 10) return "   " + to_string(n);
-    if (n < 100) return "  " + to_string(n);
-    if (n < 1000) return " " + to_string(n);
-    return to_string(n);
-  };
-
-  rep(y, 50) {
-    rep(x, 50) cout << format(visited[y][x]) << "|";
-    cout << '\n';
-    rep(x, 50) cout << "----+";
-    cout << '\n';
-  }
+  cout << ans << '\n';
 }
 
 int main() {
