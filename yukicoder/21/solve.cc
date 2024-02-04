@@ -35,33 +35,13 @@ int main() {
 
   vector<int> ps(n);
   rep(i, n) cin >> ps[i];
-  sort(all(ps));
 
-  double ans{0};
-  do {
-    for (int a = 0; a < n; ++a) {
-      for (int b = a + 1; b < n; ++b) {
-        for (int c = b + 1; c < n; ++c) {
-          int low{}, mid{}, high{};
+  int minv{INFi}, maxv{0};
 
-          for (int t = 0; t <= a; ++t) low += ps[t];
-          for (int t = a + 1; t <= b; ++t) mid += ps[t];
-          for (int t = b + 1; t <= c; ++t) high += ps[t];
+  rep(i, n) {
+    chmin(minv, ps[i]);
+    chmax(maxv, ps[i]);
+  }
 
-          int cnt = (a + 1) + (b - a) + (c - b);
-          if (cnt == k) {
-            double ave_a = (double)low / (a + 1);
-            double ave_b = (double)mid / (b - a);
-            double ave_c = (double)high / (c - b);
-
-            double diff =
-                max(ave_a, max(ave_b, ave_c)) - min(ave_a, min(ave_b, ave_c));
-            chmax(ans, diff);
-          }
-        }
-      }
-    }
-  } while (next_permutation(all(ps)));
-
-  output(ans);
+  output(maxv - minv);
 }
