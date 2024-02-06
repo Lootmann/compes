@@ -38,11 +38,13 @@ int main() {
   sort(rall(ai));
   dump(ai);
 
-  int ans{};
-  rep(i, k) {
+  int ans{ai[0]};
+  for (int i = 1; i < k; ++i) {
     if (ai[i] >= 0) {
       ans += ai[i];
     }
+    dump(ans);
   }
+
   out(ans);
 }
