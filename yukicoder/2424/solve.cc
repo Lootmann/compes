@@ -20,31 +20,6 @@ using namespace std;
     exit(0);             \
   } while (0)
 
-template <class A> void read(vector<A>& v);
-template <class A, size_t S> void read(array<A, S>& a);
-template <class T> void read(T& x) {
-  cin >> x;
-}
-void read(double& d) {
-  string t;
-  read(t);
-  d = stod(t);
-}
-void read(long double& d) {
-  string t;
-  read(t);
-  d = stold(t);
-}
-template <class H, class... T> void read(H& h, T&... t) {
-  read(h);
-  read(t...);
-}
-template <class A> void read(vector<A>& x) {
-  EACH(a, x) read(a);
-}
-template <class A, size_t S> void read(array<A, S>& x) {
-  EACH(a, x) read(a);
-}
 template <typename T> bool chmax(T& a, const T& b) {
   return ((a < b) ? (a = b, true) : (false));
 }
@@ -57,14 +32,12 @@ using llint = long long int;
 int main() {
   FastIO;
   llint n, k;
-  read(n, k);
+  cin >> n >> k;
 
   vector<llint> ai(n);
-  read(ai);
+  rep(i, n) cin >> ai[i];
 
   sort(ai.begin(), ai.end());
-  dump(ai);
-  dump("薬品", k);
 
   llint wither{};
   rep(i, n) {
@@ -72,7 +45,6 @@ int main() {
       k -= ai[i];
       wither++;
     }
-    dump(wither, k);
   }
   cout << wither << ' ' << k << '\n';
 }
