@@ -20,31 +20,6 @@ using namespace std;
     exit(0);             \
   } while (0)
 
-template <class A> void read(vector<A>& v);
-template <class A, size_t S> void read(array<A, S>& a);
-template <class T> void read(T& x) {
-  cin >> x;
-}
-void read(double& d) {
-  string t;
-  read(t);
-  d = stod(t);
-}
-void read(long double& d) {
-  string t;
-  read(t);
-  d = stold(t);
-}
-template <class H, class... T> void read(H& h, T&... t) {
-  read(h);
-  read(t...);
-}
-template <class A> void read(vector<A>& x) {
-  EACH(a, x) read(a);
-}
-template <class A, size_t S> void read(array<A, S>& x) {
-  EACH(a, x) read(a);
-}
 template <typename T> bool chmax(T& a, const T& b) {
   return ((a < b) ? (a = b, true) : (false));
 }
@@ -69,13 +44,10 @@ ullint conv2to10(const string& s) {
 int main() {
   FastIO;
   string a, b;
-  read(a, b);
+  cin >> a >> b;
 
   ullint aa = conv2to10(a);
   ullint bb = conv2to10(b);
-
-  dump(aa);
-  dump(bb);
 
   if (aa % 2 == 1 && bb % 2 == 1)
     output("Odd");
