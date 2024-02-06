@@ -20,31 +20,6 @@ using namespace std;
     exit(0);             \
   } while (0)
 
-template <class A> void read(vector<A>& v);
-template <class A, size_t S> void read(array<A, S>& a);
-template <class T> void read(T& x) {
-  cin >> x;
-}
-void read(double& d) {
-  string t;
-  read(t);
-  d = stod(t);
-}
-void read(long double& d) {
-  string t;
-  read(t);
-  d = stold(t);
-}
-template <class H, class... T> void read(H& h, T&... t) {
-  read(h);
-  read(t...);
-}
-template <class A> void read(vector<A>& x) {
-  EACH(a, x) read(a);
-}
-template <class A, size_t S> void read(array<A, S>& x) {
-  EACH(a, x) read(a);
-}
 template <typename T> bool chmax(T& a, const T& b) {
   return ((a < b) ? (a = b, true) : (false));
 }
@@ -57,13 +32,8 @@ using llint = long long int;
 int main() {
   FastIO;
   long double v, t;
-  read(v, t);
+  cin >> v >> t;
 
   v *= 1000000;
-  dump(v);
-  dump(v * t, (int)(v * t));
-  dump(v * t / 1000000);
-  dump((int)(v * t) / 1000000);
-
   output((int)(v * t / 1000000));
 }
