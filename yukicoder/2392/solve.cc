@@ -7,44 +7,21 @@ using namespace std;
 #define dump(...)
 #endif
 
+using llint = long long int;
+
 #define FastIO cin.tie(nullptr), ios_base::sync_with_stdio(false);
-#define rep(i, n) for (int i = 0; (int)i < n; ++i)
-#define repa(i, a, n) for (int i = a; (int)i < n; ++i)
-#define rrep(i, n) for (int i = n; (int)i >= 0; --i)
-#define rrepa(i, a, n) for (int i = a; (int)i >= n; --i)
-#define EACH(x, a) for (auto& x : a)
-#define output(msg) cout << (msg) << '\n'
+#define rep(i, n) for (int i = 0; i < (int)(n); ++i)
+#define out(msg) cout << (msg) << '\n'
 #define die(msg)         \
   do {                   \
     cout << msg << endl; \
     exit(0);             \
   } while (0)
+#define all(k) k.begin(), k.end()
+#define rall(k) k.rbegin(), k.rend()
+#define INFi 1 << 30
+#define INFll 1LL << 60
 
-template <class A> void read(vector<A>& v);
-template <class A, size_t S> void read(array<A, S>& a);
-template <class T> void read(T& x) {
-  cin >> x;
-}
-void read(double& d) {
-  string t;
-  read(t);
-  d = stod(t);
-}
-void read(long double& d) {
-  string t;
-  read(t);
-  d = stold(t);
-}
-template <class H, class... T> void read(H& h, T&... t) {
-  read(h);
-  read(t...);
-}
-template <class A> void read(vector<A>& x) {
-  EACH(a, x) read(a);
-}
-template <class A, size_t S> void read(array<A, S>& x) {
-  EACH(a, x) read(a);
-}
 template <typename T> bool chmax(T& a, const T& b) {
   return ((a < b) ? (a = b, true) : (false));
 }
@@ -52,24 +29,28 @@ template <typename T> bool chmin(T& a, const T& b) {
   return ((a > b) ? (a = b, true) : false);
 }
 
-using llint = long long int;
+vector<int> pow_divisors(int n) {
+  vector<int> res;
+  for (int i = 1; i * i <= n; ++i) {
+    res.push_back(i * i);
+  }
+  return res;
+}
 
 int main() {
   FastIO;
-
   int p;
-  read(p);
+  cin >> p;
 
-  // O(p^(0.5))
-  for (int i = 1; i * i <= p * 2; ++i) {
-    int j = p - i * i;
-    if (1 <= j && j <= p) {
-      int n = sqrt(j);
-      if (j == n * n) {
+  vector<int> divs = pow_divisors(p);
+  int n = (int)divs.size();
+
+  for (int i = 0; i < n; ++i) {
+    for (int j = i; j < n; ++j) {
+      if (divs[i] + divs[j] == p) {
         die("Yes");
       }
     }
   }
-
-  die("No");
+  out("No");
 }
