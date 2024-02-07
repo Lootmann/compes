@@ -7,44 +7,21 @@ using namespace std;
 #define dump(...)
 #endif
 
+using llint = long long int;
+
 #define FastIO cin.tie(nullptr), ios_base::sync_with_stdio(false);
-#define rep(i, n) for (int i = 0; (int)i < n; ++i)
-#define repa(i, a, n) for (int i = a; (int)(i) < (n); (++i))
-#define rrep(i, n) for (int i = (n - 1); (int)i >= 0; --i)
-#define rrepa(i, a, n) for (int i = a; (int)i >= 0; --i)
-#define EACH(x, a) for (auto& x : a)
-#define output(msg) cout << (msg) << '\n'
+#define rep(i, n) for (int i = 0; i < (int)(n); ++i)
+#define out(msg) cout << (msg) << '\n'
 #define die(msg)         \
   do {                   \
     cout << msg << endl; \
     exit(0);             \
   } while (0)
+#define all(k) k.begin(), k.end()
+#define rall(k) k.rbegin(), k.rend()
+#define INFi 1 << 30
+#define INFll 1LL << 60
 
-template <class A> void read(vector<A>& v);
-template <class A, size_t S> void read(array<A, S>& a);
-template <class T> void read(T& x) {
-  cin >> x;
-}
-void read(double& d) {
-  string t;
-  read(t);
-  d = stod(t);
-}
-void read(long double& d) {
-  string t;
-  read(t);
-  d = stold(t);
-}
-template <class H, class... T> void read(H& h, T&... t) {
-  read(h);
-  read(t...);
-}
-template <class A> void read(vector<A>& x) {
-  EACH(a, x) read(a);
-}
-template <class A, size_t S> void read(array<A, S>& x) {
-  EACH(a, x) read(a);
-}
 template <typename T> bool chmax(T& a, const T& b) {
   return ((a < b) ? (a = b, true) : (false));
 }
@@ -52,39 +29,29 @@ template <typename T> bool chmin(T& a, const T& b) {
   return ((a > b) ? (a = b, true) : false);
 }
 
-using llint = long long int;
+int manhattan(int x1, int y1, int x2, int y2) {
+  return abs(x1 - x2) + abs(y1 - y2);
+}
 
 int main() {
   FastIO;
-
   int n;
-  read(n);
+  cin >> n;
 
   vector<int> xi(n), yi(n);
-  rep(i, n) {
-    int x, y;
-    read(x, y);
-    xi[i] = x;
-    yi[i] = y;
-  }
+  rep(i, n) cin >> xi[i] >> yi[i];
 
-  sort(xi.begin(), xi.end());
-  sort(yi.begin(), yi.end());
+  int ans{300 * 300 * 2 + 1};
 
-  auto manhattan = [](int x1, int y1, int x2, int y2) {
-    return abs(x1 - x2) + abs(y1 - y2);
-  };
-
-  int ans{999999};
-
-  repa(cur_x, xi.front(), xi.back() + 1) {
-    repa(cur_y, yi.front(), yi.back() + 1) {
+  for (int x = 1; x <= 300; ++x) {
+    for (int y = 1; y <= 300; ++y) {
       int dist{};
-      rep(i, n) dist += manhattan(cur_x, cur_y, xi[i], yi[i]);
-
+      rep(i, n) {
+        dist += manhattan(x, y, xi[i], yi[i]);
+      }
       chmin(ans, dist);
     }
   }
 
-  output(ans);
+  out(ans);
 }
