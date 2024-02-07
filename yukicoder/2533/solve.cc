@@ -8,43 +8,18 @@ using namespace std;
 #endif
 
 #define FastIO cin.tie(nullptr), ios_base::sync_with_stdio(false);
-#define rep(i, n) for (int i = 0; (int)i < n; ++i)
-#define repa(i, a, n) for (int i = a; (int)(i) < (n); (++i))
-#define rrep(i, n) for (int i = (n - 1); (int)i >= 0; --i)
-#define rrepa(i, a, n) for (int i = a; (int)i >= 0; --i)
-#define EACH(x, a) for (auto& x : a)
-#define output(msg) cout << msg << '\n'
+#define rep(i, n) for (int i = 0; i < (int)(n); ++i)
+#define out(msg) cout << (msg) << '\n'
 #define die(msg)         \
   do {                   \
     cout << msg << endl; \
     exit(0);             \
   } while (0)
+#define all(k) k.begin(), k.end()
+#define rall(k) k.rbegin(), k.rend()
+#define INFi 1 << 30
+#define INFll 1LL << 60
 
-template <class A> void read(vector<A>& v);
-template <class A, size_t S> void read(array<A, S>& a);
-template <class T> void read(T& x) {
-  cin >> x;
-}
-void read(double& d) {
-  string t;
-  read(t);
-  d = stod(t);
-}
-void read(long double& d) {
-  string t;
-  read(t);
-  d = stold(t);
-}
-template <class H, class... T> void read(H& h, T&... t) {
-  read(h);
-  read(t...);
-}
-template <class A> void read(vector<A>& x) {
-  EACH(a, x) read(a);
-}
-template <class A, size_t S> void read(array<A, S>& x) {
-  EACH(a, x) read(a);
-}
 template <typename T> bool chmax(T& a, const T& b) {
   return ((a < b) ? (a = b, true) : (false));
 }
@@ -54,11 +29,12 @@ template <typename T> bool chmin(T& a, const T& b) {
 
 using llint = long long int;
 
-string conv10to2(int n) {
+string int2bit(int n) {
   if (n == 0) return "0";
+
   string res{};
   while (n > 0) {
-    res = char(n % 2 + '0') + res;
+    res = (char)(n % 2 + '0') + res;
     n /= 2;
   }
   return res;
@@ -67,10 +43,23 @@ string conv10to2(int n) {
 int main() {
   FastIO;
   int a, b;
-  read(a, b);
+  cin >> a >> b;
 
-  if ((a & b) == a)
-    output("Yes");
-  else
-    output("No");
+  string sa = int2bit(a);
+  string sb = int2bit(b);
+
+  // sa's first bit is 1
+  if (sa.size() > sb.size()) die("No");
+
+  int n = min((int)sa.size(), (int)sb.size());
+
+  rep(i, n) {
+    char ach = sa[(int)sa.size() - i - 1];
+    char bch = sb[(int)sb.size() - i - 1];
+    if (ach == '1') {
+      if (bch == '0') die("No");
+    }
+  }
+
+  out("Yes");
 }
