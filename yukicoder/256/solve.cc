@@ -8,14 +8,16 @@ using namespace std;
 #endif
 
 #define FastIO cin.tie(nullptr), ios_base::sync_with_stdio(false);
-#define rep(i, n) for (int i = 0; (int)i < n; ++i)
-#define output(msg) cout << (msg) << '\n'
+#define rep(i, n) for (int i = 0; i < (int)(n); ++i)
+#define out(msg) cout << (msg) << '\n'
 #define die(msg)         \
   do {                   \
     cout << msg << endl; \
     exit(0);             \
   } while (0)
-#define INTi 1 << 30
+#define all(k) k.begin(), k.end()
+#define rall(k) k.rbegin(), k.rend()
+#define INFi 1 << 30
 #define INFll 1LL << 60
 
 template <typename T> bool chmax(T& a, const T& b) {
@@ -33,6 +35,5 @@ int main() {
   cin >> n;
 
   sort(n.rbegin(), n.rend());
-  dump(n);
-  output(n);
+  out(n);
 }
