@@ -9,13 +9,14 @@ using namespace std;
 
 #define FastIO cin.tie(nullptr), ios_base::sync_with_stdio(false);
 #define rep(i, n) for (int i = 0; i < (int)(n); ++i)
-#define output(msg) cout << (msg) << '\n'
+#define out(msg) cout << (msg) << '\n'
 #define die(msg)         \
   do {                   \
     cout << msg << endl; \
     exit(0);             \
   } while (0)
 #define all(k) k.begin(), k.end()
+#define rall(k) k.rbegin(), k.rend()
 #define INFi 1 << 30
 #define INFll 1LL << 60
 
@@ -59,9 +60,9 @@ int main() {
   }
 
   if (total > 50) {
-    output("No");
+    out("No");
   } else {
-    output("Yes");
-    output(total);
+    out("Yes");
+    out(total);
   }
 }
