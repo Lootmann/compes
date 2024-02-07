@@ -29,21 +29,20 @@ template <typename T> bool chmin(T& a, const T& b) {
 using llint = long long int;
 
 struct GoodPoint {
-  double euclid_dist;
+  double dist;
   int x;
   int y;
 
-  GoodPoint(double e, int _x, int _y) : euclid_dist(e), x(_x), y(_y) {}
+  GoodPoint(double e, int _x, int _y) : dist(e), x(_x), y(_y) {}
 };
 
 bool compare(const GoodPoint& a, const GoodPoint& b) {
-  if (a.euclid_dist < b.euclid_dist) return true;
+  if (a.dist < b.dist) return true;
   return false;
 }
 
 double euclid(int x1, int y1, int x2, int y2) {
-  double dist = sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
-  return dist;
+  return pow(x1 - x2, 2) + pow(y1 - y2, 2);
 }
 
 int main() {
@@ -61,7 +60,6 @@ int main() {
       for (int y = -d; y <= d; ++y) {
         double manhattan = abs(x) + abs(y);
 
-        // good point candidates
         if (manhattan == d) {
           GoodPoint p(x * x + y * y, x, y);
           good_points.push_back(p);
