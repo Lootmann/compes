@@ -9,3 +9,5 @@ tmp/
 **/got*
 **/want*
 **/seed*
+!atc/indeednow-quala
+
