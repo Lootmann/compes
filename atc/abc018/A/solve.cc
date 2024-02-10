@@ -38,16 +38,18 @@ bool compare(const P& a, const P& b) {
 int main() {
   FastIO;
 
-  vector<pair<int, int>> ranks(3);
-  rep(i, 3) {
-    int a;
-    cin >> a;
-    ranks[i] = make_pair(a, i);
-  }
+  int n{3};
+  vector<int> score(n);
+  rep(i, n) cin >> score[i];
 
-  sort(all(ranks), compare);
+  for (int i = 0; i < n; ++i) {
+    int cnt{};
+    for (int j = 0; j < n; ++j) {
+      if (i != j && score[i] < score[j]) {
+        cnt++;
+      }
+    }
 
-  rep(i, 3) {
-    out(ranks[i].second + 1);
+    out(cnt + 1);
   }
 }
