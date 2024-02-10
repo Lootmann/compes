@@ -35,22 +35,12 @@ template <typename T> inline bool chmin(T& a, const T& b) {
 // clang-format on
 
 int main() {
-  int n;
-  cin >> n;
+  string s, t;
+  cin >> s >> t;
 
-  vector<int> hi(n);
-  rep(i, n) cin >> hi[i];
-
-  int ans{0}, cnt{};
-
-  rep(i, n - 1) {
-    if (hi[i] >= hi[i + 1]) {
-      cnt++;
-    } else {
-      cnt = 0;
-    }
-    chmax(ans, cnt);
+  int cnt{};
+  rep(i, 3) {
+    if (s[i] == t[i]) cnt++;
   }
-
-  out(ans);
+  out(cnt);
 }
