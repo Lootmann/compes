@@ -34,6 +34,9 @@ template <typename T> inline bool chmin(T& a, const T& b) {
 }
 // clang-format on
 
+const int dh[]{0, 1, 1, -1};
+const int dw[]{1, 0, 1, 1};
+
 int main() {
   int n;
   cin >> n;
@@ -42,49 +45,26 @@ int main() {
   rep(i, n) cin >> grid[i];
 
   int H = n, W = (int)grid[0].size();
-  bool can_draw{false};
 
-  // horizontal
-  rep(h, H) rep(w, W - 5) {
+  rep(h, H) rep(w, W) rep(d, 4) {
+    int nh = h;
+    int nw = w;
     int cnt{};
 
     rep(k, 6) {
-      if (grid[h][w + k] == '#') cnt++;
-    }
-    if (cnt >= 4) can_draw = true;
-  }
-
-  // vertical
-  rep(w, W) rep(h, H - 5) {
-    int cnt{};
-
-    rep(k, 6) {
-      if (grid[h + k][w] == '#') cnt++;
-    }
-    if (cnt >= 4) can_draw = true;
-  }
-
-  // diagonal
-  rep(h, H - 5) rep(w, W - 5) {
-    {
-      // from left-top to right-bottom
-      int cnt{};
-      rep(k, 6) {
-        if (grid[h + k][w + k] == '#') cnt++;
+      if (!(0 <= nh && nh < H && 0 <= nw && nw < W)) {
+        cnt = -100;
+        break;
       }
-      if (cnt >= 4) can_draw = true;
+      if (grid[nh][nw] == '#') cnt++;
+
+      nh += dh[d];
+      nw += dw[d];
     }
 
-    {
-      // from left-top to right-top
-      int cnt = 0;
-      rep(k, 6) {
-        if (grid[h + 5 - k][w + k] == '#') cnt++;
-      }
-      if (cnt >= 4) can_draw = true;
-    }
+    if (cnt >= 4) die("Yes");
   }
 
   // output
-  out(can_draw ? "Yes" : "No");
+  out("No");
 }
