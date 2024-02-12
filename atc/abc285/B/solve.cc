@@ -35,13 +35,19 @@ template <typename T> inline bool chmin(T& a, const T& b) {
 // clang-format on
 
 int main() {
+  int n;
   string s;
-  cin >> s;
+  cin >> n >> s;
 
-  llint num{};
-  for (auto ch : s) {
-    num *= 26;
-    num += ch - 'A' + 1;
+  for (int i = 1; i < n; ++i) {
+    int cnt{};
+    for (int j = 0; j < n - i; ++j) {
+      if (s[j] != s[i + j]) {
+        cnt++;
+      } else {
+        break;
+      }
+    }
+    out(cnt);
   }
-  out(num);
 }

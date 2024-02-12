@@ -35,13 +35,10 @@ template <typename T> inline bool chmin(T& a, const T& b) {
 // clang-format on
 
 int main() {
-  string s;
-  cin >> s;
-
-  llint num{};
-  for (auto ch : s) {
-    num *= 26;
-    num += ch - 'A' + 1;
-  }
-  out(num);
+  int a, b;
+  cin >> a >> b;
+  if (a == b / 2)
+    out("Yes");
+  else
+    out("No");
 }
