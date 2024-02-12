@@ -35,32 +35,13 @@ template <typename T> inline bool chmin(T& a, const T& b) {
 // clang-format on
 
 int main() {
-  int H, W;
-  cin >> H >> W;
+  vector<int> ai(3);
+  rep(i, 3) cin >> ai[i];
+  sort(rall(ai));
 
-  vector<string> grid(H);
-  rep(i, H) cin >> grid[i];
+  int k;
+  cin >> k;
+  rep(_, k) ai[0] *= 2;
 
-  vector<vector<char>> campus(H, vector<char>(W, '.'));
-  rep(h, H) rep(w, W) {
-    if (w + 1 < W) {
-      if (grid[h][w] == '#' && grid[h][w + 1] == '#') {
-        campus[h][w] = campus[h][w + 1] = '#';
-      }
-    }
-
-    if (h + 1 < H) {
-      if (grid[h][w] == '#' && grid[h + 1][w] == '#') {
-        campus[h][w] = campus[h + 1][w] = '#';
-      }
-    }
-  }
-
-  rep(h, H) rep(w, W) {
-    if (grid[h][w] != campus[h][w]) {
-      die("No");
-    }
-  }
-
-  out("Yes");
+  out(accumulate(ai.begin(), ai.end(), 0));
 }
