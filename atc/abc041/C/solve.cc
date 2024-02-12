@@ -34,9 +34,26 @@ template <typename T> inline bool chmin(T& a, const T& b) {
 }
 // clang-format on
 
+using P = pair<int, int>;
+
+bool compare(const P& a, const P& b) {
+  return a.first > b.first;
+}
+
 int main() {
-  string s;
-  int i;
-  cin >> s >> i;
-  out(s[i - 1]);
+  int n;
+  cin >> n;
+
+  vector<P> vp;
+  rep(i, n) {
+    int h;
+    cin >> h;
+    vp.push_back({h, i + 1});
+  }
+  sort(all(vp), compare);
+
+  for (auto [height, idx] : vp) {
+    dump(height, idx);
+    out(idx);
+  }
 }

@@ -35,8 +35,12 @@ template <typename T> inline bool chmin(T& a, const T& b) {
 // clang-format on
 
 int main() {
-  string s;
-  int i;
-  cin >> s >> i;
-  out(s[i - 1]);
+  llint a, b, c;
+  cin >> a >> b >> c;
+
+  llint sum{1};
+  sum = sum * a % MOD17;
+  sum = sum * b % MOD17;
+  sum = sum * c % MOD17;
+  out(sum % MOD17);
 }
