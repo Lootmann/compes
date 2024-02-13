@@ -7,49 +7,73 @@ using namespace std;
 #define dump(...)
 #endif
 
-#define FastIO cin.tie(nullptr), ios_base::sync_with_stdio(false);
-#define rep(i, n) for (int i = 0; (int)i < n; ++i)
-#define output(msg) cout << (msg) << '\n'
-#define die(msg)         \
-  do {                   \
-    cout << msg << endl; \
-    exit(0);             \
-  } while (0)
+// clang-format off
+struct  Fast {Fast(){std::cin.tie(0);ios::sync_with_stdio(false);}} fast;
+#define rep(i, n) for (int i = 0; i < (int)(n); ++i)
+#define out(msg) cout << (msg) << '\n'
+#define die(msg) do {cout << msg << endl;exit(0);} while (0)
 
-template <typename T> bool chmax(T& a, const T& b) {
-  return ((a < b) ? (a = b, true) : (false));
+#define all(k)  k.begin(), k.end()
+#define rall(k) k.rbegin(), k.rend()
+
+// const
+#define INFi  1   << 30
+#define INFll 1LL << 60
+#define MOD17 10'0000'0007
+#define MOD98  9'9824'4353
+
+// alias
+using ullint = unsigned long long int;
+using llint  = long long int;
+
+template <typename T> inline bool chmax(T& a, const T& b) {
+  return ((a < b) ? (a = b, true) : false);
 }
-template <typename T> bool chmin(T& a, const T& b) {
+template <typename T> inline bool chmin(T& a, const T& b) {
   return ((a > b) ? (a = b, true) : false);
 }
+// clang-format on
 
-using llint = long long int;
+using Graph = vector<vector<int>>;
+
+void bfs(const Graph& graph, vector<int>& dist, int vertex) {
+  // bfs
+
+  queue<int> que{};
+  que.push(vertex);
+  dist[vertex] = 0;
+  while (!que.empty()) {
+    int v = que.front();
+    que.pop();
+
+    for (auto nv : graph[v]) {
+      if (dist[nv] != -1) continue;
+      que.push(nv);
+      dist[nv] = dist[v] + 1;
+    }
+  }
+}
 
 int main() {
-  FastIO;
   int n, m;
   cin >> n >> m;
 
-  vector<vector<int>> graph(n);
-  rep(i, m) {
-    int from, to;
-    cin >> from >> to;
-    from--, to--;
-    graph[from].push_back(to);
-    graph[to].push_back(from);
+  Graph graph(n);
+  rep(_, m) {
+    int a, b;
+    cin >> a >> b;
+    a--, b--;
+
+    graph[a].push_back(b);
+    graph[b].push_back(a);
   }
 
-  rep(i, n) {
-    bool from_zero{false}, to_n{false};
-    for (auto nxt : graph[i]) {
-      if (nxt == 0) from_zero = true;
-      if (nxt == n - 1) to_n = true;
-    }
+  // bfs
+  vector<int> dist(n, -1);
+  bfs(graph, dist, 0);
 
-    if (from_zero && to_n) {
-      die("POSSIBLE");
-    }
-  }
-
-  output("IMPOSSIBLE");
+  if (dist[n - 1] == 2)
+    out("POSSIBLE");
+  else
+    out("IMPOSSIBLE");
 }
