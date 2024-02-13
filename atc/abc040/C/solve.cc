@@ -7,46 +7,49 @@ using namespace std;
 #define dump(...)
 #endif
 
-#define FastIO cin.tie(nullptr), ios_base::sync_with_stdio(false);
-#define rep(i, n) for (int i = 0; (int)i < n; ++i)
-#define output(msg) cout << (msg) << '\n'
-#define die(msg)         \
-  do {                   \
-    cout << msg << endl; \
-    exit(0);             \
-  } while (0)
+// clang-format off
+struct  Fast {Fast(){std::cin.tie(0);ios::sync_with_stdio(false);}} fast;
+#define rep(i, n) for (int i = 0; i < (int)(n); ++i)
+#define out(msg) cout << (msg) << '\n'
+#define die(msg) do {cout << msg << endl;exit(0);} while (0)
 
-template <typename T> bool chmax(T& a, const T& b) {
-  return ((a < b) ? (a = b, true) : (false));
+#define all(k)  k.begin(), k.end()
+#define rall(k) k.rbegin(), k.rend()
+
+// const
+#define INFi  1   << 30
+#define INFll 1LL << 60
+#define MOD17 10'0000'0007
+#define MOD98  9'9824'4353
+
+// alias
+using ullint = unsigned long long int;
+using llint  = long long int;
+
+template <typename T> inline bool chmax(T& a, const T& b) {
+  return ((a < b) ? (a = b, true) : false);
 }
-template <typename T> bool chmin(T& a, const T& b) {
+template <typename T> inline bool chmin(T& a, const T& b) {
   return ((a > b) ? (a = b, true) : false);
 }
-
-using llint = long long int;
-const int INF = 1 << 30;
+// clang-format on
 
 int main() {
-  FastIO;
   int n;
   cin >> n;
 
-  vector<int> hi(n);
-  rep(i, n) cin >> hi[i];
+  vector<int> ai(n);
+  rep(i, n) cin >> ai[i];
 
-  vector<int> dp(n, INF);
+  vector<int> dp(n, INFi);
   dp[0] = 0;
 
   for (int i = 1; i < n; ++i) {
-    if (i >= 1) {
-      chmin(dp[i], dp[i - 1] + abs(hi[i] - hi[i - 1]));
-    }
-
+    chmin(dp[i], dp[i - 1] + abs(ai[i] - ai[i - 1]));
     if (i >= 2) {
-      chmin(dp[i], dp[i - 2] + abs(hi[i] - hi[i - 2]));
+      chmin(dp[i], dp[i - 2] + abs(ai[i] - ai[i - 2]));
     }
   }
 
-  rep(i, n) dump(dp[i]);
-  output(dp[n - 1]);
+  out(dp[n - 1]);
 }
