@@ -35,34 +35,7 @@ template <typename T> inline bool chmin(T& a, const T& b) {
 // clang-format on
 
 int main() {
-  int n, m;
-  cin >> n >> m;
-
-  vector<int> s(n, -1);
-  rep(_, m) {
-    int si, ci;
-    cin >> si >> ci;
-    si--;
-
-    if (s[si] == -1) {
-      s[si] = ci;
-    } else {
-      if (s[si] != ci) die(-1);
-    }
-  }
-
-  // first digit
-  if (n == 1) {
-    if (s[0] == -1) s[0] = 0;
-  } else {
-    if (s[0] == 0) die(-1);  // 0 is not allowed
-    if (s[0] == -1) s[0] = 1;
-  }
-
-  for (int i = 1; i < n; ++i) {
-    if (s[i] == -1) s[i] = 0;
-  }
-
-  rep(i, n) cout << s[i];
-  cout << endl;
+  int n;
+  cin >> n;
+  out((n + 1) / 2);
 }

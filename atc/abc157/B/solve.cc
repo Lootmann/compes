@@ -35,34 +35,51 @@ template <typename T> inline bool chmin(T& a, const T& b) {
 // clang-format on
 
 int main() {
-  int n, m;
-  cin >> n >> m;
+  vector<vector<int>> ai(3, vector<int>(3));
+  rep(h, 3) rep(w, 3) cin >> ai[h][w];
 
-  vector<int> s(n, -1);
-  rep(_, m) {
-    int si, ci;
-    cin >> si >> ci;
-    si--;
+  int n;
+  cin >> n;
 
-    if (s[si] == -1) {
-      s[si] = ci;
-    } else {
-      if (s[si] != ci) die(-1);
+  rep(i, n) {
+    int b;
+    cin >> b;
+
+    rep(h, 3) rep(w, 3) {
+      if (ai[h][w] == b) {
+        ai[h][w] = -1;
+      }
     }
   }
 
-  // first digit
-  if (n == 1) {
-    if (s[0] == -1) s[0] = 0;
-  } else {
-    if (s[0] == 0) die(-1);  // 0 is not allowed
-    if (s[0] == -1) s[0] = 1;
+  // hor
+  rep(i, 3) {
+    int a = ai[i][0];
+    int b = ai[i][1];
+    int c = ai[i][2];
+    if (a == -1 && b == -1 && c == -1) die("Yes");
   }
 
-  for (int i = 1; i < n; ++i) {
-    if (s[i] == -1) s[i] = 0;
+  rep(i, 3) {
+    int a = ai[0][i];
+    int b = ai[1][i];
+    int c = ai[2][i];
+    if (a == -1 && b == -1 && c == -1) die("Yes");
   }
 
-  rep(i, n) cout << s[i];
-  cout << endl;
+  {
+    int a = ai[0][0];
+    int b = ai[1][1];
+    int c = ai[2][2];
+    if (a == -1 && b == -1 && c == -1) die("Yes");
+  }
+
+  {
+    int a = ai[0][2];
+    int b = ai[1][1];
+    int c = ai[2][0];
+    if (a == -1 && b == -1 && c == -1) die("Yes");
+  }
+
+  out("No");
 }
