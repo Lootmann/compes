@@ -35,22 +35,15 @@ template <typename T> inline bool chmin(T& a, const T& b) {
 // clang-format on
 
 int main() {
-  llint n, y;
-  cin >> n >> y;
+  int n;
+  cin >> n;
 
-  // 10000a + 5000b + 1000c = y
-  // a + b + c = n
-  for (llint a = 0; a <= n; ++a) {
-    for (llint b = 0; b <= n; ++b) {
-      llint c = n - a - b;
-      if (0 <= c && a + b + c == n) {
-        if (10000 * a + 5000 * b + 1000 * c == y) {
-          cout << a << ' ' << b << ' ' << c << '\n';
-          return 0;
-        }
-      }
-    }
+  set<int> st;
+  rep(i, n) {
+    int d;
+    cin >> d;
+    st.insert(d);
   }
 
-  cout << "-1 -1 -1" << '\n';
+  out(st.size());
 }
