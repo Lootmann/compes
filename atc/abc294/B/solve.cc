@@ -35,25 +35,19 @@ template <typename T> inline bool chmin(T& a, const T& b) {
 // clang-format on
 
 int main() {
-  int n, m;
-  cin >> n >> m;
+  int h, w;
+  cin >> h >> w;
 
-  vector<int> ai(n), bi(m);
-  rep(i, n) cin >> ai[i];
-  rep(i, m) cin >> bi[i];
+  vector<vector<int>> grid(h, vector<int>(w, 0));
+  rep(i, h) rep(j, w) cin >> grid[i][j];
 
-  vector<int> di;
-  for (auto a : ai) di.push_back(a);
-  for (auto b : bi) di.push_back(b);
-  sort(all(di));
-
-  map<int, int> pos;
-  rep(i, n + m) {
-    pos[di[i]] = i + 1;
+  rep(i, h) {
+    rep(j, w) {
+      if (grid[i][j] != 0)
+        cout << (char)(grid[i][j] - 1 + 'A');
+      else
+        cout << '.';
+    }
+    cout << '\n';
   }
-
-  dump(pos);
-
-  rep(i, n) cout << pos[ai[i]] << (i == n - 1 ? '\n' : ' ');
-  rep(i, m) cout << pos[bi[i]] << (i == m - 1 ? '\n' : ' ');
 }
