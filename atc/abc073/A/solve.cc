@@ -38,25 +38,8 @@ int main() {
   int n;
   cin >> n;
 
-  map<int, int> mp;
-  rep(_, n) {
-    int a;
-    cin >> a;
-
-    if (mp.contains(a)) {
-      if (mp[a] > 0) {
-        mp[a]--;
-      } else {
-        mp[a]++;
-      }
-    } else {
-      mp[a]++;
-    }
-  }
-
-  int cnt{};
-  for (auto [key, num] : mp) {
-    if (num >= 1) cnt++;
-  }
-  out(cnt);
+  if (n / 10 == 9 || n % 10 == 9)
+    out("Yes");
+  else
+    out("No");
 }

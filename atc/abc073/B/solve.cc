@@ -34,29 +34,25 @@ template <typename T> inline bool chmin(T& a, const T& b) {
 }
 // clang-format on
 
+const int MAX = 100'010;
+
 int main() {
   int n;
   cin >> n;
 
-  map<int, int> mp;
+  vector<int> acc(MAX, 0);
   rep(_, n) {
-    int a;
-    cin >> a;
-
-    if (mp.contains(a)) {
-      if (mp[a] > 0) {
-        mp[a]--;
-      } else {
-        mp[a]++;
-      }
-    } else {
-      mp[a]++;
-    }
+    int l, r;
+    cin >> l >> r;
+    acc[l]++;
+    acc[r + 1]--;
   }
 
+  rep(i, MAX - 1) acc[i + 1] += acc[i];
+
   int cnt{};
-  for (auto [key, num] : mp) {
-    if (num >= 1) cnt++;
+  rep(i, MAX) {
+    if (acc[i] > 0) cnt++;
   }
   out(cnt);
 }
