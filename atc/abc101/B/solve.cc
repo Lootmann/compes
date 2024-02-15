@@ -34,19 +34,19 @@ template <typename T> inline bool chmin(T& a, const T& b) {
 }
 // clang-format on
 
-int main() {
-  int n, k;
-  cin >> n >> k;
-
-  vector<int> ai(n);
-  rep(i, n) cin >> ai[i];
-
-  dump(ai);
-
-  int minv = *min_element(all(ai));
-  int cnt{};
-  for (auto a : ai) {
-    if (a == minv) cnt++;
+int S(int n) {
+  int sum{};
+  while (n > 0) {
+    sum += n % 10;
+    n /= 10;
   }
-  out((n - cnt + k - 2) / (k - 1));
+  return sum;
+}
+
+int main() {
+  int n;
+  cin >> n;
+
+  int can_div = n % S(n) == 0;
+  out(can_div ? "Yes" : "No");
 }

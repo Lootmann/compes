@@ -35,18 +35,15 @@ template <typename T> inline bool chmin(T& a, const T& b) {
 // clang-format on
 
 int main() {
-  int n, k;
-  cin >> n >> k;
+  string s;
+  cin >> s;
 
-  vector<int> ai(n);
-  rep(i, n) cin >> ai[i];
-
-  dump(ai);
-
-  int minv = *min_element(all(ai));
-  int cnt{};
-  for (auto a : ai) {
-    if (a == minv) cnt++;
+  int ans{};
+  for (auto ch : s) {
+    if (ch == '+')
+      ans++;
+    else
+      ans--;
   }
-  out((n - cnt + k - 2) / (k - 1));
+  out(ans);
 }
