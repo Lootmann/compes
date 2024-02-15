@@ -7,56 +7,61 @@ using namespace std;
 #define dump(...)
 #endif
 
-#define FastIO cin.tie(nullptr), ios_base::sync_with_stdio(false);
-#define rep(i, n) for (int i = 0; (int)i < n; ++i)
-#define output(msg) cout << (msg) << '\n'
-#define die(msg)         \
-  do {                   \
-    cout << msg << endl; \
-    exit(0);             \
-  } while (0)
-#define INFi 1 << 30
-#define INFll 1LL << 60
+// clang-format off
+struct  Fast {Fast(){std::cin.tie(0);ios::sync_with_stdio(false);}} fast;
+#define rep(i, n) for (int i = 0; i < (int)(n); ++i)
+#define out(msg) cout << (msg) << '\n'
+#define die(msg) do {cout << msg << endl;exit(0);} while (0)
 
-template <typename T> bool chmax(T& a, const T& b) {
-  return ((a < b) ? (a = b, true) : (false));
+#define all(k)  k.begin(), k.end()
+#define rall(k) k.rbegin(), k.rend()
+
+// const
+#define INFi  1   << 30
+#define INFll 1LL << 60
+#define MOD17 10'0000'0007
+#define MOD98  9'9824'4353
+
+// alias
+using ullint = unsigned long long int;
+using llint  = long long int;
+
+template <typename T> inline bool chmax(T& a, const T& b) {
+  return ((a < b) ? (a = b, true) : false);
 }
-template <typename T> bool chmin(T& a, const T& b) {
+template <typename T> inline bool chmin(T& a, const T& b) {
   return ((a > b) ? (a = b, true) : false);
 }
-
-using llint = long long int;
+// clang-format on
 
 int main() {
-  FastIO;
-  int N;
-  cin >> N;
-
+  int n;
   string s;
-  cin >> s;
+  cin >> n >> s;
 
-  vector<int> west(N + 1, 0), east(N + 1, 0);
-  for (int i = 0; i < N; ++i) {
-    if (s[i] == 'W') {
-      west[i]++;
+  vector<int> right(n), left(n);
+
+  rep(i, n) {
+    if (s[i] == 'E') {
+      right[i]++;
     } else {
-      east[i]++;
+      left[i]++;
     }
+  }
 
-    if (i > 0) {
-      west[i] += west[i - 1];
-      east[i] += east[i - 1];
-    }
+  for (int i = 1; i < n; ++i) {
+    right[i] += right[i - 1];
+    left[i] += left[i - 1];
   }
 
   int ans{INFi};
-  rep(i, N) {
-    int sum{};
-    if (i != 0) {
-      sum += west[i - 1];
+  rep(i, n) {
+    int now{};
+    if (i > 0) {
+      now += left[i - 1];
     }
-    sum += east[N - 1] - east[i];
-    chmin(ans, sum);
+    now += right[n - 1] - right[i];
+    chmin(ans, now);
   }
-  output(ans);
+  out(ans);
 }
