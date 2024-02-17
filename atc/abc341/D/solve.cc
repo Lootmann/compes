@@ -35,38 +35,23 @@ template <typename T> inline bool chmin(T& a, const T& b) {
 }
 // clang-format on
 
-/*** period? parity?
- *
- * 2 vs 3
- *
- * 2   4  6  8   10  12  14    16
- *   3    6    9     12     15
- * - - -  ^  - - -   ^   -  -  -  ^ ...
- */
 int main() {
   llint n, m, k;
   cin >> n >> m >> k;
 
   llint common = lcm(n, m);
-
-  // binary search
   llint left{0}, right{INFll};
 
-  while (left < right) {
+  // lower bound ?
+  while (left + 1 < right) {
     llint mid = left + (right - left) / 2;
     llint cnt = (mid / n) + (mid / m) - 2 * (mid / common);
 
-    dump(cnt, left, mid, right);
-
-    if (cnt == k) {
-      break;
-    } else if (cnt < k) {
-      left = mid + 1;
-    } else {
-      right = mid - 1;
-    }
+    if (cnt < k)
+      left = mid;
+    else
+      right = mid;
   }
 
-  dump(left, right);
-  out(left + 1);
+  out(right);
 }
