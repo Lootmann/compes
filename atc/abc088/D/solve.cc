@@ -7,89 +7,89 @@ using namespace std;
 #define dump(...)
 #endif
 
-#define FastIO cin.tie(nullptr), ios_base::sync_with_stdio(false);
+// clang-format off
+struct  Fast {Fast(){std::cin.tie(0);ios::sync_with_stdio(false);}} fast;
 #define rep(i, n) for (int i = 0; i < (int)(n); ++i)
-#define output(msg) cout << (msg) << '\n'
-#define die(msg)         \
-  do {                   \
-    cout << msg << endl; \
-    exit(0);             \
-  } while (0)
-#define all(k) k.begin(), k.end()
-#define INFi 1 << 30
-#define INFll 1LL << 60
+#define out(msg) cout << (msg) << '\n'
+#define die(msg) do {cout << msg << endl;exit(0);} while (0)
+#define el '\n'
 
-template <typename T> bool chmax(T& a, const T& b) {
-  return ((a < b) ? (a = b, true) : (false));
+#define all(k)  k.begin(), k.end()
+#define rall(k) k.rbegin(), k.rend()
+
+// const
+#define INFi  1   << 30
+#define INFll 1LL << 60
+#define MOD17 10'0000'0007
+#define MOD98  9'9824'4353
+
+// alias
+using ullint = unsigned long long int;
+using llint  = long long int;
+
+template <typename T> inline bool chmax(T& a, const T& b) {
+  return ((a < b) ? (a = b, true) : false);
 }
-template <typename T> bool chmin(T& a, const T& b) {
+template <typename T> inline bool chmin(T& a, const T& b) {
   return ((a > b) ? (a = b, true) : false);
 }
+// clang-format on
 
-using llint = long long int;
-using Graph = vector<string>;
-
-int dy[]{-1, 0, 0, 1};
-int dx[]{0, 1, -1, 0};
-int H, W;
-bool can_goal{false};
-vector<vector<int>> visited;
-
-struct Pos {
+struct P {
   int y;
   int x;
-  Pos(int _y, int _x) : y(_y), x(_x) {}
 };
 
-bool is_inbound(int y, int x) {
-  return 0 <= y && y < H && 0 <= x && x < W;
-}
-
-void bfs(const Graph& graph, int gy, int gx) {
-  int y = 0, x = 0;
-  visited[y][x] = 1;
-  queue<Pos> que;
-  que.push(Pos(y, x));
-
-  while (!que.empty()) {
-    Pos p = que.front();
-    que.pop();
-
-    rep(k, 4) {
-      int ny = p.y + dy[k];
-      int nx = p.x + dx[k];
-
-      if (ny == gy && nx == gx) can_goal = true;
-
-      if (!is_inbound(ny, nx)) continue;
-      if (visited[ny][nx] != 0) continue;
-      if (graph[ny][nx] == '#') continue;
-
-      visited[ny][nx] = visited[p.y][p.x] + 1;
-      que.push(Pos(ny, nx));
-    }
-  }  // end bfs
-}
+int dh[]{-1, 0, 0, 1};
+int dw[]{0, -1, 1, 0};
 
 int main() {
-  FastIO;
-
+  int H, W;
   cin >> H >> W;
 
   vector<string> grid(H);
   rep(i, H) cin >> grid[i];
 
-  visited.resize(H, vector<int>(W, 0));
-  int gy = H - 1, gx = W - 1;
-  bfs(grid, gy, gx);
+  vector dist(H, vector<int>(W, 0));
 
-  if (!can_goal) die(-1);
+  auto bfs = [&](int sh, int sw) {
+    dist[sh][sw] = 1;
 
-  int dist = visited[H - 1][W - 1];
-  int dot{};
+    queue<P> que;
+    que.push({sh, sw});
+
+    while (!que.empty()) {
+      auto [h, w] = que.front();
+      que.pop();
+
+      rep(k, 4) {
+        int nh = h + dh[k];
+        int nw = w + dw[k];
+
+        if (!(0 <= nh && nh < H && 0 <= nw && nw < W)) continue;
+        if (grid[nh][nw] == '#') continue;
+        if (dist[nh][nw] != 0) continue;
+
+        dist[nh][nw] = dist[h][w] + 1;
+        que.push({nh, nw});
+      }
+    }
+  };
+
+  // found shorted path count
+  bfs(0, 0);
+
+  // can't goal
+  if (dist[H - 1][W - 1] == 0) die(-1);
+
+  // dist
+  int shortest = dist[H - 1][W - 1];
+
+  // find #
+  int sharp{};
   rep(h, H) rep(w, W) {
-    if (grid[h][w] == '.') dot++;
+    if (grid[h][w] == '#') sharp++;
   }
 
-  output(dot - dist);
+  out(H * W - sharp - shortest);
 }
