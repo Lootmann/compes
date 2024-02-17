@@ -42,21 +42,20 @@ int main() {
   cin >> n >> m;
 
   Graph graph(n);
-  rep(i, m) {
+  rep(_, m) {
     int from, to;
     cin >> from >> to;
     from--, to--;
-
     graph[from].push_back(to);
     graph[to].push_back(from);
   }
 
   vector<bool> visited(n, false);
+  stack<int> st;
 
-  auto dfs = [&](int vertex) -> void {
-    visited[vertex] = true;
-    stack<int> st;
-    st.push(vertex);
+  auto dfs = [&](int start_v) {
+    visited[start_v] = true;
+    st.push(start_v);
 
     while (!st.empty()) {
       int v = st.top();
@@ -64,6 +63,7 @@ int main() {
 
       for (auto nv : graph[v]) {
         if (visited[nv]) continue;
+
         visited[nv] = true;
         st.push(nv);
       }
@@ -72,10 +72,10 @@ int main() {
 
   int cnt{};
   rep(i, n) {
-    if (visited[i]) continue;
-    cnt++;
-    dfs(i);
+    if (!visited[i]) {
+      dfs(i);
+      cnt++;
+    }
   }
-
-  cout << cnt << el;
+  out(cnt);
 }
