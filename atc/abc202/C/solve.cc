@@ -41,24 +41,28 @@ int main() {
 
   vector<llint> ai(n), bi(n), ci(n);
 
-  rep(i, n) cin >> ai[i];
-  rep(i, n) cin >> bi[i];
-  rep(i, n) {
-    cin >> ci[i];
-    --ci[i];
+  for (auto& a : ai) {
+    cin >> a;
+    a--;
+  }
+  for (auto& b : bi) {
+    cin >> b;
+    b--;
+  }
+  for (auto& c : ci) {
+    cin >> c;
+    c--;
   }
 
-  vector<llint> di;
-  rep(i, n) di.push_back(bi[ci[i]]);
-
-  map<llint, llint> cnt;
-  for (auto a : ai) {
-    cnt[a]++;
+  vector<llint> counter(n, 0);
+  rep(i, n) {
+    llint k = bi[ci[i]];
+    counter[k]++;
   }
 
   llint ans{};
-  for (auto d : di) {
-    ans += cnt[d];
+  rep(i, n) {
+    ans += counter[ai[i]];
   }
   out(ans);
 }
