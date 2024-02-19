@@ -36,16 +36,9 @@ template <typename T> inline bool chmin(T& a, const T& b) {
 // clang-format on
 
 int main() {
-  int n;
-  cin >> n;
+  double r;
+  cin >> r;
 
-  vector<int> ai(n);
-  rep(i, n - 1) cin >> ai[i];
-
-  map<int, int> mp;
-  rep(i, n - 1) mp[ai[i]]++;
-
-  for (int i = 1; i <= n; ++i) {
-    cout << mp[i] << el;
-  }
+  cout << fixed << setprecision(20);
+  cout << 2 * r * M_PI << el;
 }

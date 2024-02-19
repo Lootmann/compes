@@ -36,16 +36,17 @@ template <typename T> inline bool chmin(T& a, const T& b) {
 // clang-format on
 
 int main() {
-  int n;
-  cin >> n;
+  int n, m;
+  cin >> n >> m;
 
-  vector<int> ai(n);
-  rep(i, n - 1) cin >> ai[i];
+  vector<int> ai(m);
+  rep(i, m) cin >> ai[i];
 
-  map<int, int> mp;
-  rep(i, n - 1) mp[ai[i]]++;
+  int sum{};
+  rep(i, m) sum += ai[i];
 
-  for (int i = 1; i <= n; ++i) {
-    cout << mp[i] << el;
-  }
+  if (sum > n)
+    cout << -1 << el;
+  else
+    cout << n - sum << el;
 }
