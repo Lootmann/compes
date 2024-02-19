@@ -15,9 +15,11 @@ out:
 in:
 	./$(TARGET) < in
 
-.PHONY: submit
-submit:
-	oj s solve.cc
+# -g3: debug level 3
+# -O0: Optimize leve 0 <=> no optimization
+.PHONY: debug
+debug:
+	$(CXX) $(CXXFLAGS) -g3 -O0 $(SRC) -o $(TARGET)
 
 .PHONY: watch
 watch:

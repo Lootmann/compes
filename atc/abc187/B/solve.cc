@@ -7,46 +7,58 @@ using namespace std;
 #define dump(...)
 #endif
 
-#define FastIO cin.tie(nullptr), ios_base::sync_with_stdio(false);
-#define rep(i, n) for (int i = 0; (int)i < n; ++i)
-#define output(msg) cout << (msg) << '\n'
-#define die(msg)         \
-  do {                   \
-    cout << msg << endl; \
-    exit(0);             \
-  } while (0)
+// clang-format off
+struct  Fast {Fast(){std::cin.tie(0);ios::sync_with_stdio(false);}} fast;
+#define rep(i, n) for (int i = 0; i < (int)(n); ++i)
+#define out(msg) cout << (msg) << '\n'
+#define die(msg) do {cout << msg << endl;exit(0);} while (0)
+#define el '\n'
 
-template <typename T> bool chmax(T& a, const T& b) {
-  return ((a < b) ? (a = b, true) : (false));
+#define all(k)  k.begin(), k.end()
+#define rall(k) k.rbegin(), k.rend()
+
+// const
+#define INFi  1   << 30
+#define INFll 1LL << 60
+#define MOD17 10'0000'0007
+#define MOD98  9'9824'4353
+
+// alias
+using ullint = unsigned long long int;
+using llint  = long long int;
+
+template <typename T> inline bool chmax(T& a, const T& b) {
+  return ((a < b) ? (a = b, true) : false);
 }
-template <typename T> bool chmin(T& a, const T& b) {
+template <typename T> inline bool chmin(T& a, const T& b) {
   return ((a > b) ? (a = b, true) : false);
 }
+// clang-format on
 
-using llint = long long int;
+struct P {
+  double x;
+  double y;
+};
 
 int main() {
-  FastIO;
   int n;
   cin >> n;
 
-  vector<pair<double, double>> vp;
-  rep(i, n) {
+  vector<P> pos;
+  rep(_, n) {
     double x, y;
     cin >> x >> y;
-    vp.push_back(make_pair(x, y));
+    pos.push_back(P{x, y});
   }
 
   int cnt{};
-
   for (int i = 0; i < n; ++i) {
     for (int j = i + 1; j < n; ++j) {
-      double y = vp[i].second - vp[j].second;
-      double x = vp[i].first - vp[j].first;
-      double gradient = y / x;
-      if (-1 <= gradient && gradient <= 1) cnt++;
+      if (pos[i].x != pos[j].x) {
+        double grad = (pos[i].y - pos[j].y) / (pos[i].x - pos[j].x);
+        if (-1.0 <= grad && grad <= 1.0) cnt++;
+      }
     }
   }
-
-  output(cnt);
+  cout << cnt << el;
 }
