@@ -38,5 +38,5 @@ template <typename T> inline bool chmin(T& a, const T& b) {
 int main() {
   int a, b, c;
   cin >> a >> b >> c;
-  out(7 * 3 - a - b - c);
+  cout << 7 * 3 - a - b - c << el;
 }

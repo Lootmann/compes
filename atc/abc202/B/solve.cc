@@ -38,15 +38,19 @@ template <typename T> inline bool chmin(T& a, const T& b) {
 int main() {
   string s;
   cin >> s;
+  reverse(all(s));
 
   int n = (int)s.size();
-  for (int i = n - 1; i >= 0; --i) {
-    if (s[i] == '6')
-      cout << 9;
-    else if (s[i] == '9')
+
+  rep(i, n) {
+    if (s[i] == '9') {
       cout << 6;
-    else
+    } else if (s[i] == '6') {
+      cout << 9;
+    } else {
       cout << s[i];
+    }
   }
+
   cout << el;
 }

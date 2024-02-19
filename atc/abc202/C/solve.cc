@@ -39,30 +39,22 @@ int main() {
   int n;
   cin >> n;
 
-  vector<llint> ai(n), bi(n), ci(n);
+  map<int, int> mp;
 
-  for (auto& a : ai) {
+  rep(i, n) {
+    int a;
     cin >> a;
-    a--;
-  }
-  for (auto& b : bi) {
-    cin >> b;
-    b--;
-  }
-  for (auto& c : ci) {
-    cin >> c;
-    c--;
+    mp[a]++;
   }
 
-  vector<llint> counter(n, 0);
-  rep(i, n) {
-    llint k = bi[ci[i]];
-    counter[k]++;
-  }
+  vector<int> bi(n), ci(n);
+  rep(i, n) cin >> bi[i];
+  rep(i, n) cin >> ci[i];
 
-  llint ans{};
+  llint cnt{};
   rep(i, n) {
-    ans += counter[ai[i]];
+    llint b = bi[ci[i] - 1];
+    cnt += mp[b];
   }
-  out(ans);
+  cout << cnt << el;
 }
