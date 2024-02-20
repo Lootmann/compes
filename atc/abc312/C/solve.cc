@@ -39,51 +39,29 @@ int main() {
   int n, m;
   cin >> n >> m;
 
-  vector<string> grid(n);
-  rep(i, n) cin >> grid[i];
+  vector<int> ai(n), bi(m);
+  rep(i, n) cin >> ai[i];
+  rep(i, m) cin >> bi[i];
 
-  vector<pair<int, int>> pos;
+  sort(all(ai));
+  sort(all(bi));
 
-  rep(h, n - 8) rep(w, m - 8) {
-    bool can_paint{true};
+  dump(ai);
+  dump(bi);
 
-    // black
-    rep(y, 3) rep(x, 3) {
-      if (grid[h + y][w + x] != '#') {
-        can_paint = false;
-      }
+  int ok = 0, ng = 1e9 + 1;
 
-      if (grid[h + y + 6][w + x + 6] != '#') {
-        can_paint = false;
-      }
-    }
+  while (ng - ok > 1) {
+    int mid = ng + (ok - ng) / 2;
+    int sell{}, buy{};
 
-    // white
-    rep(k, 4) {
-      if (grid[h + 3][w + k] != '.') {
-        can_paint = false;
-      }
-      if (grid[h + k][w + 3] != '.') {
-        can_paint = false;
-      }
-      if (grid[h + 5][w + k + 5] != '.') {
-        can_paint = false;
-      }
-      if (grid[h + k + 5][w + 5] != '.') {
-        can_paint = false;
-      }
-    }
+    rep(i, n) if (ai[i] <= mid) sell++;
+    rep(i, m) if (bi[i] >= mid) buy++;
 
-    if (can_paint) {
-      pos.push_back({h + 1, w + 1});
-    }
+    if (sell >= buy)
+      ng = mid;
+    else
+      ok = mid;
   }
-
-  if (pos.size() == 0) {
-    cout << el;
-  } else {
-    for (auto [y, x] : pos) {
-      cout << y << ' ' << x << el;
-    }
-  }
+  cout << ng << el;
 }
