@@ -36,21 +36,27 @@ template <typename T> inline bool chmin(T& a, const T& b) {
 // clang-format on
 
 int main() {
-  int n, x;
-  cin >> n >> x;
+  int n;
+  cin >> n;
 
-  vector<int> xi{x};
-  rep(i, n) {
-    int a;
-    cin >> a;
-    xi.push_back(a);
-  }
-  sort(all(xi));
+  vector<string> vs(n);
+  rep(i, n) cin >> vs[i];
 
-  int ans{};
+  set<string> st;
   rep(i, n) {
-    int diff = xi[i + 1] - xi[i];
-    ans = gcd(ans, diff);
+    if (st.find(vs[i]) != st.end()) {
+      die("No");
+    }
+    st.insert(vs[i]);
+
+    if (i < n - 1) {
+      string cur = vs[i];
+      string nxt = vs[i + 1];
+      if (cur.back() != nxt.front()) {
+        die("No");
+      }
+    }
   }
-  cout << ans << el;
+
+  cout << "Yes" << el;
 }

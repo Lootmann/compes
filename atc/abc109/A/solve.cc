@@ -36,21 +36,10 @@ template <typename T> inline bool chmin(T& a, const T& b) {
 // clang-format on
 
 int main() {
-  int n, x;
-  cin >> n >> x;
-
-  vector<int> xi{x};
-  rep(i, n) {
-    int a;
-    cin >> a;
-    xi.push_back(a);
-  }
-  sort(all(xi));
-
-  int ans{};
-  rep(i, n) {
-    int diff = xi[i + 1] - xi[i];
-    ans = gcd(ans, diff);
-  }
-  cout << ans << el;
+  int a, b;
+  cin >> a >> b;
+  if (a % 2 == 0 || b % 2 == 0)
+    cout << "No" << el;
+  else
+    cout << "Yes" << el;
 }
