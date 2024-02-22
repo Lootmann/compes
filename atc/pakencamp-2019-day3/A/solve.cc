@@ -37,22 +37,7 @@ template <typename T> inline bool chmin(T& a, const T& b) {
 // clang-format on
 
 int main() {
-  int n, m;
-  cin >> n >> m;
-
-  vector<vector<llint>> ai(n, vector<llint>(m, 0));
-  rep(i, n) rep(j, m) cin >> ai[i][j];
-
-  llint ans{};
-  for (int i = 0; i < m; ++i) {
-    for (int j = i + 1; j < m; ++j) {
-      llint cur{};
-      rep(k, n) {
-        cur += max(ai[k][i], ai[k][j]);
-      }
-      chmax(ans, cur);
-    }
-  }
-
-  cout << ans << el;
+  int a, b;
+  cin >> a >> b;
+  cout << b - a + 1 << el;
 }

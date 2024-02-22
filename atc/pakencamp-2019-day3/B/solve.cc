@@ -11,7 +11,7 @@ using namespace std;
 struct  Fast{Fast(){std::cin.tie(0);ios::sync_with_stdio(false);}} fast;
 
 #define rep(i,n) for (int i=0; i<(int)n; ++i)
-#define out(msg) cout << msg << '\n'
+#define out(msg) cout << (msg) << '\n'
 #define die(msg) do{ cout << msg << endl,exit(0); }while(0)
 #define el '\n'
 
@@ -37,22 +37,18 @@ template <typename T> inline bool chmin(T& a, const T& b) {
 // clang-format on
 
 int main() {
-  int n, m;
-  cin >> n >> m;
+  int n;
+  cin >> n;
 
-  vector<vector<llint>> ai(n, vector<llint>(m, 0));
-  rep(i, n) rep(j, m) cin >> ai[i][j];
-
-  llint ans{};
-  for (int i = 0; i < m; ++i) {
-    for (int j = i + 1; j < m; ++j) {
-      llint cur{};
-      rep(k, n) {
-        cur += max(ai[k][i], ai[k][j]);
-      }
-      chmax(ans, cur);
-    }
+  int black{}, white{};
+  rep(_, n) {
+    string s;
+    cin >> s;
+    if (s == "black")
+      black++;
+    else
+      white++;
   }
 
-  cout << ans << el;
+  out(black > white ? "black" : "white");
 }
