@@ -8,12 +8,14 @@ using namespace std;
 #endif
 
 // clang-format off
-struct  Fast {Fast(){std::cin.tie(0);ios::sync_with_stdio(false);}} fast;
-#define rep(i, n) for (int i = 0; i < (int)(n); ++i)
-#define out(msg) cout << (msg) << '\n'
-#define die(msg) do {cout << msg << endl;exit(0);} while (0)
+struct  Fast{Fast(){std::cin.tie(0);ios::sync_with_stdio(false);}} fast;
 
-#define all(k)  k.begin(), k.end()
+#define rep(i,n) for (int i=0; i<(int)n; ++i)
+#define out(msg) cout << (msg) << '\n'
+#define die(msg) do{ cout << (msg) << endl,exit(0); }while(0)
+#define el '\n'
+
+#define all(k)  k.begin(),  k.end()
 #define rall(k) k.rbegin(), k.rend()
 
 // const
@@ -39,29 +41,31 @@ int main() {
   string s;
   cin >> n >> s;
 
-  vector<int> right(n), left(n);
+  vector<int> ei(n), wi(n);
 
   rep(i, n) {
     if (s[i] == 'E') {
-      right[i]++;
+      ei[i] = 1;
     } else {
-      left[i]++;
+      wi[i] = 1;
     }
   }
 
   for (int i = 1; i < n; ++i) {
-    right[i] += right[i - 1];
-    left[i] += left[i - 1];
+    wi[i] += wi[i - 1];
+    ei[i] += ei[i - 1];
   }
 
   int ans{INFi};
+
   rep(i, n) {
-    int now{};
-    if (i > 0) {
-      now += left[i - 1];
-    }
-    now += right[n - 1] - right[i];
-    chmin(ans, now);
+    int sum{};
+
+    if (i != 0) sum += wi[i - 1];
+    sum += ei[n - 1] - ei[i];
+
+    chmin(ans, sum);
   }
-  out(ans);
+
+  cout << ans << el;
 }

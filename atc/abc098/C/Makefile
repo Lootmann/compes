@@ -16,7 +16,7 @@ in:
 	./$(TARGET) < in
 
 # -g3: debug level 3
-# -O0: Optimize leve 0 <=> no optimization
+# -O0: Optimize level 0 <=> no optimizations
 .PHONY: debug
 debug:
 	$(CXX) $(CXXFLAGS) -g3 -O0 $(SRC) -o $(TARGET)
@@ -27,4 +27,4 @@ watch:
 
 .PHONY: clean
 clean:
-	rm a.out solve.cc ./test -r
+	rm a.out solve.cc ./test in out -r
