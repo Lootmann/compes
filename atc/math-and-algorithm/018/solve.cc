@@ -40,15 +40,15 @@ int main() {
   int n;
   cin >> n;
 
-  vector<int> ai(n);
+  vector<llint> ai(n);
   rep(i, n) cin >> ai[i];
 
-  vector<int> count(5);
+  vector<llint> count(5);
   for (auto a : ai) {
     count[a / 100]++;
   }
 
-  int ans{};
+  llint ans{};
   ans += count[1] * count[4];
   ans += count[2] * count[3];
   cout << ans << el;
