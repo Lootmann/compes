@@ -1,5 +1,6 @@
 CXX      = g++
-CXXFLAGS = -std=c++2a -Wall -Wextra -pedantic-errors -Wshadow -fsanitize=undefined -fsanitize=address -DDEBUG_
+CXXFLAGS = -std=c++2a -Wall -Wextra -pedantic-errors -Wshadow \
+		   -fsanitize=undefined -fsanitize=address -DDEBUG_
 TARGET   = a.out
 SRC      = solve.cc
 
@@ -14,9 +15,11 @@ out:
 in:
 	./$(TARGET) < in
 
-.PHONY: submit
-submit:
-	oj s solve.cc
+# -g3: debug level 3
+# -O0: Optimize level 0 <=> no optimizations
+.PHONY: debug
+debug:
+	$(CXX) $(CXXFLAGS) -g3 -O0 $(SRC) -o $(TARGET)
 
 .PHONY: watch
 watch:
@@ -24,4 +27,4 @@ watch:
 
 .PHONY: clean
 clean:
-	rm a.out solve.cc ./test -r
+	rm a.out solve.cc ./test in out -r
