@@ -8,12 +8,14 @@ using namespace std;
 #endif
 
 // clang-format off
-struct  Fast {Fast(){std::cin.tie(0);ios::sync_with_stdio(false);}} fast;
-#define rep(i, n) for (int i = 0; i < (int)(n); ++i)
-#define out(msg) cout << (msg) << '\n'
-#define die(msg) do {cout << msg << endl;exit(0);} while (0)
+struct  Fast{Fast(){std::cin.tie(0);ios::sync_with_stdio(false);}} fast;
 
-#define all(k)  k.begin(), k.end()
+#define rep(i,n) for (int i=0; i<(int)n; ++i)
+#define out(msg) cout << (msg) << '\n'
+#define die(msg) do{ cout << (msg) << endl,exit(0); }while(0)
+#define el '\n'
+
+#define all(k)  k.begin(),  k.end()
 #define rall(k) k.rbegin(), k.rend()
 
 // const
@@ -34,55 +36,26 @@ template <typename T> inline bool chmin(T& a, const T& b) {
 }
 // clang-format on
 
-using vvi = vector<vector<int>>;
-
-// goal pos
-int GH, GW;
-
-llint dfs(const vvi& grid, set<int> st, int h, int w) {
-  // reach the goal
-  if (h == GH - 1 && w == GW - 1) {
-    return 1;
-  }
-
-  llint cnt{};
-
-  // go down
-  if (h < GH - 1) {
-    h++;
-    int n = grid[h][w];
-    if (!st.contains(n)) {
-      st.insert(n);
-      cnt += dfs(grid, st, h, w);
-      st.erase(n);
-    }
-    h--;
-  }
-
-  // go right
-  if (w < GW - 1) {
-    w++;
-    int n = grid[h][w];
-    if (!st.contains(n)) {
-      st.insert(n);
-      cnt += dfs(grid, st, h, w);
-      st.erase(n);
-    }
-    w--;
-  }
-
-  return cnt;
-}
-
 int main() {
-  int h, w;
-  cin >> h >> w;
+  int H, W;
+  cin >> H >> W;
 
-  GH = h, GW = w;
+  vector<vector<int>> grid(H, vector<int>(W, 0));
+  rep(h, H) rep(w, W) cin >> grid[h][w];
 
-  vector<vector<int>> grid(h, vector<int>(w, 0));
-  rep(i, h) rep(j, w) cin >> grid[i][j];
+  auto rec = [&](auto f, int h, int w, set<int> trace) -> int {
+    if (!(0 <= h && h < H && 0 <= w && w < W)) return 0;
+    if (trace.find(grid[h][w]) != trace.end()) return 0;
+    if (h == H - 1 && w == W - 1) return 1;
 
-  set<int> st{grid[0][0]};
-  cout << dfs(grid, st, 0, 0) << '\n';
+    int cnt{};
+    trace.insert(grid[h][w]);
+    cnt += f(f, h + 1, w, trace);
+    cnt += f(f, h, w + 1, trace);
+    return cnt;
+  };
+
+  set<int> st;
+  int ans = rec(rec, 0, 0, st);
+  cout << ans << el;
 }
