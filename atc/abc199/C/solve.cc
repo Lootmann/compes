@@ -8,12 +8,14 @@ using namespace std;
 #endif
 
 // clang-format off
-struct  Fast {Fast(){std::cin.tie(0);ios::sync_with_stdio(false);}} fast;
-#define rep(i, n) for (int i = 0; i < (int)(n); ++i)
-#define out(msg) cout << (msg) << '\n'
-#define die(msg) do {cout << msg << endl;exit(0);} while (0)
+struct  Fast{Fast(){std::cin.tie(0);ios::sync_with_stdio(false);}} fast;
 
-#define all(k)  k.begin(), k.end()
+#define rep(i,n) for (int i=0; i<(int)n; ++i)
+#define out(msg) cout << (msg) << '\n'
+#define die(msg) do{ cout << (msg) << endl,exit(0); }while(0)
+#define el '\n'
+
+#define all(k)  k.begin(),  k.end()
 #define rall(k) k.rbegin(), k.rend()
 
 // const
@@ -34,43 +36,36 @@ template <typename T> inline bool chmin(T& a, const T& b) {
 }
 // clang-format on
 
-void solve() {
+int main() {
   int n;
+  cin >> n;
+
   string s;
-  cin >> n >> s;
+  cin >> s;
+
+  bool is_swap{false};
 
   int q;
   cin >> q;
-
-  bool is_flip{false};
   rep(_, q) {
     int t, a, b;
     cin >> t >> a >> b;
     a--, b--;
 
     if (t == 1) {
-      if (is_flip) {
-        a = (a + n) % (2 * n);
-        b = (b + n) % (2 * n);
+      if (is_swap) {
+        a = (n + a) % (2 * n);
+        b = (n + b) % (2 * n);
       }
-
-      char ch = s[a];
-      s[a] = s[b];
-      s[b] = ch;
+      swap(s[a], s[b]);
     } else {
-      is_flip = !is_flip;
+      is_swap = !is_swap;
     }
   }
 
-  if (is_flip) {
-    s = s.substr(n) + s.substr(0, n);
+  if (is_swap) {
+    cout << s.substr(n) << s.substr(0, n) << el;
+  } else {
+    cout << s << el;
   }
-
-  out(s);
-}
-
-int main() {
-  int t{1};
-  // cin >> t;
-  while (t--) solve();
 }
