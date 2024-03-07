@@ -8,12 +8,14 @@ using namespace std;
 #endif
 
 // clang-format off
-struct  Fast {Fast(){std::cin.tie(0);ios::sync_with_stdio(false);}} fast;
-#define rep(i, n) for (int i = 0; i < (int)(n); ++i)
-#define out(msg) cout << (msg) << '\n'
-#define die(msg) do {cout << msg << endl;exit(0);} while (0)
+struct  Fast{Fast(){std::cin.tie(0);ios::sync_with_stdio(false);}} fast;
 
-#define all(k)  k.begin(), k.end()
+#define rep(i,n) for (int i=0; i<(int)n; ++i)
+#define out(msg) cout << (msg) << '\n'
+#define die(msg) do{ cout << (msg) << endl,exit(0); }while(0)
+#define el '\n'
+
+#define all(k)  k.begin(),  k.end()
 #define rall(k) k.rbegin(), k.rend()
 
 // const
@@ -41,6 +43,7 @@ int main() {
   cin >> n >> m;
 
   Graph graph(n);
+
   rep(_, m) {
     int a, b;
     cin >> a >> b;
@@ -50,32 +53,32 @@ int main() {
     graph[b].push_back(a);
   }
 
-  vector<bool> visited(n, false);
-  int cnt{};
+  vector<int> dist(n, -1);
 
-  auto dfs = [&](int vertex) -> void {
-    // cycle one
-    cnt++;
-    queue<int> st;
-    st.push(vertex);
+  auto dfs = [&](int sv, int id) {
+    dist[sv] = id;
+
+    stack<int> st;
+    st.push(sv);
 
     while (!st.empty()) {
-      int v = st.front();
+      int v = st.top();
       st.pop();
 
       for (auto nv : graph[v]) {
-        if (visited[nv]) continue;
-        visited[nv] = true;
+        if (dist[nv] != -1) continue;
+        dist[nv] = id;
         st.push(nv);
       }
     }
   };
 
+  int id{};
   rep(i, n) {
-    if (!visited[i]) dfs(i);
+    if (dist[i] == -1) {
+      dfs(i, id++);
+    }
   }
 
-  dump(cnt);
-  dump(visited);
-  out(m - n + cnt);
+  cout << m - (n - id) << el;
 }
