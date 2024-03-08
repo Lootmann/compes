@@ -8,12 +8,14 @@ using namespace std;
 #endif
 
 // clang-format off
-struct  Fast {Fast(){std::cin.tie(0);ios::sync_with_stdio(false);}} fast;
-#define rep(i, n) for (int i = 0; i < (int)(n); ++i)
-#define out(msg) cout << (msg) << '\n'
-#define die(msg) do {cout << msg << endl;exit(0);} while (0)
+struct  Fast{Fast(){std::cin.tie(0);ios::sync_with_stdio(false);}} fast;
 
-#define all(k)  k.begin(), k.end()
+#define rep(i,n) for (int i=0; i<(int)n; ++i)
+#define out(msg) cout << (msg) << '\n'
+#define die(msg) do{ cout << (msg) << endl,exit(0); }while(0)
+#define el '\n'
+
+#define all(k)  k.begin(),  k.end()
 #define rall(k) k.rbegin(), k.rend()
 
 // const
@@ -53,10 +55,7 @@ int main() {
   if (has > 4) die(0);
   if (not_has == 10) die(0);
 
-  // ^ x ^ x ^ x ^
-  // ^ x ^ x ^
   int ans{};
-
   if (has == 4) {
     ans = 4 * 3 * 2 * 1;
   } else if (has == 3) {
@@ -68,5 +67,5 @@ int main() {
   } else {
     ans = pow(amb, 4);
   }
-  out(ans);
+  cout << ans << el;
 }
