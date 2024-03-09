@@ -7,60 +7,53 @@ using namespace std;
 #define dump(...)
 #endif
 
-#define FastIO cin.tie(nullptr), ios_base::sync_with_stdio(false);
-#define rep(i, n) for (int i = 0; (int)i < n; ++i)
-#define repa(i, a, n) for (int i = a; (int)i < n; ++i)
-#define rrep(i, n) for (int i = n; (int)i >= 0; --i)
-#define rrepa(i, a, n) for (int i = a; (int)i >= n; --i)
-#define EACH(x, a) for (auto& x : a)
-#define output(msg) cout << (msg) << '\n'
-#define die(msg)         \
-  do {                   \
-    cout << msg << endl; \
-    exit(0);             \
-  } while (0)
+// clang-format off
+struct  Fast{Fast(){std::cin.tie(0);ios::sync_with_stdio(false);}} fast;
 
-template <class A> void read(vector<A>& v);
-template <class A, size_t S> void read(array<A, S>& a);
-template <class T> void read(T& x) {
-  cin >> x;
+#define rep(i,n) for (int i=0; i<(int)n; ++i)
+#define out(msg) cout << (msg) << '\n'
+#define die(msg) do{ cout << (msg) << endl,exit(0); }while(0)
+#define el '\n'
+
+#define all(k)  k.begin(),  k.end()
+#define rall(k) k.rbegin(), k.rend()
+
+// const
+#define INFi  1   << 30
+#define INFll 1LL << 60
+#define MOD17 10'0000'0007
+#define MOD98  9'9824'4353
+
+// alias
+using ullint = unsigned long long int;
+using llint  = long long int;
+
+template <typename T> inline bool chmax(T& a, const T& b) {
+  return ((a < b) ? (a = b, true) : false);
 }
-void read(double& d) {
-  string t;
-  read(t);
-  d = stod(t);
-}
-void read(long double& d) {
-  string t;
-  read(t);
-  d = stold(t);
-}
-template <class H, class... T> void read(H& h, T&... t) {
-  read(h);
-  read(t...);
-}
-template <class A> void read(vector<A>& x) {
-  EACH(a, x) read(a);
-}
-template <class A, size_t S> void read(array<A, S>& x) {
-  EACH(a, x) read(a);
-}
-template <typename T> bool chmax(T& a, const T& b) {
-  return ((a < b) ? (a = b, true) : (false));
-}
-template <typename T> bool chmin(T& a, const T& b) {
+template <typename T> inline bool chmin(T& a, const T& b) {
   return ((a > b) ? (a = b, true) : false);
 }
-
-using llint = long long int;
+// clang-format on
 
 int main() {
-  FastIO;
   string s;
-  llint k;
-  read(s, k);
+  cin >> s;
 
-  if (s[0] != '1') die(s[0]);
-  rep(i, k) if (s[i] != '1') die(s[i]);
-  output(1);
+  llint k;
+  cin >> k;
+  k--;
+
+  char ans{'1'};
+  for (auto ch : s) {
+    if (ch != '1') {
+      ans = ch;
+      break;
+    }
+
+    if (k == 0) break;
+    k--;
+  }
+
+  cout << ans << el;
 }
