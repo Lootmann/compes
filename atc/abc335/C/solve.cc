@@ -8,12 +8,15 @@ using namespace std;
 #endif
 
 // clang-format off
-struct  Fast {Fast(){std::cin.tie(0);ios::sync_with_stdio(false);}} fast;
-#define rep(i, n) for (int i = 0; i < (int)(n); ++i)
-#define out(msg) cout << (msg) << '\n'
-#define die(msg) do {cout << msg << endl;exit(0);} while (0)
+struct  Fast{Fast(){std::cin.tie(0);ios::sync_with_stdio(false);}} fast;
 
-#define all(k)  k.begin(), k.end()
+#define rep(i,n) for (int i=0; i<(int)n; ++i)
+#define rrep(i,a,n) for (int i=a; i<(int)n; ++i)
+#define out(msg) cout << (msg) << '\n'
+#define die(msg) do{ cout << (msg) << endl,exit(0); }while(0)
+#define el '\n'
+
+#define all(k)  k.begin(),  k.end()
 #define rall(k) k.rbegin(), k.rend()
 
 // const
@@ -33,45 +36,43 @@ template <typename T> inline bool chmin(T& a, const T& b) {
   return ((a > b) ? (a = b, true) : false);
 }
 // clang-format on
+
 using P = pair<int, int>;
 
 int main() {
   int n, q;
   cin >> n >> q;
 
-  // init (x, y)
-  deque<P> que;
-  rep(x, n) que.push_back({x + 1, 0});
+  vector<P> que;
+  for (int i = n; i > 0; --i) {
+    que.push_back({i, 0});
+  }
 
   int x{1}, y{0};
   rep(_, q) {
-    int t;
-    cin >> t;
+    int query;
+    cin >> query;
 
-    if (t == 1) {
+    if (query == 1) {
       char c;
       cin >> c;
-
-      if (c == 'U')
+      if (c == 'U') {
         y++;
-      else if (c == 'D')
+      } else if (c == 'D') {
         y--;
-      else if (c == 'R')
+      } else if (c == 'R') {
         x++;
-      else
+      } else {
         x--;
-
-      // push
-      que.push_front({x, y});
-      while ((int)que.size() > n) {
-        que.pop_back();
       }
+
+      que.push_back({x, y});
     } else {
       int p;
       cin >> p;
 
-      auto [nx, ny] = que[p - 1];
-      cout << nx << ' ' << ny << '\n';
+      cout << que[que.size() - p].first << ' ';
+      cout << que[que.size() - p].second << el;
     }
   }
 }
