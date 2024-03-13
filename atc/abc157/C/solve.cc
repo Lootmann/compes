@@ -8,12 +8,15 @@ using namespace std;
 #endif
 
 // clang-format off
-struct  Fast {Fast(){std::cin.tie(0);ios::sync_with_stdio(false);}} fast;
-#define rep(i, n) for (int i = 0; i < (int)(n); ++i)
-#define out(msg) cout << (msg) << '\n'
-#define die(msg) do {cout << msg << endl;exit(0);} while (0)
+struct  Fast{Fast(){std::cin.tie(0);ios::sync_with_stdio(false);}} fast;
 
-#define all(k)  k.begin(), k.end()
+#define rep(i,n) for (int i=0; i<(int)n; ++i)
+#define rrep(i,a,n) for (int i=a; i<(int)n; ++i)
+#define out(msg) cout << (msg) << '\n'
+#define die(msg) do{ cout << (msg) << endl,exit(0); }while(0)
+#define el '\n'
+
+#define all(k)  k.begin(),  k.end()
 #define rall(k) k.rbegin(), k.rend()
 
 // const
@@ -38,31 +41,40 @@ int main() {
   int n, m;
   cin >> n >> m;
 
-  vector<int> s(n, -1);
+  vector<int> digit(n, -1);
   rep(_, m) {
-    int si, ci;
-    cin >> si >> ci;
-    si--;
+    int s, c;
+    cin >> s >> c;
+    s--;
 
-    if (s[si] == -1) {
-      s[si] = ci;
-    } else {
-      if (s[si] != ci) die(-1);
+    if (digit[s] == -1) {
+      digit[s] = c;
+    } else if (digit[s] != c) {
+      die(-1);
     }
   }
 
-  // first digit
   if (n == 1) {
-    if (s[0] == -1) s[0] = 0;
-  } else {
-    if (s[0] == 0) die(-1);  // 0 is not allowed
-    if (s[0] == -1) s[0] = 1;
+    if (digit[0] == -1)
+      die(0);
+    else
+      die(digit[0]);
   }
 
-  for (int i = 1; i < n; ++i) {
-    if (s[i] == -1) s[i] = 0;
-  }
+  if (digit[0] == 0) die(-1);
+  if (digit[0] == -1) digit[0] = 1;
 
-  rep(i, n) cout << s[i];
-  cout << endl;
+  rep(i, n) {
+    int d = digit[i];
+
+    if (i == 0) {
+      cout << d;
+    } else {
+      if (d == -1)
+        cout << 0;
+      else
+        cout << d;
+    }
+  }
+  cout << el;
 }
