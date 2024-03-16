@@ -37,43 +37,27 @@ template <typename T> inline bool chmin(T& a, const T& b) {
 }
 // clang-format on
 
-using P = pair<set<int>, bool>;
-using ci = const int;
-
-const int SIZE = 10'005;
-
-void update(vector<P>& dp, ci a, ci b, ci idx) {
-  rep(i, SIZE) {
-    if (dp[i].second && dp[i].first.count(idx)) {
-      dp[a + i].first.insert(idx + 1);
-      dp[a + i].second = true;
-      dp[b + i].first.insert(idx + 1);
-      dp[b + i].second = true;
-    }
-  }
-}
-
 int main() {
   int n, x;
   cin >> n >> x;
 
-  vector<P> dp(SIZE);
+  vector<int> ai(n), bi(n);
+  rep(i, n) cin >> ai[i] >> bi[i];
+
+  vector<vector<bool>> dp(n + 1, vector<bool>(x + 1, 0));
+  dp[0][0] = true;
 
   rep(i, n) {
-    int a, b;
-    cin >> a >> b;
-
-    if (i == 0) {
-      dp[a] = {{1}, true};
-      dp[b] = {{1}, true};
-    } else {
-      update(dp, a, b, i);
+    rep(j, x) {
+      if (dp[i][j]) {
+        if (j + ai[i] <= x) dp[i + 1][j + ai[i]] = true;
+        if (j + bi[i] <= x) dp[i + 1][j + bi[i]] = true;
+      }
     }
   }
 
-  if (dp[x].first.count(n) && dp[x].second) {
+  if (dp[n][x])
     cout << "Yes" << el;
-  } else {
+  else
     cout << "No" << el;
-  }
 }
